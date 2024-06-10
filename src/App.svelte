@@ -29,6 +29,11 @@
   let threshold2 = 0.5
   let bottom2 = 0.9
 
+  let texto_respuesta = "";
+  let ultimo_id = null;
+  let respuestas_por_pregunta = [["si1", "no1"], ["si2", "no2"], ["si3", "no3"]];
+
+
   /* Charts */
   let charts = {
     0: "lines_01.png",
@@ -65,18 +70,116 @@
     }
     console.log(filteredDeportistas)
   }
+
+  function ChangeOption(id) {
+    if(id == 0){
+      id = "boton0";
+    }
+    else if (id == 1){
+      id = "boton1";
+    }
+    else if(id == 2){
+      id = "boton2";
+    }
+    else{
+      id = "boton3";
+    }
+    if (ultimo_id != null) {
+      let boton_ultimo = document.getElementById("active");
+      boton_ultimo.id = ultimo_id;
+    }
+    if (id == ultimo_id) {
+      ultimo_id = null;
+    } else {
+      const boton_id = document.getElementById(id);
+      ultimo_id = boton_id.id;
+      console.log(boton_id.id);
+      boton_id.id = "active";
+      console.log(boton_id.id);
+    }
+  }
+
+  function mostrar_texto(opcion){
+    var chat_answer = document.querySelector(".chat");
+    chat_answer.style.display = "flex";
+    if(opcion == 0){
+      texto_respuesta = "Hola! Este es un chat que va a ser tu guia para la pagina web. Elige una pregunta, contestala y descubre si el resto opina igual que vos";
+    }
+    else if(opcion == 1){
+      texto_respuesta = "hola 1";
+    }
+    else if(opcion == 2){
+      texto_respuesta = "hola 2";
+    }
+    else{
+      texto_respuesta = "hola 3";
+    }
+    ChangeOption(opcion);
+  }
+
+  function mostrar_botones(boton_tocado, num_div_botones){
+    let id_boton;
+    if(boton_tocado == 0){
+      id_boton = "boton"+boton_tocado
+      let botones_opciones = document.getElementById("divbotones1");
+      console.log(botones_opciones);
+      botones_opciones.style.display = "flex";
+    }
+    else{
+      id_boton = "divbotones"+num_div_botones;
+      let id_name = "respuestas"+boton_tocado;
+      let respuestas = document.getElementById(id_name);
+      respuestas.style.display = "flex";
+    }
+    let boton_tocado_element = document.getElementById(id_boton);
+    boton_tocado_element.style.display = "none";
+  }
+
 </script>
 
 <main>
   <div class="header">
     <img src="/images/olympics-logo.png" width="100" alt="anillos" />
     <h3 class="headline">
-      <b>Triunfos Olímpicos</b>
+      <b>Public Opinion about IA</b>
       Medallas, alturas y continentes
     </h3>
-    <p class="bajada">Explorando los logros olímpicos a través de datos</p>
-    <div class="lorem_ipsum">
-      <Loremipsum />
+    <p class="bajada">Explorando que opina la gente sobre la IA</p>
+    <div class="mensaje-usuario">
+      <p>Comenzar</p>
+    </div>
+    <div class="mensaje-usuario chat">
+      <p>{texto_respuesta}</p>
+    </div>
+    <div>
+      <input class="boton-inicio" id="boton0" type="button" value="Empezar el chat" on:click={() => {
+        mostrar_botones(0, 0);
+        mostrar_texto(0);
+        }}>
+      <div id="divbotones1" style="display: none;">
+        <input class="botones-opciones" id="boton1" type="button" value="¿Conoces Chat-Gpt? Si lo conoces, ¿que tan seguido lo usas?" on:click={() => {
+          mostrar_botones(1, 1);
+          mostrar_texto(1);
+          }}>
+        <input class="botones-opciones" id="boton2" type="button" value="Opcion 2" on:click={() => {
+          mostrar_botones(2, 1);
+          mostrar_texto(2, 1);
+          }}>
+        <input class="botones-opciones" id="boton3" type="button" value="Opcion 3" on:click={() => {
+          mostrar_botones(3, 1);
+          mostrar_texto(3);
+          }}>
+      </div>
+      <div style="display: flex;">
+        {#each respuestas_por_pregunta as respuestas, i}
+          <div id="respuestas{i+1}" style="display: none;">
+            {#each respuestas as respuesta_i, j}
+              <p>{i}</p>
+              <input class="botones-respuesta" id="boton{i}" type="button" value="{respuesta_i}" on:click={() => mostrar_texto(i)}>
+            {/each}
+          </div>
+        {/each}
+      </div>
     </div>
   </div>
 
@@ -176,6 +279,17 @@
 </div>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Gentium+Plus:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+  :global(body) {
+    background-color: black;
+  }
+
+  * {
+    font-family: "VT323", monospace;
+    color: white;
+  }
 
   .header {
     display: flex;
@@ -193,6 +307,7 @@
     margin: 20px;
   }
   .bajada {
+    font-family: "Gentium Plus", serif;
     font-size: 18px;
     font-weight: normal;
     text-align: center;
@@ -202,6 +317,60 @@
     display: block;
   }
 
+  .boton-inicio{
+    width: fit-content;
+    height: 50px;
+    color: black;
+    border-radius: 5px;
+    font-size: large;
+  }
+
+  .botones-opciones{
+    width: fit-content;
+    height: 50px;
+    color: black;
+    border-radius: 5px;
+    font-size: large;
+  }
+
+  .botones-respuesta{
+    width: 100px;
+    height: 50px;
+    color: black;
+    background-color: red;
+    border-radius: 5px;
+    font-size: large;
+  }
+
+  #active{
+    background-image: linear-gradient(
+      rgba(164, 0, 247, 0.5),
+      rgb(255, 120, 209, 0),
+      rgba(164, 0, 247, 0.5)
+    );
+  }
+
+  .mensaje-usuario{
+    border-radius: 20px;
+    padding-left: 10px;
+    margin-bottom: 20px;
+    background-color: grey;
+    width: 200px;
+    align-self: flex-end;
+    height: 50px;
+  }
+  
+  .chat{
+    border-radius: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: grey;
+    width: 200px;
+    align-self: flex-start;
+    display: none;
+    height: fit-content;
+  }
+  
   /* Estilos para el scroller */
   .foreground_container {
     pointer-events: none;
@@ -224,6 +393,7 @@
     background-color: rgba(0, 0, 0, 0.5);
   }
   .lorem_ipsum {
+    font-family: "Gentium Plus", serif;
     margin: 100px auto;
     max-width: 740px;
   }
