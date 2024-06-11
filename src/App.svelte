@@ -29,9 +29,13 @@
   let threshold2 = 0.5
   let bottom2 = 0.9
 
-  let texto_respuesta = "";
   let ultimo_id = null;
   let respuestas_por_pregunta = [["si1", "no1"], ["si2", "no2"], ["si3", "no3"]];
+  let tematicas = {
+    "Trabajo": ["pregunta 1-trabajo", "pregunta 2-trabajo", "pregunta 3-trabajo"],
+    "Uso cotidiano": ["pregunta 1-uso cotidiano", "pregunta 2-uso cotidiano"],
+    "Lenguajes": ["pregunta 1-lenguaje", "pregunta 2-lenguaje", "pregunta 3-lenguaje"]
+  }
 
 
   /* Charts */
@@ -99,20 +103,58 @@
     }
   }
 
-  function mostrar_texto(opcion){
-    var chat_answer = document.querySelector(".chat");
-    chat_answer.style.display = "flex";
-    if(opcion == 0){
-      texto_respuesta = "Hola! Este es un chat que va a ser tu guia para la pagina web. Elige una pregunta, contestala y descubre si el resto opina igual que vos";
-    }
-    else if(opcion == 1){
-      texto_respuesta = "hola 1";
-    }
-    else if(opcion == 2){
-      texto_respuesta = "hola 2";
+  function add_span() {
+      // Crear el span y agregarlo al div.chat
+      var typingIndicator = document.createElement("span");
+      typingIndicator.id = "typing-indicator";
+      typingIndicator.style.display = "none";
+      
+      var chatDiv = document.querySelector(".mensaje-usuario.chat");
+      chatDiv.appendChild(typingIndicator);
+  }
+
+  var i = 0;
+  var speed = 20;
+  function typeWrite(texto_respuesta){
+    if(i < texto_respuesta.length){
+      document.getElementById("texto-respuesta").innerHTML += texto_respuesta.charAt(i);
+      i++;
+
+      let typingIndicator = document.getElementById("typing-indicator");
+      let textoRespuesta = document.getElementById("texto-respuesta");
+      textoRespuesta.appendChild(typingIndicator);
+
+      setTimeout(function(){
+        typeWrite(texto_respuesta);
+      }, speed);
     }
     else{
-      texto_respuesta = "hola 3";
+      document.getElementById("typing-indicator").style.display = "none";
+    }
+  }
+
+  function mostrar_texto(opcion){
+
+    i = 0;
+    var chat_answer = document.querySelector(".chat");
+    chat_answer.style.display = "flex";
+
+    document.getElementById("texto-respuesta").innerHTML = "";
+
+    add_span();
+    document.getElementById("typing-indicator").style.display = "inline-block";
+
+    if(opcion == 0){
+      typeWrite("Hola! Este es un chat que va a ser tu guia para la pagina web. Elige una pregunta, contestala y descubre si el resto opina igual que vos.");
+    }
+    else if(opcion == 1){
+      typeWrite("hola 1");
+    }
+    else if(opcion == 2){
+      typeWrite("hola 2");
+    }
+    else{
+      typeWrite("hola 3");
     }
     ChangeOption(opcion);
   }
@@ -139,23 +181,32 @@
 
 <main>
   <div class="header">
-    <img src="/images/olympics-logo.png" width="100" alt="anillos" />
+    <img src="/images/header_image.svg" width="100" alt="Exploring AI" />
     <h3 class="headline">
       <b>Public Opinion about IA</b>
-      Medallas, alturas y continentes
     </h3>
     <p class="bajada">Explorando que opina la gente sobre la IA</p>
     <div class="mensaje-usuario">
       <p>Comenzar</p>
     </div>
     <div class="mensaje-usuario chat">
-      <p>{texto_respuesta}</p>
+      <p id="texto-respuesta"></p>
     </div>
     <div>
       <input class="boton-inicio" id="boton0" type="button" value="Empezar el chat" on:click={() => {
         mostrar_botones(0, 0);
         mostrar_texto(0);
         }}>
+      <div style="display: flex;">
+        <div id="divbotones1" style="display: none;">
+          {#each Object.entries(tematicas) as [tematica, preguntas], i}
+            <input class="botones-opciones" id="boton{i}" type="button" value={tematica} on:click={() => {
+              mostrar_botones(i, 1);
+              mostrar_texto(i);
+            }}>
+          {/each}
+        </div>
+      </div>
       <div id="divbotones1" style="display: none;">
         <input class="botones-opciones" id="boton1" type="button" value="¿Conoces Chat-Gpt? Si lo conoces, ¿que tan seguido lo usas?" on:click={() => {
           mostrar_botones(1, 1);
@@ -316,6 +367,23 @@
   .headline b {
     display: block;
   }
+
+  #typing-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-left: 5px;
+  border-radius: 50%;
+  background-color: #000; /* Cambia el color según tus necesidades */
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 
   .boton-inicio{
     width: fit-content;
