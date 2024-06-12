@@ -260,6 +260,11 @@
         <script type="text/javascript" defer src="https://datawrapper.dwcdn.net/FgbkA/embed.js?v=3" charset="utf-8"></script><noscript><img src="https://datawrapper.dwcdn.net/FgbkA/full.png" alt="" /></noscript>
       </div>
     </div>
+    <div>
+        <div class="centered-chart-container">
+          <script type="text/javascript" defer src="https://datawrapper.dwcdn.net/luAfk/embed.js?v=2" charset="utf-8"></script><noscript><img src="https://datawrapper.dwcdn.net/luAfk/full.png" alt="" /></noscript>
+          </div>
+    </div>  
 
   <div class="lorem_ipsum">
     <Loremipsum />
