@@ -37,6 +37,8 @@
     "Lenguajes": ["pregunta 1-lenguaje", "pregunta 2-lenguaje", "pregunta 3-lenguaje"]
   }
 
+  let chat = []
+
 
   /* Charts */
   let charts = {
@@ -97,9 +99,7 @@
     } else {
       const boton_id = document.getElementById(id);
       ultimo_id = boton_id.id;
-      console.log(boton_id.id);
       boton_id.id = "active";
-      console.log(boton_id.id);
     }
   }
 
@@ -107,22 +107,26 @@
       // Crear el span y agregarlo al div.chat
       var typingIndicator = document.createElement("span");
       typingIndicator.id = "typing-indicator";
-      typingIndicator.style.display = "none";
       
       var chatDiv = document.querySelector(".mensaje-usuario.chat");
       chatDiv.appendChild(typingIndicator);
+      console.log(chatDiv);
   }
 
   var i = 0;
-  var speed = 20;
+  var speed = 50;
   function typeWrite(texto_respuesta){
     if(i < texto_respuesta.length){
       document.getElementById("texto-respuesta").innerHTML += texto_respuesta.charAt(i);
       i++;
-
+      
       let typingIndicator = document.getElementById("typing-indicator");
+      console.log("texto typing", i, typingIndicator);
       let textoRespuesta = document.getElementById("texto-respuesta");
+      console.log("texto respuesta", i, textoRespuesta);
       textoRespuesta.appendChild(typingIndicator);
+      typingIndicator.style.display = "inline-block";
+
 
       setTimeout(function(){
         typeWrite(texto_respuesta);
@@ -133,7 +137,13 @@
     }
   }
 
-  function mostrar_texto(opcion){
+  function mostrar_texto(texto, tipo){
+    chat = [...chat, [texto, tipo]];
+    console.log(chat);
+  }
+
+
+  function mostrar_texto2(opcion){
 
     i = 0;
     var chat_answer = document.querySelector(".chat");
@@ -143,6 +153,7 @@
 
     add_span();
     document.getElementById("typing-indicator").style.display = "inline-block";
+    console.log("segundo", document.getElementById("texto-respuesta"));
 
     if(opcion == 0){
       typeWrite("Hola! Este es un chat que va a ser tu guia para la pagina web. Elige una pregunta, contestala y descubre si el resto opina igual que vos.");
@@ -186,23 +197,32 @@
       <b>Public Opinion about IA</b>
     </h3>
     <p class="bajada">Explorando que opina la gente sobre la IA</p>
-    <div class="mensaje-usuario">
-      <p>Comenzar</p>
-    </div>
-    <div class="mensaje-usuario chat">
-      <p id="texto-respuesta"></p>
-    </div>
+    
+    {#each chat as {mensaje, tipo}}
+    <p>{mensaje}</p>
+      {#if tipo == 0}
+        <div class="mensaje-usuario">
+          <p>{mensaje}</p>
+        </div>
+      
+      {:else}
+      <div class="mensaje-usuario chat">
+        <p>{mensaje}</p>
+      </div>
+      {/if}
+    {/each}
+
     <div>
       <input class="boton-inicio" id="boton0" type="button" value="Empezar el chat" on:click={() => {
         mostrar_botones(0, 0);
-        mostrar_texto(0);
+        mostrar_texto("ssss", 1);
         }}>
       <div style="display: flex;">
         <div id="divbotones1" style="display: none;">
           {#each Object.entries(tematicas) as [tematica, preguntas], i}
             <input class="botones-opciones" id="boton{i}" type="button" value={tematica} on:click={() => {
               mostrar_botones(i, 1);
-              mostrar_texto(i);
+              mostrar_texto("aaa", 0);
             }}>
           {/each}
         </div>
@@ -210,15 +230,15 @@
       <div id="divbotones1" style="display: none;">
         <input class="botones-opciones" id="boton1" type="button" value="¿Conoces Chat-Gpt? Si lo conoces, ¿que tan seguido lo usas?" on:click={() => {
           mostrar_botones(1, 1);
-          mostrar_texto(1);
+          mostrar_texto("bbb", 0);
           }}>
         <input class="botones-opciones" id="boton2" type="button" value="Opcion 2" on:click={() => {
           mostrar_botones(2, 1);
-          mostrar_texto(2, 1);
+          mostrar_texto("ccc", 0);
           }}>
         <input class="botones-opciones" id="boton3" type="button" value="Opcion 3" on:click={() => {
           mostrar_botones(3, 1);
-          mostrar_texto(3);
+          mostrar_texto("ddd", 0);
           }}>
       </div>
       <div style="display: flex;">
@@ -234,54 +254,12 @@
     </div>
   </div>
 
-  {#if progress < 1}
-  <DebugScroller
-    index={index}
-    count={count}
-    offset={offset}
-    progress={progress}
-  />
-  {/if}
   <!-- Primer scroller -->
-  <Scroller
-    top={top}
-    threshold={threshold}
-    bottom={bottom}
-    bind:count={count}
-    bind:index={index}
-    bind:offset={offset}
-    bind:progress={progress}
-  >
-    <div slot="background">
-      <Medallero deportistas={filteredDeportistas} />
+    <div>
+      <div class="centered-chart-container">
+        <script type="text/javascript" defer src="https://datawrapper.dwcdn.net/FgbkA/embed.js?v=3" charset="utf-8"></script><noscript><img src="https://datawrapper.dwcdn.net/FgbkA/full.png" alt="" /></noscript>
+      </div>
     </div>
-    <div slot="foreground" class="foreground_container">
-      <section class="step_foreground">
-        <div class="epi_foreground">
-          <h3>Seccion {index + 1}</h3>
-          <p>Todos los deportistas</p>
-        </div>
-      </section>
-      <section class="step_foreground">
-        <div class="epi_foreground">
-          <h3>Seccion {index + 1}</h3>
-          <p>Deportistas femeninas</p>
-        </div>
-      </section>
-      <section class="step_foreground">
-        <div class="epi_foreground">
-          <h3>Seccion {index + 1}</h3>
-          <p>Deportistas masculinos</p>
-        </div>
-      </section>
-      <section class="step_foreground">
-        <div class="epi_foreground">
-          <h3>Seccion {index + 1}</h3>
-          <p>Deportistas americanos</p>
-        </div>
-      </section>
-    </div>
-  </Scroller>
 
   <div class="lorem_ipsum">
     <Loremipsum />
@@ -289,7 +267,7 @@
   
 
   <!-- Segundo scroller -->
-  <Scroller
+  <!--<Scroller
     top={top2}
     threshold={threshold2}
     bottom={bottom2}
@@ -322,7 +300,7 @@
         </div>
       </section>
     </div>
-  </Scroller>
+  </Scroller>-->
 </main>
 
 <div class="lorem_ipsum">
@@ -334,13 +312,24 @@
   @import url('https://fonts.googleapis.com/css2?family=Gentium+Plus:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
   :global(body) {
-    background-color: black;
+    background-color: blue;
   }
 
   * {
     font-family: "VT323", monospace;
     color: white;
   }
+
+  .centered-chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 463px;
+    width: 100%;
+    color: #fff;
+    margin: 0 auto;
+}
+
 
   .header {
     display: flex;
@@ -374,7 +363,7 @@
   height: 10px;
   margin-left: 5px;
   border-radius: 50%;
-  background-color: #000; /* Cambia el color según tus necesidades */
+  background-color: #fff; /* Cambia el color según tus necesidades */
   animation: blink 1s infinite;
 }
 
