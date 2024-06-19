@@ -1,4 +1,5 @@
 <script>
+
   import Scroller from "@sveltejs/svelte-scroller"
   import {onMount} from "svelte"
   import * as d3 from "d3"
@@ -6,6 +7,7 @@
   import Medallero from "./components/Medallero.svelte"
   import DebugScroller from "./components/DebugScroller.svelte"
   import Loremipsum from "./components/Loremipsum.svelte"
+  import Radar from "./components/Radar.svelte"
 
   /* Variables para la data del medallero */
   let deportistas = []
@@ -29,15 +31,80 @@
   let threshold2 = 0.5
   let bottom2 = 0.9
 
+  let texto_Trabajo = "Por el momento la IA es una herramienta, no un reemplazo. Es cierto que algunas tareas basicas las puede hacer una IA en lugar de un humano, pero tareas que requieran una capacidad de anlisis y pensamiento que la IA todavia no tiene, siguen siendo responsabilidad de los humanos. ¿Vos que pensas?";
+
+  let texto_UsoCotidiano = "La IA inicialmente tenia fines exclusivamente cientificos y de investigación, sin embargo con la salida de CHat-GPT uno de los primeros modelos de IA disponibles para todo publico, comenzo una tendencia de democratizar el acceso a la IA. ¿Vos cuanto la usas durante la semana?";
+
+  let texto_Lenguaje = "Chat-GPT es una inteligencia artificial creada por la empresa OpenIA, haciendola abierta al publico en el año 2021. Esta herramienta es una de las primeras IA's en estar abiertas para todo el publico. Sus aplicaciones diversas, desde escribir ensayos hasta desarrollo de aplicaciones y crear imagenes a partir de texto. Su imapcto es a nivel mundial, tanto que FALTA."
+
   let ultimo_id = null;
-  let respuestas_por_pregunta = [["si1", "no1"], ["si2", "no2"], ["si3", "no3"]];
+  let respuestas_por_pregunta = [["Sí", "No"], ["Mucho", "No se"], ["si3", "no3"]];
   let tematicas = {
-    "Trabajo": ["pregunta 1-trabajo", "pregunta 2-trabajo", "pregunta 3-trabajo"],
-    "Uso cotidiano": ["pregunta 1-uso cotidiano", "pregunta 2-uso cotidiano"],
-    "Lenguajes": ["pregunta 1-lenguaje", "pregunta 2-lenguaje", "pregunta 3-lenguaje"]
+    "Trabajo": [["¿Me voy a quedar sin empleo a causa de la IA?", "Me gustaria saber como va a afectar el avance de la IA al empleo a nivel mundial.", texto_Trabajo]],
+    "Uso cotidiano": [["¿Que tan seguido usas la IA?", "Qusiera saber si es sano usar la IA para todo o debemos abstenernos en algun sentido.", texto_UsoCotidiano], ["pregunta 2-uso cotidiano", "vvv", "fefef"]],
+    "Lenguajes": [["¿Conoces Chat-GPT? - ¿Lo usas?", "¿Que es Chat-GPT? ¿Por que todos hablan de él?", texto_Lenguaje], ["pregunta 2-lenguaje", "ggg"], ["pregunta 3-lenguaje", "nnn"]]
   }
 
-  let chat = []
+  let respuestas_por_pregunta2 = {
+    "Trabajo": {
+      "¿Me voy a quedar sin empleo a causa de la IA?": {
+        "Si, definitivamente": "todos concuerdan con vos",
+        "No, para nada": "nadie concuerda con vos"
+      },
+    },
+    "Uso cotidiano": {
+      "¿Que tan seguido usas la IA?": {
+        "Mucho, no habia vida antes de la IA": "muchos piensan como vos",
+        "Poco, solo cuando lo considero absolutamente necesario": "pocos concuerdan",
+        "Nada, no confio en la IA": "vos y alguien más coinciden"
+      }
+    },
+    "Lenguaje": {
+      "¿Conoces Chat-GPT? - ¿Lo usas?": {
+        "Lo conozco y lo uso a menudo": "No sos el unico, desde que salio su popularidad fue en aumento sin descanso.",
+        "Lo conozco pero no lo uso": "No todos son como vos, muchos ya estan inmersos en el uso de la IA en su vida diaria.",
+        "No": "Raro, te lo presento: https://chatgpt.com/"
+      }
+    }
+  }
+
+  let tematicas_mensajes = {
+    "Trabajo": ["¿Como afecta el surgimiento de la IA al trabajo de las personas?", "En esta sección discutiremos si la IA es un enemigo para el empleo o más bien es un amigo."],
+    "Uso cotidiano": ["¿La IA sigue siendo algo secreto y exclusivo, o ahora todos la tienen al alcance de sus manos?", "¿Se usa en exceso la IA? ¿Estamos abusando de sus beneficios? Estas son algunas preguntas que responderemos en esta sección."],
+    "Lenguajes": ["¿Que tipos de IA existe? y ¿Cualés son las más usadas?", "Hay una amplia variedad de IA's, las cuales se usan para diferentes propositos. A continuación analizaremos veremos algunas de ellas."]
+  }
+
+  let texto1 = "Hola! Este es un chat que va a ser tu guia para la pagina web. Los pasos son simples: elige una tematica, selecciona una pregunta de ese tema, contestala y descubre si la mayoria concuerda con vos o te diferencias de los demas.";
+  let index_actual = 0;
+
+  let chat = [
+    { mensaje: "", tipo: 1},
+    { mensaje: "", tipo: 0},
+    { mensaje: "", tipo: 1},
+    { mensaje: "", tipo: 0},
+    { mensaje: "", tipo: 1},
+    { mensaje: "", tipo: 0},
+    { mensaje: "", tipo: 1},
+    { mensaje: "", tipo: 0},
+    { mensaje: "", tipo: 1},
+    { mensaje: "", tipo: 0},
+    { mensaje: "", tipo: 1},
+    { mensaje: "", tipo: 0},
+    { mensaje: "", tipo: 1},
+    { mensaje: "", tipo: 0},
+    { mensaje: "", tipo: 1},
+    { mensaje: "", tipo: 0},
+    { mensaje: "", tipo: 1},
+    { mensaje: "", tipo: 0},
+    { mensaje: "", tipo: 1},
+    { mensaje: "", tipo: 0},
+    { mensaje: "", tipo: 1},
+    { mensaje: "", tipo: 0},
+    { mensaje: "", tipo: 1},
+    { mensaje: "", tipo: 0}
+  ]
+
+  let delay_global = 2000;
 
 
   /* Charts */
@@ -52,6 +119,8 @@
       deportistas = data
       filteredDeportistas = deportistas
     })
+    mostrar_texto(texto1, 0);
+    delayed_action(5000, enable_buttons, "btn-tematica");
   })
 
   $: {
@@ -74,118 +143,118 @@
       default:
         filteredDeportistas = deportistas
     }
-    console.log(filteredDeportistas)
   }
 
-  function ChangeOption(id) {
-    if(id == 0){
-      id = "boton0";
-    }
-    else if (id == 1){
-      id = "boton1";
-    }
-    else if(id == 2){
-      id = "boton2";
-    }
-    else{
-      id = "boton3";
-    }
-    if (ultimo_id != null) {
-      let boton_ultimo = document.getElementById("active");
-      boton_ultimo.id = ultimo_id;
-    }
-    if (id == ultimo_id) {
-      ultimo_id = null;
-    } else {
-      const boton_id = document.getElementById(id);
-      ultimo_id = boton_id.id;
-      boton_id.id = "active";
-    }
+  function enable_buttons(name){
+    let class_name = "."+name;
+    let botones = document.querySelectorAll(class_name);
+    botones.forEach(function(boton){
+      boton.disabled = false;
+    });
   }
 
-  function add_span() {
-      // Crear el span y agregarlo al div.chat
-      var typingIndicator = document.createElement("span");
-      typingIndicator.id = "typing-indicator";
-      
-      var chatDiv = document.querySelector(".mensaje-usuario.chat");
-      chatDiv.appendChild(typingIndicator);
-      console.log(chatDiv);
+  function delayed_action(delay, funcion_a_ejecutar, ...args){
+    setTimeout(function() {
+      funcion_a_ejecutar(...args);
+    }, delay)
+  }
+  
+  function mostrar_graficos(tematica, index){
+
+    let mensaje_id = "mensaje-"+index;
+    let mensaje = document.getElementById(mensaje_id);
+
+    var radarDiv = document.createElement("div");
+    radarDiv.className = "grafico-Trabajo";
+    radarDiv.id = "radar";
+    radarDiv.style.display = "flex";
+    radarDiv.style.justifyContent = "start";
+    
+    // Crear el elemento Radar y agregarlo al nuevo div
+    new Radar({
+      target: radarDiv
+    });
+    
+    
+    // Agregar el nuevo div al elemento existente en el DOM
+    mensaje.appendChild(radarDiv);
+    let class_name = ".grafico-"+tematica;
+    /*let graficos = document.querySelectorAll(class_name);
+    console.log("graficos", class_name, graficos);
+    graficos.forEach(function(grafico){
+      grafico.style.display = "flex";
+    })*/
   }
 
+  var speed = 10;
   var i = 0;
-  var speed = 50;
-  function typeWrite(texto_respuesta){
+
+  function typeWrite(texto_respuesta, index){
+    let typing_id = "typing-indicator-"+index;
+
     if(i < texto_respuesta.length){
-      document.getElementById("texto-respuesta").innerHTML += texto_respuesta.charAt(i);
+      let name_id = "texto-respuesta-"+index
+      document.getElementById(name_id).innerHTML += texto_respuesta.charAt(i);
       i++;
-      
-      let typingIndicator = document.getElementById("typing-indicator");
-      console.log("texto typing", i, typingIndicator);
-      let textoRespuesta = document.getElementById("texto-respuesta");
-      console.log("texto respuesta", i, textoRespuesta);
+      let typingIndicator = document.getElementById(typing_id);
+      let textoRespuesta = document.getElementById(name_id);
       textoRespuesta.appendChild(typingIndicator);
-      typingIndicator.style.display = "inline-block";
 
 
       setTimeout(function(){
-        typeWrite(texto_respuesta);
+        typeWrite(texto_respuesta, index);
       }, speed);
     }
     else{
-      document.getElementById("typing-indicator").style.display = "none";
+      document.getElementById(typing_id).style.display = "none";
     }
   }
 
-  function mostrar_texto(texto, tipo){
-    chat = [...chat, [texto, tipo]];
-    console.log(chat);
-  }
 
-
-  function mostrar_texto2(opcion){
-
+  function mostrar_texto(mensaje, index){
+    //chat = [...chat, {mensaje, tipo}];
+    let mensaje_id = "mensaje-"+index;
     i = 0;
-    var chat_answer = document.querySelector(".chat");
-    chat_answer.style.display = "flex";
+    document.getElementById(mensaje_id).style.display = "flex";
+    document.getElementById(mensaje_id).scrollIntoView({behaviour: "smooth"});
+    typeWrite(mensaje, index);
+    index_actual = index_actual + 1;
 
-    document.getElementById("texto-respuesta").innerHTML = "";
-
-    add_span();
-    document.getElementById("typing-indicator").style.display = "inline-block";
-    console.log("segundo", document.getElementById("texto-respuesta"));
-
-    if(opcion == 0){
-      typeWrite("Hola! Este es un chat que va a ser tu guia para la pagina web. Elige una pregunta, contestala y descubre si el resto opina igual que vos.");
-    }
-    else if(opcion == 1){
-      typeWrite("hola 1");
-    }
-    else if(opcion == 2){
-      typeWrite("hola 2");
-    }
-    else{
-      typeWrite("hola 3");
-    }
-    ChangeOption(opcion);
   }
 
-  function mostrar_botones(boton_tocado, num_div_botones){
-    let id_boton;
-    if(boton_tocado == 0){
-      id_boton = "boton"+boton_tocado
-      let botones_opciones = document.getElementById("divbotones1");
-      console.log(botones_opciones);
-      botones_opciones.style.display = "flex";
+  function mostrar_botones(type_button_touched, tematica, index, id_button_touched){
+    if(type_button_touched == "reinicio-tematicas"){
+      let botones_tematica = document.querySelectorAll(".botones-tematicas");
+      botones_tematica.forEach(function(button){
+        button.style.display = "flex";
+      })
     }
-    else{
-      id_boton = "divbotones"+num_div_botones;
-      let id_name = "respuestas"+boton_tocado;
-      let respuestas = document.getElementById(id_name);
-      respuestas.style.display = "flex";
+    else if(type_button_touched == "Tematica"){
+      let id_botones = "botones-preguntas-"+index
+      let botones_preguntas_tematica = document.getElementById(id_botones);
+      botones_preguntas_tematica.style.display = "flex";
     }
-    let boton_tocado_element = document.getElementById(id_boton);
-    boton_tocado_element.style.display = "none";
+    else if(type_button_touched == "Preguntas"){
+      console.log(index, tematica, "botones preguntas");
+      let id_botones = "respuestas-"+index+"-"+tematica
+      let botones_preguntas_tematica = document.getElementById(id_botones);
+      botones_preguntas_tematica.style.display = "flex";
+    }
+    let class_boton_touched = "."+id_button_touched;
+    let button_touched_div = document.querySelectorAll(class_boton_touched);
+    button_touched_div.forEach(function(button){
+      button.style.display = "none";
+    })
+  }
+
+  function reinicio_preguntas(){
+    let reinicio_div = document.getElementById("reinicio-preguntas");
+    reinicio_div.style.display = "flex";
+    
+    let botones_respuesta = document.querySelectorAll(".opciones-respuestas");
+    botones_respuesta.forEach(function(button){
+      button.style.display = "none";
+    })
   }
 
 </script>
@@ -198,67 +267,111 @@
     </h3>
     <p class="bajada">Explorando que opina la gente sobre la IA</p>
     
-    {#each chat as {mensaje, tipo}}
-    <p>{mensaje}</p>
+    {#each chat as {mensaje, tipo},index}
       {#if tipo == 0}
-        <div class="mensaje-usuario">
-          <p>{mensaje}</p>
+        <div class="mensaje-usuario" id="mensaje-{index}" style="display: none;">
+          <p id="texto-respuesta-{index}">
+            <span class="typing-indicator" id="typing-indicator-{index}"></span>
+          </p>
         </div>
       
       {:else}
-      <div class="mensaje-usuario chat">
-        <p>{mensaje}</p>
+      <div class="mensaje-usuario chat" id="mensaje-{index}" style="display: none;">
+        <p id="texto-respuesta-{index}">
+          <span class="typing-indicator" id="typing-indicator-{index}"></span>
+        </p>
+        
       </div>
       {/if}
     {/each}
-
-    <div>
-      <input class="boton-inicio" id="boton0" type="button" value="Empezar el chat" on:click={() => {
-        mostrar_botones(0, 0);
-        mostrar_texto("ssss", 1);
-        }}>
-      <div style="display: flex;">
-        <div id="divbotones1" style="display: none;">
-          {#each Object.entries(tematicas) as [tematica, preguntas], i}
-            <input class="botones-opciones" id="boton{i}" type="button" value={tematica} on:click={() => {
-              mostrar_botones(i, 1);
-              mostrar_texto("aaa", 0);
-            }}>
-          {/each}
-        </div>
-      </div>
-      <div id="divbotones1" style="display: none;">
-        <input class="botones-opciones" id="boton1" type="button" value="¿Conoces Chat-Gpt? Si lo conoces, ¿que tan seguido lo usas?" on:click={() => {
-          mostrar_botones(1, 1);
-          mostrar_texto("bbb", 0);
-          }}>
-        <input class="botones-opciones" id="boton2" type="button" value="Opcion 2" on:click={() => {
-          mostrar_botones(2, 1);
-          mostrar_texto("ccc", 0);
-          }}>
-        <input class="botones-opciones" id="boton3" type="button" value="Opcion 3" on:click={() => {
-          mostrar_botones(3, 1);
-          mostrar_texto("ddd", 0);
-          }}>
-      </div>
-      <div style="display: flex;">
-        {#each respuestas_por_pregunta as respuestas, i}
-          <div id="respuestas{i+1}" style="display: none;">
-            {#each respuestas as respuesta_i, j}
-              <p>{i}</p>
-              <input class="botones-respuesta" id="boton{i}" type="button" value="{respuesta_i}" on:click={() => mostrar_texto(i)}>
-            {/each}
-          </div>
-        {/each}
-      </div>
-    </div>
+      
   </div>
 
   <!-- Primer scroller -->
-    <div>
+    <!--<div>
       <div class="centered-chart-container">
         <script type="text/javascript" defer src="https://datawrapper.dwcdn.net/FgbkA/embed.js?v=3" charset="utf-8"></script><noscript><img src="https://datawrapper.dwcdn.net/FgbkA/full.png" alt="" /></noscript>
       </div>
+    </div>-->
+
+    <div class="container">
+      <div class="botones">
+        <div style="display: flex;">
+          {#each Object.entries(tematicas) as [tematica, preguntas], index}
+            <div style="display: none;" class="botones-preguntas" id="botones-preguntas-{index}">
+              {#each preguntas as [pregunta, texto1, texto2], index_pregunta}
+                  <input class="botones-opciones btn-preguntas" type="button" value={pregunta} on:click={() => {
+                    mostrar_botones("Preguntas", tematica, index_pregunta, "botones-preguntas");
+                    mostrar_texto(texto1, index_actual);
+                    delayed_action(delay_global, mostrar_texto, texto2, index_actual);        
+                    delayed_action(delay_global + 6000, mostrar_graficos, tematica, index_actual);      
+                  }} disabled>
+              {/each}
+            </div>
+            <div style="display: flex;" class="botones-tematicas">
+              <input class="botones-opciones btn-tematica" type="button" value={tematica} on:click={() => {
+                mostrar_botones("Tematica", tematica, index, "botones-tematicas");
+                mostrar_texto(tematicas_mensajes[tematica][0], index_actual);
+                delayed_action(delay_global, mostrar_texto, tematicas_mensajes[tematica][1], index_actual);
+                delayed_action(4000, enable_buttons, "btn-preguntas");
+              }} disabled>
+            </div>
+          {/each}
+        </div>
+        
+        <div style="display: flex;">
+          {#each respuestas_por_pregunta as respuestas, i}
+            <div id="respuestas{i+1}" style="display: none;" class="botones-respuestas">
+              {#each respuestas as respuesta_i}
+                <input class="botones-opciones" type="button" value="{respuesta_i}" on:click={() => {
+                  mostrar_texto("respuesta si o no", index_actual);
+                  delayed_action(delay_global, mostrar_texto, "asdsa", index_actual);
+                  delayed_action(delay_global, reinicio_preguntas);
+                }}>
+              {/each}
+            </div>
+          {/each}
+        </div>
+
+        <div style="display: flex;">
+          {#each Object.entries(respuestas_por_pregunta2) as [tematica, preguntas]}
+          <div>
+            {#each Object.entries(preguntas) as [pregunta, opciones], nro_pregunta}
+            <div style="display: none;" id="respuestas-{nro_pregunta}-{tematica}" class="opciones-respuestas">
+              {#each Object.entries(opciones) as [opcion, respuesta]}
+              <input class="botones-opciones" type="button" value="{opcion}" on:click={() => {
+                mostrar_texto(opcion, index_actual);
+                delayed_action(delay_global, mostrar_texto, respuesta, index_actual);
+                delayed_action(delay_global, reinicio_preguntas);
+              }}>
+              {/each}  
+            </div>
+            {/each}
+          </div>
+          {/each}
+        </div>
+
+        <div style="display: none;" id="reinicio-preguntas">
+          <input type="button" class="botones-opciones" value="Otra categoria" on:click={() => {
+            delayed_action(0, mostrar_botones, "reinicio-tematicas", 0, "botones-respuestas");
+            document.getElementById("reinicio-preguntas").style.display = "none";
+          }}>
+          <input type="button" class="botones-opciones" value="Más preguntas trabajo" on:click={() => {
+            delayed_action(delay_global, mostrar_botones, "Tematica", "Trabajo", 0, "botones-respuestas");
+            document.getElementById("reinicio-preguntas").style.display = "none";
+          }}>
+          <input type="button" class="botones-opciones" value="Más preguntas uso cotidiano" on:click={() => {
+            delayed_action(delay_global, mostrar_botones, "Tematica", "Uso cotidiano", 1, "botones-respuestas");
+            document.getElementById("reinicio-preguntas").style.display = "none";
+          }}>
+          <input type="button" class="botones-opciones" value="Más preguntas lenguaje" on:click={() => {
+            delayed_action(delay_global, mostrar_botones, "Tematica", "Lenguaje", 2, "botones-respuestas");
+            document.getElementById("reinicio-preguntas").style.display = "none";
+          }}>
+        </div>
+
+      </div>
+
     </div>
     <div>
         <div class="centered-chart-container">
@@ -266,9 +379,7 @@
           </div>
     </div>  
 
-  <div class="lorem_ipsum">
-    <Loremipsum />
-  </div>
+    
   
 
   <!-- Segundo scroller -->
@@ -308,21 +419,22 @@
   </Scroller>-->
 </main>
 
-<div class="lorem_ipsum">
-  <Loremipsum />
-</div>
-
 <style>
   @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Gentium+Plus:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
   :global(body) {
-    background-color: blue;
+    background-color: black;
   }
 
   * {
     font-family: "VT323", monospace;
     color: white;
+  }
+
+  input{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
   }
 
   .centered-chart-container {
@@ -362,7 +474,7 @@
     display: block;
   }
 
-  #typing-indicator {
+  .typing-indicator {
   display: inline-block;
   width: 10px;
   height: 10px;
@@ -378,6 +490,13 @@
   100% { opacity: 1; }
 }
 
+  .botones{
+    display: flex;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+  }
+
 
   .boton-inicio{
     width: fit-content;
@@ -389,6 +508,7 @@
 
   .botones-opciones{
     width: fit-content;
+    min-width: 100px;
     height: 50px;
     color: black;
     border-radius: 5px;
@@ -399,7 +519,6 @@
     width: 100px;
     height: 50px;
     color: black;
-    background-color: red;
     border-radius: 5px;
     font-size: large;
   }
@@ -419,17 +538,19 @@
     background-color: grey;
     width: 200px;
     align-self: flex-end;
-    height: 50px;
+    height: fit-content;
   }
   
   .chat{
     border-radius: 20px;
     padding-left: 10px;
     padding-right: 10px;
-    background-color: grey;
-    width: 200px;
+    margin-bottom: 20px;
+    background-color: black;
+    width: fit-content;
     align-self: flex-start;
-    display: none;
+    display: flex;
+    flex-direction: column;
     height: fit-content;
   }
   
