@@ -7,6 +7,7 @@
   import DebugScroller from "./components/DebugScroller.svelte";
   import Loremipsum from "./components/Loremipsum.svelte";
   import Radar from "./components/Radar.svelte";
+  import Mapa from "./components/Mapa.svelte"
 
   /* Variables para la data del medallero */
   let deportistas = [];
@@ -160,7 +161,7 @@
       filteredDeportistas = deportistas;
     });
     mostrar_texto(texto1, 0);
-    delayed_action(5000, enable_buttons, "btn-tematica");
+    delayed_action(8000, enable_buttons, "btn-tematica");
   });
 
   $: {
@@ -203,19 +204,29 @@
     let mensaje_id = "mensaje-" + index;
     let mensaje = document.getElementById(mensaje_id);
 
-    var radarDiv = document.createElement("div");
-    radarDiv.className = "grafico-Trabajo";
-    radarDiv.id = "radar";
-    radarDiv.style.display = "flex";
-    radarDiv.style.justifyContent = "start";
+    var DivGrafico = document.createElement("div");
+    DivGrafico.className = "grafico";
+    DivGrafico.style.display = "flex";
+    DivGrafico.style.justifyContent = "start";
+
+    if(tematica == "Trabajo"){
+      new Radar({
+      target: DivGrafico,
+    });
+    }
+    else if(tematica == "Uso cotidiano"){
+      DivGrafico.style.height = "1000px";
+      DivGrafico.style.width = "800px";
+      new Mapa({
+        target: DivGrafico
+      })
+    }
 
     // Crear el elemento Radar y agregarlo al nuevo div
-    new Radar({
-      target: radarDiv,
-    });
 
     // Agregar el nuevo div al elemento existente en el DOM
-    mensaje.appendChild(radarDiv);
+    mensaje.appendChild(DivGrafico);
+    mensaje.scrollIntoView({ behaviour: "smooth" });
     let class_name = ".grafico-" + tematica;
     /*let graficos = document.querySelectorAll(class_name);
     console.log("graficos", class_name, graficos);
@@ -223,6 +234,7 @@
       grafico.style.display = "flex";
     })*/
   }
+  
   var i = 0;
 
   function typeWrite(texto_respuesta, index) {
@@ -366,6 +378,7 @@
                     tematica,
                     index_actual
                   );
+                  delayed_action(10000, enable_buttons, "btn-opciones");
                 }}
                 disabled
               />
@@ -390,7 +403,7 @@
                   tematicas_mensajes[tematica][1],
                   index_actual
                 );
-                delayed_action(4000, enable_buttons, "btn-preguntas");
+                delayed_action(6500, enable_buttons, "btn-preguntas");
               }}
               disabled
             />
@@ -437,7 +450,7 @@
               >
                 {#each Object.entries(opciones) as [opcion, respuesta]}
                   <input
-                    class="botones-opciones"
+                    class="botones-opciones btn-opciones"
                     type="button"
                     value={opcion}
                     on:click={() => {
@@ -450,7 +463,7 @@
                       );
                       delayed_action(delay_global, reinicio_preguntas);
                     }}
-                  />
+                  disabled />
                 {/each}
               </div>
             {/each}
@@ -570,7 +583,7 @@
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,700;1,700&display=swap");
   :global(body) {
-    background-color: black;
+    background-color: #202021;
     /*font-family: "Roboto Mono", monospace;*/
     font-optical-sizing: auto;
     font-style: normal;
@@ -650,7 +663,7 @@
   .boton-inicio {
     width: fit-content;
     height: 50px;
-    color: black;
+    color: #202021;
     border-radius: 5px;
     font-size: large;
   }
@@ -659,7 +672,7 @@
     width: fit-content;
     min-width: 100px;
     height: 50px;
-    color: black;
+    color: #202021;
     border-radius: 5px;
     font-size: large;
   }
@@ -667,7 +680,7 @@
   .botones-respuesta {
     width: 100px;
     height: 50px;
-    color: black;
+    color: #202021;
     border-radius: 5px;
     font-size: large;
   }
@@ -686,7 +699,7 @@
     padding-right: 10px;
     margin-bottom: 20px;
     margin-right: 50px;
-    background-color: grey;
+    background-color: #2E2F2E;
     width: fit-content;
     align-self: flex-end;
     height: fit-content;
@@ -698,7 +711,7 @@
     padding-left: 50px;
     padding-right: 10px;
     margin-bottom: 20px;
-    background-color: black;
+    background-color: #202021;
     width: 900px;
     align-self: flex-start;
     display: flex;
