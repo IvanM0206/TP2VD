@@ -36,10 +36,12 @@
       }
     }
   });
+
+  export let p = 0;
 </script>
 
 <main>
-  <div class="radar"></div>
+  <div class="radar" style="--p:{p}"></div>
 </main>
 
 <style>
@@ -55,9 +57,17 @@
     place-items: center;
   }
 
+  @property --p {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+  }
+
   .radar {
-    --size: 450px;
+    --size: 400px;
     --color: #15fcd8;
+    --color-inside: rgb(21, 252, 216, 0.05);
+    --p: 180;
 
     width: var(--size);
     height: var(--size);
@@ -79,10 +89,10 @@
       ),
       /* 3) radar */
         radial-gradient(
-          transparent 0% 25%,
-          var(--color) 25.5% 25.75%,
+          transparent 10% 25%,
+          var(--color-inside) 10% 25.75%,
           transparent 26% 50%,
-          var(--color) 50.5% 50.75%,
+          var(--color-inside) 50.5% 50.75%,
           transparent 51% 75%,
           var(--color) 75.5% 75.75%,
           transparent 76% 100%
@@ -122,20 +132,18 @@
     height: 100%;
     border-radius: 100%;
     background: conic-gradient(
-      transparent 0,
-      var(--radar-color) 0turn 0.57turn,
-      transparent 0.6turn 1turn
+      transparent calc(var(--p) * 1deg),
+      var(--radar-color) calc(var(--p) * 1deg),
+      var(--radar-color) calc(var(--p) * 1deg + 0.6turn),
+      transparent calc(var(--p) * 1deg + 0.6turn + 1turn)
     );
     mix-blend-mode: plus-lighter;
-    animation: move-radar 1s linear;
+    animation: move-radar 2s linear infinite;
   }
 
   @keyframes move-radar {
     from {
-      rotate: -0.125turn;
-    }
-    to {
-      rotate: 0.875turn;
+      --p: 360;
     }
   }
 
@@ -152,27 +160,6 @@
   @keyframes disappear {
     to {
       opacity: 0;
-    }
-  }
-
-  .mute {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-  }
-
-  .mute {
-    cursor: pointer;
-
-    & input {
-      display: none;
-    }
-    & img {
-      width: 48px;
-    }
-    & input:checked ~ .on,
-    & input:not(:checked) ~ .off {
-      display: none;
     }
   }
 </style>

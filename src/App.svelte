@@ -92,7 +92,7 @@
     ],
   };
 
-  let texto1 =
+  let textoBienvenida =
     "Hola! Este es un chat que va a ser tu guia para la pagina web. Los pasos son simples: elige una tematica, selecciona una pregunta de ese tema, contestala y descubre si la mayoria concuerda con vos o te diferencias de los demas.";
   let index_actual = 0;
 
@@ -123,14 +123,18 @@
     { mensaje: "", tipo: 0 },
   ];
 
-  var speed = 30;
+  var speed = 10;
   let delay_global = (speed + 5) * 100;
   let buttons_are_active = false;
   let image_buttons = "../src/assets/Arrow_open.svg";
 
   onMount(() => {
-    mostrar_texto(texto1, 0);
-    delayed_action(8000, enable_buttons, "btn-tematica");
+    mostrar_texto(textoBienvenida, 0);
+    delayed_action(
+      (speed + 2) * textoBienvenida.length,
+      enable_buttons,
+      "btn-tematica"
+    );
   });
 
   function enable_buttons(name) {
@@ -153,16 +157,16 @@
 
     var DivGrafico = document.createElement("div");
     DivGrafico.className = "grafico";
-    DivGrafico.style.display = "flex";
     DivGrafico.style.justifyContent = "start";
 
     if (tematica == "Trabajo") {
       new Radar({
         target: DivGrafico,
+        props: { p: 270 },
       });
     } else if (tematica == "Uso cotidiano") {
-      DivGrafico.style.height = "1000px";
-      DivGrafico.style.width = "800px";
+      DivGrafico.style.height = "100%";
+      DivGrafico.style.width = "100%";
       new Mapa({
         target: DivGrafico,
       });
@@ -289,18 +293,23 @@
             <div
               class="mensaje-usuario chat"
               id="mensaje-{index}"
-              style="display: none; flex-direction: row; align-items: flex-start;"
+              style="display: none; flex-direction: column; "
             >
-              <img
-                src="../src/assets/compass.svg"
-                alt="Logo"
-                width="20px"
-                style="margin-top: 25px"
-              />
-              <p id="texto-respuesta-{index}" style="margin-left: 10px;">
-                <span class="typing-indicator" id="typing-indicator-{index}"
-                ></span>
-              </p>
+              <div
+                class="mensaje-usuario chat"
+                style="flex-direction: row; align-items: flex-start; "
+              >
+                <img
+                  src="../src/assets/compass.svg"
+                  alt="Logo"
+                  width="20px"
+                  style="margin-top: 25px"
+                />
+                <p id="texto-respuesta-{index}" style="margin-left: 10px;">
+                  <span class="typing-indicator" id="typing-indicator-{index}"
+                  ></span>
+                </p>
+              </div>
             </div>
           </div>
         {/if}
@@ -330,18 +339,23 @@
                       );
                       mostrar_texto(texto1, index_actual);
                       delayed_action(
-                        delay_global,
+                        (speed + 2) * texto1.length,
                         mostrar_texto,
                         texto2,
                         index_actual
                       );
                       delayed_action(
-                        delay_global + 6000,
+                        (speed + 2) * texto1.length +
+                          (speed + 2) * texto2.length,
                         mostrar_graficos,
                         tematica,
                         index_actual
                       );
-                      delayed_action(10000, enable_buttons, "btn-opciones");
+                      delayed_action(
+                        (speed + 2) * (texto1.length + texto2.length),
+                        enable_buttons,
+                        "btn-opciones"
+                      );
                     }}
                     disabled
                   />
@@ -364,12 +378,18 @@
                       index_actual
                     );
                     delayed_action(
-                      delay_global,
+                      (speed + 2) * tematicas_mensajes[tematica][0].length,
                       mostrar_texto,
                       tematicas_mensajes[tematica][1],
                       index_actual
                     );
-                    delayed_action(6500, enable_buttons, "btn-preguntas");
+                    delayed_action(
+                      (speed + 2) *
+                        (tematicas_mensajes[tematica][0].length +
+                          tematicas_mensajes[tematica][1].length),
+                      enable_buttons,
+                      "btn-preguntas"
+                    );
                   }}
                   disabled
                 />
@@ -422,12 +442,15 @@
                         on:click={() => {
                           mostrar_texto(opcion, index_actual);
                           delayed_action(
-                            delay_global,
+                            (speed + 2) * opcion.length,
                             mostrar_texto,
                             respuesta,
                             index_actual
                           );
-                          delayed_action(delay_global, reinicio_preguntas);
+                          delayed_action(
+                            (speed + 2) * (opcion.length + respuesta.length),
+                            reinicio_preguntas
+                          );
                         }}
                         disabled
                       />
@@ -651,7 +674,6 @@
 
   .chat {
     border-radius: 20px;
-    padding-left: 50px;
     padding-right: 10px;
     margin-bottom: 20px;
     background-color: #202021;
