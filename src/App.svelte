@@ -88,7 +88,7 @@
         "Nada, no confio en la IA": "vos y alguien más coinciden",
       },
     },
-    Lenguaje: {
+    Lenguajes: {
       "¿Conoces Chat-GPT? - ¿Lo usas?": {
         "Lo conozco y lo uso a menudo":
           "No sos el unico, desde que salio su popularidad fue en aumento sin descanso.",
@@ -147,6 +147,8 @@
 
   var speed = 30;
   let delay_global = (speed + 5) * 100;
+  let buttons_are_active = false;
+  let image_buttons = "../src/assets/Arrow_open.svg";
 
   /* Charts */
   let charts = {
@@ -303,6 +305,21 @@
       button.style.display = "none";
     });
   }
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("image-buttons").addEventListener("click", () => {
+    let button_container = document.getElementById("botones-juntos");
+    if(!buttons_are_active){
+        button_container.style.display = "flex";
+        image_buttons = "../src/assets/Arrow_close.svg";
+    }
+    else{
+      button_container.style.display = "none";
+      image_buttons = "../src/assets/Arrow_open.svg";
+    }
+    buttons_are_active = !buttons_are_active;
+  })
+  })
+
 </script>
 
 <main>
@@ -324,15 +341,19 @@
           </p>
         </div>
       {:else}
+      <div style="display: flex;" class="mensaje-usuario chat">
         <div
           class="mensaje-usuario chat"
           id="mensaje-{index}"
-          style="display: none;"
+          style="display: none; flex-direction: row; align-items: flex-start;"
         >
-          <p id="texto-respuesta-{index}">
+          <img src="../src/assets/compass.svg" alt="Logo" width="20px" style="margin-top: 25px">
+          <p id="texto-respuesta-{index}" style="margin-left: 10px;">
             <span class="typing-indicator" id="typing-indicator-{index}"></span>
           </p>
         </div>
+      </div>
+        
       {/if}
     {/each}
   </div>
@@ -345,200 +366,203 @@
     </div>-->
 
   <div class="container">
-    <div class="botones">
-      <div style="display: flex;">
-        {#each Object.entries(tematicas) as [tematica, preguntas], index}
-          <div
-            style="display: none;"
-            class="botones-preguntas"
-            id="botones-preguntas-{index}"
-          >
-            {#each preguntas as [pregunta, texto1, texto2], index_pregunta}
+    <div class="botones" id="list-buttons">
+      <img id="image-buttons" src={image_buttons} alt="Arrow">
+      <div id="botones-juntos" style="display: none;">
+        <div style="display: flex;">
+          {#each Object.entries(tematicas) as [tematica, preguntas], index}
+            <div
+              style="display: none;"
+              class="botones-preguntas"
+              id="botones-preguntas-{index}"
+            >
+              {#each preguntas as [pregunta, texto1, texto2], index_pregunta}
+                <input
+                  class="botones-opciones btn-preguntas"
+                  type="button"
+                  value={pregunta}
+                  on:click={() => {
+                    mostrar_botones(
+                      "Preguntas",
+                      tematica,
+                      index_pregunta,
+                      "botones-preguntas"
+                    );
+                    mostrar_texto(texto1, index_actual);
+                    delayed_action(
+                      delay_global,
+                      mostrar_texto,
+                      texto2,
+                      index_actual
+                    );
+                    delayed_action(
+                      delay_global + 6000,
+                      mostrar_graficos,
+                      tematica,
+                      index_actual
+                    );
+                    delayed_action(10000, enable_buttons, "btn-opciones");
+                  }}
+                  disabled
+                />
+              {/each}
+            </div>
+            <div style="display: flex;" class="botones-tematicas">
               <input
-                class="botones-opciones btn-preguntas"
+                class="botones-opciones btn-tematica"
                 type="button"
-                value={pregunta}
+                value={tematica}
                 on:click={() => {
                   mostrar_botones(
-                    "Preguntas",
+                    "Tematica",
                     tematica,
-                    index_pregunta,
-                    "botones-preguntas"
+                    index,
+                    "botones-tematicas"
                   );
-                  mostrar_texto(texto1, index_actual);
+                  mostrar_texto(tematicas_mensajes[tematica][0], index_actual);
                   delayed_action(
                     delay_global,
                     mostrar_texto,
-                    texto2,
+                    tematicas_mensajes[tematica][1],
                     index_actual
                   );
-                  delayed_action(
-                    delay_global + 6000,
-                    mostrar_graficos,
-                    tematica,
-                    index_actual
-                  );
-                  delayed_action(10000, enable_buttons, "btn-opciones");
+                  delayed_action(6500, enable_buttons, "btn-preguntas");
                 }}
                 disabled
               />
-            {/each}
-          </div>
-          <div style="display: flex;" class="botones-tematicas">
-            <input
-              class="botones-opciones btn-tematica"
-              type="button"
-              value={tematica}
-              on:click={() => {
-                mostrar_botones(
-                  "Tematica",
-                  tematica,
-                  index,
-                  "botones-tematicas"
-                );
-                mostrar_texto(tematicas_mensajes[tematica][0], index_actual);
-                delayed_action(
-                  delay_global,
-                  mostrar_texto,
-                  tematicas_mensajes[tematica][1],
-                  index_actual
-                );
-                delayed_action(6500, enable_buttons, "btn-preguntas");
-              }}
-              disabled
-            />
-          </div>
-        {/each}
-      </div>
-
-      <div style="display: flex;">
-        {#each respuestas_por_pregunta as respuestas, i}
-          <div
-            id="respuestas{i + 1}"
-            style="display: none;"
-            class="botones-respuestas"
-          >
-            {#each respuestas as respuesta_i}
-              <input
-                class="botones-opciones"
-                type="button"
-                value={respuesta_i}
-                on:click={() => {
-                  mostrar_texto("respuesta si o no", index_actual);
-                  delayed_action(
-                    delay_global,
-                    mostrar_texto,
-                    "asdsa",
-                    index_actual
-                  );
-                  delayed_action(delay_global, reinicio_preguntas);
-                }}
-              />
-            {/each}
-          </div>
-        {/each}
-      </div>
-
-      <div style="display: flex;">
-        {#each Object.entries(respuestas_por_pregunta2) as [tematica, preguntas]}
-          <div>
-            {#each Object.entries(preguntas) as [pregunta, opciones], nro_pregunta}
-              <div
-                style="display: none;"
-                id="respuestas-{nro_pregunta}-{tematica}"
-                class="opciones-respuestas"
-              >
-                {#each Object.entries(opciones) as [opcion, respuesta]}
-                  <input
-                    class="botones-opciones btn-opciones"
-                    type="button"
-                    value={opcion}
-                    on:click={() => {
-                      mostrar_texto(opcion, index_actual);
-                      delayed_action(
-                        delay_global,
-                        mostrar_texto,
-                        respuesta,
-                        index_actual
-                      );
-                      delayed_action(delay_global, reinicio_preguntas);
-                    }}
-                  disabled />
-                {/each}
-              </div>
-            {/each}
-          </div>
-        {/each}
-      </div>
-
-      <div style="display: none;" id="reinicio-preguntas">
-        <input
-          type="button"
-          class="botones-opciones"
-          value="Otra categoria"
-          on:click={() => {
-            delayed_action(
-              0,
-              mostrar_botones,
-              "reinicio-tematicas",
-              0,
-              "botones-respuestas"
-            );
-            document.getElementById("reinicio-preguntas").style.display =
-              "none";
-          }}
-        />
-        <input
-          type="button"
-          class="botones-opciones"
-          value="Más preguntas trabajo"
-          on:click={() => {
-            delayed_action(
-              delay_global,
-              mostrar_botones,
-              "Tematica",
-              "Trabajo",
-              0,
-              "botones-respuestas"
-            );
-            document.getElementById("reinicio-preguntas").style.display =
-              "none";
-          }}
-        />
-        <input
-          type="button"
-          class="botones-opciones"
-          value="Más preguntas uso cotidiano"
-          on:click={() => {
-            delayed_action(
-              delay_global,
-              mostrar_botones,
-              "Tematica",
-              "Uso cotidiano",
-              1,
-              "botones-respuestas"
-            );
-            document.getElementById("reinicio-preguntas").style.display =
-              "none";
-          }}
-        />
-        <input
-          type="button"
-          class="botones-opciones"
-          value="Más preguntas lenguaje"
-          on:click={() => {
-            delayed_action(
-              delay_global,
-              mostrar_botones,
-              "Tematica",
-              "Lenguaje",
-              2,
-              "botones-respuestas"
-            );
-            document.getElementById("reinicio-preguntas").style.display =
-              "none";
-          }}
-        />
+            </div>
+          {/each}
+        </div>
+  
+        <div style="display: flex;">
+          {#each respuestas_por_pregunta as respuestas, i}
+            <div
+              id="respuestas{i + 1}"
+              style="display: none;"
+              class="botones-respuestas"
+            >
+              {#each respuestas as respuesta_i}
+                <input
+                  class="botones-opciones"
+                  type="button"
+                  value={respuesta_i}
+                  on:click={() => {
+                    mostrar_texto("respuesta si o no", index_actual);
+                    delayed_action(
+                      delay_global,
+                      mostrar_texto,
+                      "asdsa",
+                      index_actual
+                    );
+                    delayed_action(delay_global, reinicio_preguntas);
+                  }}
+                />
+              {/each}
+            </div>
+          {/each}
+        </div>
+  
+        <div style="display: flex;">
+          {#each Object.entries(respuestas_por_pregunta2) as [tematica, preguntas]}
+            <div>
+              {#each Object.entries(preguntas) as [pregunta, opciones], nro_pregunta}
+                <div
+                  style="display: none;"
+                  id="respuestas-{nro_pregunta}-{tematica}"
+                  class="opciones-respuestas"
+                >
+                  {#each Object.entries(opciones) as [opcion, respuesta]}
+                    <input
+                      class="botones-opciones btn-opciones"
+                      type="button"
+                      value={opcion}
+                      on:click={() => {
+                        mostrar_texto(opcion, index_actual);
+                        delayed_action(
+                          delay_global,
+                          mostrar_texto,
+                          respuesta,
+                          index_actual
+                        );
+                        delayed_action(delay_global, reinicio_preguntas);
+                      }}
+                    disabled />
+                  {/each}
+                </div>
+              {/each}
+            </div>
+          {/each}
+        </div>
+  
+        <div style="display: none;" id="reinicio-preguntas">
+          <input
+            type="button"
+            class="botones-opciones"
+            value="Otra categoria"
+            on:click={() => {
+              delayed_action(
+                0,
+                mostrar_botones,
+                "reinicio-tematicas",
+                0,
+                "botones-respuestas"
+              );
+              document.getElementById("reinicio-preguntas").style.display =
+                "none";
+            }}
+          />
+          <input
+            type="button"
+            class="botones-opciones"
+            value="Más preguntas trabajo"
+            on:click={() => {
+              delayed_action(
+                delay_global,
+                mostrar_botones,
+                "Tematica",
+                "Trabajo",
+                0,
+                "botones-respuestas"
+              );
+              document.getElementById("reinicio-preguntas").style.display =
+                "none";
+            }}
+          />
+          <input
+            type="button"
+            class="botones-opciones"
+            value="Más preguntas uso cotidiano"
+            on:click={() => {
+              delayed_action(
+                delay_global,
+                mostrar_botones,
+                "Tematica",
+                "Uso cotidiano",
+                1,
+                "botones-respuestas"
+              );
+              document.getElementById("reinicio-preguntas").style.display =
+                "none";
+            }}
+          />
+          <input
+            type="button"
+            class="botones-opciones"
+            value="Más preguntas lenguaje"
+            on:click={() => {
+              delayed_action(
+                delay_global,
+                mostrar_botones,
+                "Tematica",
+                "Lenguaje",
+                2,
+                "botones-respuestas"
+              );
+              document.getElementById("reinicio-preguntas").style.display =
+                "none";
+            }}
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -593,9 +617,18 @@
       "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
       "Noto Color Emoji";
   }
+
   input {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
+  }
+
+  input:enabled{
+    cursor: pointer;
+  }
+
+  #image-buttons{
+    cursor: pointer;
   }
 
   .centered-chart-container {
