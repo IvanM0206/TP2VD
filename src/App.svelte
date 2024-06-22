@@ -7,7 +7,8 @@
   import DebugScroller from "./components/DebugScroller.svelte";
   import Loremipsum from "./components/Loremipsum.svelte";
   import Radar from "./components/Radar.svelte";
-  import Mapa from "./components/Mapa.svelte"
+  import Mapa from "./components/Mapa.svelte";
+   import Circuit from "./components/Circuit.svelte";
 
   /* Variables para la data del medallero */
   let deportistas = [];
@@ -323,12 +324,13 @@
 </script>
 
 <main>
-  <div class="header">
-    <img src="/images/header_image.svg" width="100" alt="Exploring AI" />
+  <div class="container">
+    <Circuit></Circuit>
     <h3 class="headline">
       <b>IA y Opinión Pública</b>
     </h3>
 
+  <div class="container">
     {#each chat as { mensaje, tipo }, index}
       {#if tipo == 0}
         <div
@@ -641,7 +643,7 @@
     margin: 0 auto;
   }
 
-  .header {
+  .container {
     display: flex;
     justify-content: center;
     align-items: center;
