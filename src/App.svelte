@@ -305,16 +305,7 @@
           </div>
         {/if}
       {/each}
-    </div>
 
-    <!-- Primer scroller -->
-    <!--<div>
-      <div class="centered-chart-container">
-        <script type="text/javascript" defer src="https://datawrapper.dwcdn.net/FgbkA/embed.js?v=3" charset="utf-8"></script><noscript><img src="https://datawrapper.dwcdn.net/FgbkA/full.png" alt="" /></noscript>
-      </div>
-    </div>-->
-
-    <div class="container">
       <div class="botones" id="list-buttons">
         <img id="image-buttons" src={image_buttons} alt="Arrow" />
         <div id="botones-juntos" style="display: none;">
@@ -567,6 +558,7 @@
     margin-top: 50px;
     margin-bottom: 80px;
   }
+
   .headline {
     font-family: "Roboto Mono", monospace;
     font-size: 60px;
