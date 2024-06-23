@@ -1,5 +1,5 @@
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+  /*document.addEventListener("DOMContentLoaded", function () {
     const radar = document.getElementById("radar");
 
     const data = [
@@ -35,13 +35,27 @@
           return "#000";
       }
     }
-  });
+  });*/
 
   export let p = 0;
+
+  function reglaDeTresSimple(p) {
+    let factor = 360 / 100;
+    return p * factor;
+  }
 </script>
 
 <main>
-  <div class="radar" style="--p:{p}"></div>
+  <div class="container">
+    <div class="radar" style="--p:{reglaDeTresSimple(p)}"></div>
+    <p class="text">
+      El <span class="text highlight">{p}%</span>
+      de las personas opinan como vos! y chamuyo chamuyde las personas opinan como
+      vos! y chamuyo chamuyde las personas opinan como vos! y chamuyo chamuyde las
+      personas opinan como vos! y chamuyo chamuyde las personas opinan como vos!
+      y chamuyo chamuy
+    </p>
+  </div>
 </main>
 
 <style>
@@ -108,6 +122,7 @@
       /* 1) background */ radial-gradient(#007672 0, #014f48 90%);
     position: relative;
     mix-blend-mode: difference; /* color-dodge; */
+    transform: scaleX(-1);
   }
 
   .radar::before {
@@ -161,5 +176,30 @@
     to {
       opacity: 0;
     }
+  }
+
+  .text {
+    font-size: 20px;
+    font-optical-sizing: auto;
+    font-style: normal;
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
+      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+      "Noto Color Emoji";
+    max-width: 50%;
+  }
+
+  .highlight {
+    color: #15fcd8;
+    font-weight: bold;
+    font-size: xx-large;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
   }
 </style>

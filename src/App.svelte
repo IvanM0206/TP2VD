@@ -162,7 +162,7 @@
     if (tematica == "Trabajo") {
       new Radar({
         target: DivGrafico,
-        props: { p: 270 },
+        props: { p: 60 },
       });
     } else if (tematica == "Uso cotidiano") {
       DivGrafico.style.height = "100%";
