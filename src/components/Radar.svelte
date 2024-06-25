@@ -41,7 +41,7 @@
 
   function reglaDeTresSimple(p) {
     let factor = 360 / 100;
-    return p * factor;
+    return (100 - p) * factor;
   }
 </script>
 
@@ -81,6 +81,7 @@
     --size: 400px;
     --color: #15fcd8;
     --color-inside: rgb(21, 252, 216, 0.05);
+    --color-axis: rgb(21, 252, 216, 0.2);
     --p: 180;
 
     width: var(--size);
@@ -92,13 +93,13 @@
     /* 4) guides */
       linear-gradient(
         transparent 0 49.75%,
-        var(--color) 49.75% 50%,
+        var(--color-axis) 49.75% 50%,
         transparent 50% 100%
       ),
       linear-gradient(
         to right,
         transparent 0 49.75%,
-        var(--color) 49.75% 50%,
+        var(--color-axis) 49.75% 50%,
         transparent 50% 100%
       ),
       /* 3) radar */
