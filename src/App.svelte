@@ -6,20 +6,17 @@
   import Mapa from "./components/Mapa.svelte";
   import Circuit from "./components/Circuit.svelte";
 
-  /* Variables para la data del medallero */
-  let deportistas = [];
-
   let texto_Trabajo =
-    "Por el momento la IA es una herramienta, no un reemplazo. Es cierto que algunas tareas basicas las puede hacer una IA en lugar de un humano, pero tareas que requieran una capacidad de anlisis y pensamiento que la IA todavia no tiene, siguen siendo responsabilidad de los humanos. ¿Vos que pensas?";
+    "Por el momento, se tiene a la IA como una herramienta más que como un reemplazo. Si bien es cierto que algunas tareas básicas las puede realizar en su totalidad un modelo automatizado por su cuenta, existen actividades que requieren cierta capacidad de análisis, pensamiento y empatía que estos modelos todavía no tienen, y no se sabe con exactitud si llegarán a tenerlos. Los humanos siguen siendo piezas esenciales y recursos indiscutibles para llevar a cabo muchos trabajos, pero es verdad, por otro lado, que actividades menos complejas podrían ser automatizadas y eso dejaría vulnerable a un sector de la población. ¿Vos qué pensás? ¿La inteligencia artificial va a reemplazar tu trabajo actual?";
 
   let texto_UsoCotidiano =
-    "La IA inicialmente tenia fines exclusivamente cientificos y de investigación, sin embargo con la salida de CHat-GPT uno de los primeros modelos de IA disponibles para todo publico, comenzo una tendencia de democratizar el acceso a la IA. ¿Vos cuanto la usas durante la semana?";
+    "¿Se usa en exceso la IA? ¿Se explotan sus beneficios en pos de la productividad? ¿Se utilizan en exceso  los modelos como Chat-GPT para todo tipo de tareas? La realidad es que la introducción y distribución de modelos abiertos y libres para su uso cambió el paradigma de la inteligencia artificial, antes utilizada especialmente para actividades de investigación, desarrollo o procesos esenciales en ciertas industrias (en el caso de los modelos más avanzados). En la actualidad se le dan cada vez más uso, y nació una concepción que asocia estos modelos como asistentes personales. Y vos, ¿conocías a Chat-GPT? ¿Lo usás seguido?";
 
   let texto_Lenguaje =
     "Chat-GPT es una inteligencia artificial creada por la empresa OpenIA, haciendola abierta al publico en el año 2021. Esta herramienta es una de las primeras IA's en estar abiertas para todo el publico. Sus aplicaciones diversas, desde escribir ensayos hasta desarrollo de aplicaciones y crear imagenes a partir de texto. Su imapcto es a nivel mundial, tanto que FALTA.";
 
-  let ultimo_id = null;
-  let respuestas_por_pregunta = [
+
+    let respuestas_por_pregunta = [
     ["Sí", "No"],
     ["Mucho", "No se"],
     ["si3", "no3"],
@@ -27,15 +24,15 @@
   let tematicas = {
     Trabajo: [
       [
-        "¿Me voy a quedar sin empleo a causa de la IA?",
-        "Me gustaria saber como va a afectar el avance de la IA al empleo a nivel mundial.",
+        "¿Cómo afecta el avance de la IA y los modelos de aprendizaje automáticos al mercado laboral?",
+        "¿Cómo afecta el avance de la IA y los modelos de aprendizaje automáticos al mercado laboral?",
         texto_Trabajo,
       ],
     ],
     "Uso cotidiano": [
       [
-        "¿Que tan seguido usas la IA?",
-        "Qusiera saber si es sano usar la IA para todo o debemos abstenernos en algun sentido.",
+        "¿Que tanto se usa Chat-GPT?",
+        "¿Que tanto se usa Chat-GPT?",
         texto_UsoCotidiano,
       ],
       ["pregunta 2-uso cotidiano", "vvv", "fefef"],
@@ -53,17 +50,18 @@
 
   let respuestas_por_pregunta2 = {
     Trabajo: {
-      "¿Me voy a quedar sin empleo a causa de la IA?": {
+      "¿Cómo afecta el avance de la IA y los modelos de aprendizaje automáticos al mercado laboral?": {
         "Si, definitivamente": "todos concuerdan con vos",
         "No, para nada": "nadie concuerda con vos",
       },
     },
     "Uso cotidiano": {
-      "¿Que tan seguido usas la IA?": {
-        "Mucho, no habia vida antes de la IA": "muchos piensan como vos",
-        "Poco, solo cuando lo considero absolutamente necesario":
+      "¿Que tanto se usa Chat-GPT?": {
+        "Sí, lo uso cada día.": "muchos piensan como vos",
+        "Sí, lo uso cada semana":
           "pocos concuerdan",
-        "Nada, no confio en la IA": "vos y alguien más coinciden",
+        "Sí, lo uso raramente": "mira vos",
+        "No, no tenía idea": "vos y alguien más coinciden",
       },
     },
     Lenguajes: {
@@ -79,21 +77,20 @@
 
   let tematicas_mensajes = {
     Trabajo: [
-      "¿Como afecta el surgimiento de la IA al trabajo de las personas?",
-      "En esta sección discutiremos si la IA es un enemigo para el empleo o más bien es un amigo.",
+      "¿Cómo afecta el avance de la IA y los modelos de aprendizaje automáticos al mercado laboral?",
+      "En esta sección podrás descubrir y reflexionar acerca de si la inteligencia artificial y sus avances más recientes son positivos o negativos para el empleo a nivel global.",
     ],
     "Uso cotidiano": [
-      "¿La IA sigue siendo algo secreto y exclusivo, o ahora todos la tienen al alcance de sus manos?",
-      "¿Se usa en exceso la IA? ¿Estamos abusando de sus beneficios? Estas son algunas preguntas que responderemos en esta sección.",
+      "¿Qué nivel de acceso se tiene a herramientas de inteligencia artificial sofisticadas hoy en día? ¿Es algo más bien exclusivo?",
+      "¿Se usa en exceso la IA? ¿Se explotan sus beneficios en pos de la productividad? ¿Se utilizan en exceso los modelos como Chat-GPT para todo tipo de tareas? En esta sección abarcaremos estas preguntas y más.",
     ],
     Lenguajes: [
-      "¿Que tipos de IA existe? y ¿Cualés son las más usadas?",
-      "Hay una amplia variedad de IA's, las cuales se usan para diferentes propositos. A continuación analizaremos veremos algunas de ellas.",
+      "¿Qué  tipos de modelos de  IA existen? ¿Cualés son los más usados?",
+      "En tan solo un par de años, muchos modelos de IA han logrado viralizarse y generaron fuertes discusiones por todo el mundo. Conocer estos modelos da una noción de las diferencias entre ellos.",
     ],
   };
 
-  let textoBienvenida =
-    "Hola! Este es un chat que va a ser tu guia para la pagina web. Los pasos son simples: elige una tematica, selecciona una pregunta de ese tema, contestala y descubre si la mayoria concuerda con vos o te diferencias de los demas.";
+  let textoBienvenida = "¡Hola! Este chat va a ser tu guía en el sitio web. Los pasos a seguir son simples: elegí una temática y seleccioná una pregunta para conocer más sobre diversos temas relacionados con inteligencia artificial, la perspectiva de la gente y comparar con tus opiniones.";
   let index_actual = 0;
 
   let chat = [
@@ -125,13 +122,14 @@
 
   var speed = 10;
   let delay_global = (speed + 5) * 100;
+  let delay_global2 = 1000
   let buttons_are_active = false;
   let image_buttons = "../src/assets/Arrow_open.svg";
 
   onMount(() => {
     mostrar_texto(textoBienvenida, 0);
     delayed_action(
-      (speed + 2) * textoBienvenida.length,
+      (speed + 2) * textoBienvenida.length + delay_global2,
       enable_buttons,
       "btn-tematica"
     );
@@ -339,20 +337,20 @@
                       );
                       mostrar_texto(texto1, index_actual);
                       delayed_action(
-                        (speed + 2) * texto1.length,
+                        (speed + 2) * texto1.length + delay_global2,
                         mostrar_texto,
                         texto2,
                         index_actual
                       );
                       delayed_action(
                         (speed + 2) * texto1.length +
-                          (speed + 2) * texto2.length,
+                          (speed + 2) * texto2.length + delay_global2 + 5000,
                         mostrar_graficos,
                         tematica,
                         index_actual
                       );
                       delayed_action(
-                        (speed + 2) * (texto1.length + texto2.length),
+                        (speed + 2) * (texto1.length + texto2.length) + delay_global2 + 5000,
                         enable_buttons,
                         "btn-opciones"
                       );
@@ -378,7 +376,7 @@
                       index_actual
                     );
                     delayed_action(
-                      (speed + 2) * tematicas_mensajes[tematica][0].length,
+                      (speed + 2) * tematicas_mensajes[tematica][0].length + delay_global2,
                       mostrar_texto,
                       tematicas_mensajes[tematica][1],
                       index_actual
@@ -386,7 +384,7 @@
                     delayed_action(
                       (speed + 2) *
                         (tematicas_mensajes[tematica][0].length +
-                          tematicas_mensajes[tematica][1].length),
+                          tematicas_mensajes[tematica][1].length) + delay_global2,
                       enable_buttons,
                       "btn-preguntas"
                     );
@@ -442,13 +440,13 @@
                         on:click={() => {
                           mostrar_texto(opcion, index_actual);
                           delayed_action(
-                            (speed + 2) * opcion.length,
+                            (speed + 2) * opcion.length + delay_global2,
                             mostrar_texto,
                             respuesta,
                             index_actual
                           );
                           delayed_action(
-                            (speed + 2) * (opcion.length + respuesta.length),
+                            (speed + 2) * (opcion.length + respuesta.length) + delay_global2,
                             reinicio_preguntas
                           );
                         }}
