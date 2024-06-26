@@ -145,7 +145,7 @@
   let delay_global = (speed + 5) * 100;
   let delay_global2 = 1000;
   let buttons_are_active = false;
-  let image_buttons = "../src/assets/Arrow_open.svg";
+  let image_buttons = "../src/assets/menu.svg"; //open //CAMBIO
 
   onMount(() => {
     mostrar_texto(textoBienvenida, 0);
@@ -280,10 +280,10 @@
       let button_container = document.getElementById("botones-juntos");
       if (!buttons_are_active) {
         button_container.style.display = "flex";
-        image_buttons = "../src/assets/Arrow_close.svg";
+        image_buttons = "../src/assets/menu.svg"; //close
       } else {
         button_container.style.display = "none";
-        image_buttons = "../src/assets/Arrow_open.svg";
+        image_buttons = "../src/assets/menu.svg"; //open
       }
       buttons_are_active = !buttons_are_active;
     });
@@ -337,8 +337,9 @@
         {/if}
       {/each}
 
+      <!-- BOTONES  -->
       <div class="botones" id="list-buttons">
-        <img id="image-buttons" src={image_buttons} alt="Arrow" />
+        <img id="image-buttons" src="{image_buttons}" alt="Arrow">
         <div id="botones-juntos" style="display: none;">
           <div style="display: flex;">
             {#each Object.entries(tematicas) as [tematica, preguntas], index}
@@ -416,6 +417,7 @@
             {/each}
           </div>
 
+          
           <div style="display: flex;">
             {#each Object.entries(respuestas_por_pregunta2) as [tematica, preguntas]}
               <div>
@@ -624,10 +626,11 @@
   }
 
   .botones {
-    display: flex;
+    display: inline-block; /*MODIFICADO*/
     position: fixed;
     right: 20px;
     bottom: 20px;
+    right: 310px; /*MODIFICADO*/
   }
 
   .boton-inicio {
@@ -665,12 +668,13 @@
 
   .mensaje-usuario {
     border-radius: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 1.5%;
+    padding-right: 1.5%;
     margin-bottom: 1px;
     margin-right: 50px;
     background-color: #2e2f2e;
-    width: 500px;
+    width: fit-content;
+    max-width: 80%;
     align-self: flex-end;
     height: fit-content;
     font-size: 20px;
@@ -680,7 +684,8 @@
     border-radius: 20px;
     padding-right: 10px;
     background-color: #202021;
-    width: 900px;
+    width: 1000px;
+    max-width: 95%;
     align-self: flex-start;
     display: flex;
     flex-direction: column;
@@ -719,4 +724,6 @@
     align-items: center;
     height: 100vh;
   }
+
+ 
 </style>
