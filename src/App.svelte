@@ -3,8 +3,9 @@
   import * as d3 from "d3";
 
   import Radar from "./components/Radar.svelte";
-  import Mapa from "./components/Mapa.svelte";
+  import Mapa from "./components/MapaDaily.svelte";
   import Circuit from "./components/Circuit.svelte";
+  import NetSentimentBars from "./components/NetSentimentBars.svelte";
 
   let texto_Trabajo =
     "Por el momento, se tiene a la IA como una herramienta más que como un reemplazo. Si bien es cierto que algunas tareas básicas las puede realizar en su totalidad un modelo automatizado por su cuenta, existen actividades que requieren cierta capacidad de análisis, pensamiento y empatía que estos modelos todavía no tienen, y no se sabe con exactitud si llegarán a tenerlos. Los humanos siguen siendo piezas esenciales y recursos indiscutibles para llevar a cabo muchos trabajos, pero es verdad, por otro lado, que actividades menos complejas podrían ser automatizadas y eso dejaría vulnerable a un sector de la población. ¿Vos qué pensás? ¿La inteligencia artificial va a reemplazar tu trabajo actual?";
@@ -12,9 +13,12 @@
   let texto_UsoCotidiano =
     "¿Se usa en exceso la IA? ¿Se explotan sus beneficios en pos de la productividad? ¿Se utilizan en exceso  los modelos como Chat-GPT para todo tipo de tareas? La realidad es que la introducción y distribución de modelos abiertos y libres para su uso cambió el paradigma de la inteligencia artificial, antes utilizada especialmente para actividades de investigación, desarrollo o procesos esenciales en ciertas industrias (en el caso de los modelos más avanzados). En la actualidad se le dan cada vez más uso, y nació una concepción que asocia estos modelos como asistentes personales. Y vos, ¿conocías a Chat-GPT? ¿Lo usás seguido?";
 
-  let texto_Lenguaje =
-    "Chat-GPT es una inteligencia artificial creada por la empresa OpenIA, haciendola abierta al publico en el año 2021. Esta herramienta es una de las primeras IA's en estar abiertas para todo el publico. Sus aplicaciones diversas, desde escribir ensayos hasta desarrollo de aplicaciones y crear imagenes a partir de texto. Su imapcto es a nivel mundial, tanto que FALTA.";
+  let texto_Lenguaje2 =
+    "Frente a la popularidad de estos modelos de inteligencia artificial, se ha armado un gran debate sobre si la influencia de estos es positiva o negativa, es decir, cómo son percibidos por los usuarios. En base a publicaciones en redes sociales sobre estos, se armó un índice de opinión para determinar, para varios modelos, si se tenía una opinión positiva o negativa de cada uno. ¿Para vos estos modelos tienen impacto negativo o positivo en general?";
 
+  let texto_Lenguaje = "Chat-GPT es un modelo de inteligencia artificial creado por la empresa OpenIA, y está abierta al público desde el año 2021. Es una de las primeras herramientas de inteligencia artificial avanzadas en ser libre de uso para todo público. Se la utiliza para diversas aplicaciones, desde escribir ensayos simples hasta desarrollar programas complejos o crear imágenes a partir de indicaciones en formato de texto. Su impacto a nivel mundial ha ido y sigue agigantándose cada vez más, mientras que salen versiones de la herramienta con más funcionalidades, más conocimiento y respuestas cada vez más precisas. Realmente se ha convertido en un hito de estos últimos años. ¿Lo conocías?"
+
+  let texto_Lenguaje3 = "En esta era de la inteligencia artificial, diversos lenguajes y modelos de IA han experimentado un crecimiento exponencial en cuanto a popularidad y uso, reflejando la adopción de la tecnología en distintos campos. A continuación, se presenta un gráfico que ilustra los lenguajes de IA más populares en el cuarto trimestre de 2023, basándonos en el índice de atención de las redes sociales."
 
     let respuestas_por_pregunta = [
     ["Sí", "No"],
@@ -35,16 +39,15 @@
         "¿Que tanto se usa Chat-GPT?",
         texto_UsoCotidiano,
       ],
-      ["pregunta 2-uso cotidiano", "vvv", "fefef"],
     ],
     Lenguajes: [
       [
-        "¿Conoces Chat-GPT? - ¿Lo usas?",
-        "¿Que es Chat-GPT? ¿Por que todos hablan de él?",
+        "Chat-GPT",
+        "¿Qué es Chat-GPT? ¿Por qué todos hablan de él?",
         texto_Lenguaje,
       ],
-      ["pregunta 2-lenguaje", "ggg"],
-      ["pregunta 3-lenguaje", "nnn"],
+      ["Impacto positivo/negativo", "¿Estos modelos son buenos o malos?", texto_Lenguaje2],
+      ["Modelos más populares", "¿Cuáles son los modelos más populares?", texto_Lenguaje3],
     ],
   };
 
@@ -65,13 +68,20 @@
       },
     },
     Lenguajes: {
-      "¿Conoces Chat-GPT? - ¿Lo usas?": {
+      "Chat-GPT": {
         "Lo conozco y lo uso a menudo":
-          "No sos el unico, desde que salio su popularidad fue en aumento sin descanso.",
+          "No sos el único, desde que salió su popularidad fue en ascenso sin descanso.",
         "Lo conozco pero no lo uso":
-          "No todos son como vos, muchos ya estan inmersos en el uso de la IA en su vida diaria.",
-        No: "Raro, te lo presento: https://chatgpt.com/",
+          "Hay bastante gente como vos, que todavía no incorporó la herramienta pese a conocer de su existencia. Sin embargo, muchos otros ya están inmersos en el uso de la IA en su vida diaria.",
+        "No lo conocía": "Raro, te lo presento: https://chatgpt.com/",
       },
+      "Impacto positivo/negativo": {
+        "Positivo": "Y",
+        "Negativo": "N"
+      },
+      "Modelos más populares": {
+        "A": "ad"
+      }
     },
   };
 
@@ -149,7 +159,7 @@
     }, delay);
   }
 
-  function mostrar_graficos(tematica, index) {
+  function mostrar_graficos(tematica, index, respuesta) {
     let mensaje_id = "mensaje-" + index;
     let mensaje = document.getElementById(mensaje_id);
 
@@ -160,7 +170,7 @@
     if (tematica == "Trabajo") {
       new Radar({
         target: DivGrafico,
-        props: { p: 60 },
+        props: { p: 60 , yes: respuesta == "Si, definitivamente"},
       });
     } else if (tematica == "Uso cotidiano") {
       DivGrafico.style.height = "100%";
@@ -168,6 +178,11 @@
       new Mapa({
         target: DivGrafico,
       });
+    }
+    else if(tematica == "Lenguajes"){
+      new NetSentimentBars({
+        target: DivGrafico
+      })
     }
 
     // Crear el elemento Radar y agregarlo al nuevo div
@@ -343,13 +358,6 @@
                         index_actual
                       );
                       delayed_action(
-                        (speed + 2) * texto1.length +
-                          (speed + 2) * texto2.length + delay_global2 + 5000,
-                        mostrar_graficos,
-                        tematica,
-                        index_actual
-                      );
-                      delayed_action(
                         (speed + 2) * (texto1.length + texto2.length) + delay_global2 + 5000,
                         enable_buttons,
                         "btn-opciones"
@@ -396,34 +404,6 @@
           </div>
 
           <div style="display: flex;">
-            {#each respuestas_por_pregunta as respuestas, i}
-              <div
-                id="respuestas{i + 1}"
-                style="display: none;"
-                class="botones-respuestas"
-              >
-                {#each respuestas as respuesta_i}
-                  <input
-                    class="botones-opciones"
-                    type="button"
-                    value={respuesta_i}
-                    on:click={() => {
-                      mostrar_texto("respuesta si o no", index_actual);
-                      delayed_action(
-                        delay_global,
-                        mostrar_texto,
-                        "asdsa",
-                        index_actual
-                      );
-                      delayed_action(delay_global, reinicio_preguntas);
-                    }}
-                  />
-                {/each}
-              </div>
-            {/each}
-          </div>
-
-          <div style="display: flex;">
             {#each Object.entries(respuestas_por_pregunta2) as [tematica, preguntas]}
               <div>
                 {#each Object.entries(preguntas) as [pregunta, opciones], nro_pregunta}
@@ -440,14 +420,27 @@
                         on:click={() => {
                           mostrar_texto(opcion, index_actual);
                           delayed_action(
+                            (speed + 2) * opcion.length,
+                            reinicio_preguntas
+                          );
+                          delayed_action(
                             (speed + 2) * opcion.length + delay_global2,
                             mostrar_texto,
                             respuesta,
                             index_actual
                           );
                           delayed_action(
-                            (speed + 2) * (opcion.length + respuesta.length) + delay_global2,
-                            reinicio_preguntas
+                            (speed + 2) * opcion.length + delay_global2,
+                            mostrar_graficos,
+                            tematica,
+                            index_actual,
+                            respuesta
+                          );
+                          delayed_action(
+                            (speed + 2) * opcion.length + delay_global2*2,
+                            mostrar_texto,
+                            respuesta,
+                            index_actual
                           );
                         }}
                         disabled
@@ -661,10 +654,10 @@
     border-radius: 20px;
     padding-left: 10px;
     padding-right: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 1px;
     margin-right: 50px;
     background-color: #2e2f2e;
-    width: fit-content;
+    width: 500px;
     align-self: flex-end;
     height: fit-content;
     font-size: 20px;
@@ -673,7 +666,6 @@
   .chat {
     border-radius: 20px;
     padding-right: 10px;
-    margin-bottom: 20px;
     background-color: #202021;
     width: 900px;
     align-self: flex-start;
