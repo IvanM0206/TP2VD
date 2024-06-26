@@ -181,7 +181,7 @@
     if (tematica == "Trabajo") {
       new Radar({
         target: DivGrafico,
-        props: { p: 36, yes: respuesta === "Sí, definitivamente." },
+        props: { p: 36, yes: respuesta == "Sí, definitivamente." },
       });
     } else if (tematica == "Uso cotidiano") {
       DivGrafico.style.height = "100%";
@@ -255,6 +255,7 @@
       let botones_preguntas_tematica = document.getElementById(id_botones);
       botones_preguntas_tematica.style.display = "flex";
     } else if (type_button_touched == "Preguntas") {
+      console.log(index, tematica, "botones preguntas");
       let id_botones = "respuestas-" + index + "-" + tematica;
       let botones_preguntas_tematica = document.getElementById(id_botones);
       botones_preguntas_tematica.style.display = "flex";
@@ -447,7 +448,7 @@
                             mostrar_graficos,
                             tematica,
                             index_actual,
-                            opcion
+                            respuesta
                           );
                           delayed_action(
                             (speed + 2) * opcion.length + delay_global2 * 2,
