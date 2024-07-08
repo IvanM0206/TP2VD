@@ -8,6 +8,7 @@
   import NetSentimentBars from "./components/NetSentimentBars.svelte";
   import * as TM from "./textos.svelte";
   import Graf9110 from "./components/graf9110.svelte";
+  import ShareAiSocialMediaBars from "./components/ShareAISocialMediaBars.svelte";
 
   let globalIndex = 0;
 
@@ -19,7 +20,7 @@
   
   let text1Habitualidad = "¿Se usa en exceso la IA? ¿Se explotan sus beneficios en pos de la productividad? ¿Se utilizan en exceso  los modelos como Chat-GPT para todo tipo de tareas? La realidad es que la introducción y distribución de modelos abiertos y libres para su uso cambió el paradigma de la inteligencia artificial, antes utilizada especialmente para actividades de investigación, desarrollo o procesos esenciales en ciertas industrias (en el caso de los modelos más avanzados). En la actualidad se le dan cada vez más uso, y nació una concepción que asocia estos modelos como asistentes personales. Y vos, ¿conocías a Chat-GPT? ¿Lo usás seguido?";
 
-  let textListAnswerHabitualidad = ["SI", "Los servicios ofrecidos por Chat GPT no solamente mostraron ser útiles, sino que también consistente, ya que dentro de sus usuarios un P% lo usa al menos una vez a la semana.", "graf-bar", "También su expansión por el mundo permite descubrir dónde impactó más. Debajo podés ver por país el porcentaje de usuarios que usan Chat GPT diariamente. Entre los países que más frecuentemente utilizan el chat están, por ejemplo, India y Kenia.", "graf-map"];
+  let textListAnswerHabitualidad = ["Sí, lo uso cada día.", "Los servicios ofrecidos por Chat GPT no solamente mostraron ser útiles, sino que también consistente, ya que dentro de sus usuarios un P% lo usa al menos una vez a la semana.", "graf-bar", "También su expansión por el mundo permite descubrir dónde impactó más. Debajo podés ver por país el porcentaje de usuarios que usan Chat GPT diariamente. Entre los países que más frecuentemente utilizan el chat están, por ejemplo, India y Kenia.", "graf-map"];
   
 
   let text1Lenguaje = "Chat-GPT es un modelo de inteligencia artificial creado por la empresa OpenIA, y está abierta al público desde el año 2021. Es una de las primeras herramientas de inteligencia artificial avanzadas en ser libre de uso para todo público. Se la utiliza para diversas aplicaciones, desde escribir ensayos simples hasta desarrollar programas complejos o crear imágenes a partir de indicaciones en formato de texto. Su impacto a nivel mundial ha ido y sigue agigantándose cada vez más, mientras que salen versiones de la herramienta con más funcionalidades, más conocimiento y respuestas cada vez más precisas. Realmente se ha convertido en un hito de estos últimos años. ¿Lo conocías?";
@@ -30,13 +31,11 @@
 
   let text4Lenguaje = "En esta era de la inteligencia artificial, diversos lenguajes y modelos de IA han experimentado un crecimiento exponencial en cuanto a popularidad y uso, reflejando la adopción de la tecnología en distintos campos. A continuación, se presenta un gráfico que ilustra los lenguajes de IA más populares en el cuarto trimestre de 2023, basándonos en el índice de atención de las redes sociales.";
 
-  let text5Lenguaje = "El gráfico muestra que GPT-4 lidera con un impresionante 45% del índice de atención, seguido por Grok con un 16% y Stable Diffusion con un 12%. Esta distribución sugiere que con su versión 4, el modelo de Chat GPT ha continuado acumulando una significativa porción del interés y uso entre los usuarios, posiblemente debido a sus capacidades avanzadas y a sus aplicaciones en una variedad de contextos. Esta predominancia no solo destaca su eficacia y y versatilidad, sino también el ritmo acelerado con el que las tecnologías de IA están siendo adoptadas por una audiencia cada vez más amplia.";
-
-  let textListAnswerLenguaje = ["YYYY", "En el siguiente gráfico podés comparar la opinión que se tiene sobre diferentes modelos en diferentes trimestres de 2023. Un índice positivo se considera una mejor opinión que uno negativo (el índice toma valores entre -100 y 100). En particular, puede verse que los modelos con menor índice coinciden en gran parte con los más populares, debido a que son los más usados y por eso generan más debate al involucrar a una mayor cantidad de usuarios.", "graf-bar-sentiment"];
+  let textListAnswerLenguaje = ["Positivo", "En el siguiente gráfico podés comparar la opinión que se tiene sobre diferentes modelos en diferentes trimestres de 2023. Un índice positivo se considera una mejor opinión que uno negativo (el índice toma valores entre -100 y 100). En particular, puede verse que los modelos con menor índice coinciden en gran parte con los más populares, debido a que son los más usados y por eso generan más debate al involucrar a una mayor cantidad de usuarios.", "graf-bar-sentiment"];
 
 
   let topicsTexts = {
-      "Trabajo": ["¿Me voy a quedar sin trabajo a causa de la IA?", text1Trabajo, "graf-radar"],
+      "Trabajo": ["¿Me voy a quedar sin trabajo a causa de la IA?", text1Trabajo],
       "Habitualidad": ["¿Qué nivel de acceso se tiene a herramientas de inteligencia artificial sofisticadas hoy en día? ¿Es algo más bien exclusivo?", text1Habitualidad],
       "Lenguajes": ["¿Qué  tipos de modelos de  IA existen? ¿Cualés son los más usados?", "En tan solo un par de años, muchos modelos de IA han logrado viralizarse y generaron fuertes discusiones por todo el mundo. Conocer estos modelos da una noción de las diferencias entre ellos."]
   }
@@ -45,8 +44,8 @@
   let messageTexts = {
     Trabajo: {
       "Riesgo de empleo": ["¿Me voy a quedar sin trabajo a causa de la IA?", text1Trabajo, "graf-radar", {
-        "Si, definitivamente": ["SI", "Sos un NPC"],
-        "No, para nada": ["NOOO", "Se hacia el"],
+        "Si, definitivamente": ["Si, definitivamente", "Muchas personas opinan como vos. La realidad es que la IA esta avanzando a pasos agigantados pero no necesariamente va a pasar lo peor. Trabajar con esta nueva herramienta es una opción viable.", "graf-radar", "graf-bar-sentiment"],
+        "No, para nada": ["No, para nada", "Hay que ser optimistas! Sorpresivamente muchas no concuerdan con vos", "graf-radar"],
       }]
     },
     Habitualidad: {
@@ -70,8 +69,8 @@
         "Positivo": textListAnswerLenguaje,
         "Negativo": textListAnswerLenguaje
       }],
-      "Modelos más populares": ["¿Cuáles son los modelos más populares?", text4Lenguaje, {
-        "Unica opción": "El gráfico muestra que GPT-4 lidera con un impresionante 45% del índice de atención, seguido por Grok con un 16% y Stable Diffusion con un 12%. Esta distribución sugiere que con su versión 4, el modelo de Chat GPT ha continuado acumulando una significativa porción del interés y uso entre los usuarios, posiblemente debido a sus capacidades avanzadas y a sus aplicaciones en una variedad de contextos. Esta predominancia no solo destaca su eficacia y y versatilidad, sino también el ritmo acelerado con el que las tecnologías de IA están siendo adoptadas por una audiencia cada vez más amplia."
+      "Modelos más populares": ["¿Cuáles son los modelos más populares?", text4Lenguaje, "graf-bar-share", {
+        "Unica opción": ["", ""]
       }]
     },
   };
@@ -215,7 +214,7 @@ function mostrarGrafico(graphicName){
         props: {p: 60}
   });
   }
-  else if(graphicName == "bar"){
+  else if(graphicName == "bar-sentiment"){
     new NetSentimentBars({
       target: DivGrafico
     })
@@ -225,8 +224,13 @@ function mostrarGrafico(graphicName){
       target: DivGrafico
     });
   }
-  else if(graphicName == "bar-sentiment"){
+  else if(graphicName == "bar"){
     new Graf9110({
+      target: DivGrafico
+    })
+  }
+  else if(graphicName == "bar-share"){
+    new ShareAiSocialMediaBars({
       target: DivGrafico
     })
   }
@@ -269,8 +273,8 @@ onMount(() => {
 </script>
 
 <main>
+  <div class="border-image"></div>
   <div class="container">
-      <Circuit></Circuit>
       <h3 class="headline">
           <b>IA y Opinión Pública</b>
       </h3>
@@ -346,7 +350,12 @@ onMount(() => {
                 style="display: none;"
                 value={pregunta}
                 on:click={() => {
-                  nextSection("btn-preguntas", "btn-opciones", tematica, nro_pregunta, opciones.slice(0, opciones.length - 1));
+                  if(Object.keys(opciones[opciones.length - 1]).length > 1){
+                    nextSection("btn-preguntas", "btn-opciones", tematica, nro_pregunta, opciones.slice(0, opciones.length - 1));
+                  }
+                  else{
+                    nextSection("btn-preguntas", "btn-reinicio", tematica, nro_pregunta, opciones.slice(0, opciones.length - 1));
+                  }
                 }}
                 
               />
@@ -360,7 +369,7 @@ onMount(() => {
                 style="display: none;"
                 value={tematica}
                 on:click={() => {
-                  if(preguntas.length > 1){
+                  if(Object.keys(preguntas).length > 1){
                     nextSection("btn-tematicas", "btn-preguntas", tematica, 0, topicsTexts[tematica]);
                   }
                   else{
@@ -423,6 +432,35 @@ onMount(() => {
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
     "Noto Color Emoji";
 }
+
+.border-image {
+    overflow: hidden;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .border-image::before,
+  .border-image::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 15%;
+    background-size: cover;
+    background-repeat: repeat;
+    z-index: 1;
+  }
+
+  .border-image::before {
+    left: 0;
+    background-image: url("../src/assets/border_left.png");
+  }
+
+  .border-image::after {
+    right: 0;
+    background-image: url("../src/assets/border_right.png");
+  }
 
 input {
   font-family: Arial, Helvetica, sans-serif;

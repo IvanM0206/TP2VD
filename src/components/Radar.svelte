@@ -38,7 +38,7 @@
   });*/
 
   export let p = 0;
-
+  export let yes = false;
   function reglaDeTresSimple(p) {
     let factor = 360 / 100;
     return (100 - p) * factor;
@@ -49,11 +49,13 @@
   <div class="container">
     <div class="radar" style="--p:{reglaDeTresSimple(p)}"></div>
     <p class="text">
-      El <span class="text highlight">{p}%</span>
-      de las personas opinan como vos! y chamuyo chamuyde las personas opinan como
-      vos! y chamuyo chamuyde las personas opinan como vos! y chamuyo chamuyde las
-      personas opinan como vos! y chamuyo chamuyde las personas opinan como vos!
-      y chamuyo chamuy
+      De acuerdo con encuestas de 2023, el <span class="text highlight"
+        >{p}%</span
+      >
+      de las personas cree que la inteligencia artificial reemplazará su trabajo
+      actual en los próximos 5 años. {yes
+        ? "Sos parte de la minoría."
+        : "Sos parte de la mayoría."}
     </p>
   </div>
 </main>
