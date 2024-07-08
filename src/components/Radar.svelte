@@ -154,7 +154,7 @@
       transparent calc(var(--p) * 1deg + 0.6turn + 1turn)
     );
     mix-blend-mode: plus-lighter;
-    animation: move-radar 2s linear infinite;
+    animation: move-radar 2s linear;
   }
 
   @keyframes move-radar {
