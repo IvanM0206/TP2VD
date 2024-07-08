@@ -10,6 +10,12 @@
   let texto_Trabajo =
     "Por el momento, se tiene a la IA como una herramienta más que como un reemplazo. Si bien es cierto que algunas tareas básicas las puede realizar en su totalidad un modelo automatizado por su cuenta, existen actividades que requieren cierta capacidad de análisis, pensamiento y empatía que estos modelos todavía no tienen, y no se sabe con exactitud si llegarán a tenerlos. Los humanos siguen siendo piezas esenciales y recursos indiscutibles para llevar a cabo muchos trabajos, pero es verdad, por otro lado, que actividades menos complejas podrían ser automatizadas y eso dejaría vulnerable a un sector de la población. ¿Vos qué pensás? ¿La inteligencia artificial va a reemplazar tu trabajo actual?";
 
+  let texto_Trabajo2 =
+    "En particular, se notó que existe una importante brecha generacional, en donde las personas encuestadas más jóvenes tendían a tener más presente que hay un peligro asociado a su trabajo actual (en un P%) frente a personas mayores de las cuales solamente el P% consideraban que la IA podía quitarles su empleo.";
+
+  let texto_Trabajo3 =
+    "Además, otro factor determinante resultó ser el nivel de ingresos de la persona encuestada. A mayores ingresos se temía más por el posible reemplazo en el trabajo actual dentro de 5 años en comparación con gente de ingresos medios o bajos. Si bien la diferencia parece sutil, es significativa en la dimensión de la encuesta y revela nuevamente otra faceta esencial  del boom de la inteligencia artificial: el nivel de concientización sobre su impacto.";
+
   let texto_UsoCotidiano =
     "¿Se usa en exceso la IA? ¿Se explotan sus beneficios en pos de la productividad? ¿Se utilizan en exceso  los modelos como Chat-GPT para todo tipo de tareas? La realidad es que la introducción y distribución de modelos abiertos y libres para su uso cambió el paradigma de la inteligencia artificial, antes utilizada especialmente para actividades de investigación, desarrollo o procesos esenciales en ciertas industrias (en el caso de los modelos más avanzados). En la actualidad se le dan cada vez más uso, y nació una concepción que asocia estos modelos como asistentes personales. Y vos, ¿conocías a Chat-GPT? ¿Lo usás seguido?";
 
@@ -30,9 +36,19 @@
   let tematicas = {
     Trabajo: [
       [
-        "¿Cómo afecta el avance de la IA y los modelos de aprendizaje automáticos al mercado laboral?",
+        "Riesgo de empleo",
         "¿Cómo afecta el avance de la IA y los modelos de aprendizaje automáticos al mercado laboral?",
         texto_Trabajo,
+      ],
+      [
+        "Trabajo y edad",
+        "¿Hay posibilidad de que nos quedemos sin trabajo a causa de la inteligencia artificial?",
+        texto_Trabajo2,
+      ],
+      [
+        "Trabajo y nivel de ingreso",
+        "¿Hay relación entre el temor de reemplazo y la clase economica?",
+        texto_Lenguaje3,
       ],
     ],
     "Uso cotidiano": [
@@ -63,11 +79,16 @@
 
   let respuestas_por_pregunta2 = {
     Trabajo: {
-      "¿Cómo afecta el avance de la IA y los modelos de aprendizaje automáticos al mercado laboral?":
-        {
-          "Sí, definitivamente.": "todos concuerdan con vos",
-          "No, para nada": "nadie concuerda con vos",
-        },
+      "Riesgo de empleo": {
+        "Si, definitivamente": "todos concuerdan con vos",
+        "No, para nada": "nadie concuerda con vos",
+      },
+      "Trabajo y edad": {
+        NULL: "asas",
+      },
+      "Trabajo y nivel de ingreso": {
+        NULL: "rrer",
+      },
     },
     "Uso cotidiano": {
       "¿Que tanto se usa Chat-GPT?": {
@@ -145,7 +166,7 @@
   let delay_global = (speed + 5) * 100;
   let delay_global2 = 1000;
   let buttons_are_active = false;
-  let image_buttons = "../src/assets/Arrow_open.svg";
+  let image_buttons = "../src/assets/menu.svg"; //open //CAMBIO
 
   onMount(() => {
     mostrar_texto(textoBienvenida, 0);
@@ -179,27 +200,43 @@
     DivGrafico.style.justifyContent = "start";
 
     if (tematica == "Trabajo") {
-      new Radar({
-        target: DivGrafico,
-        props: { p: 36, yes: respuesta == "Sí, definitivamente." },
-      });
+      if (respuesta == "Caso") {
+        new NetSentimentBars({
+          target: DivGrafico,
+        });
+        mensaje.insertBefore(DivGrafico, mensaje.firstChild);
+        mensaje.scrollIntoView({ behaviour: "smooth" });
+      } else {
+        new Radar({
+          target: DivGrafico,
+          props: { p: 36, yes: respuesta === "Sí, definitivamente." },
+        });
+
+        mensaje.appendChild(DivGrafico);
+        mensaje.scrollIntoView({ behaviour: "smooth" });
+      }
     } else if (tematica == "Uso cotidiano") {
       DivGrafico.style.height = "100%";
       DivGrafico.style.width = "100%";
       new MapaDaily({
         target: DivGrafico,
       });
+
+      mensaje.appendChild(DivGrafico);
+      mensaje.scrollIntoView({ behaviour: "smooth" });
     } else if (tematica == "Lenguajes") {
       new NetSentimentBars({
         target: DivGrafico,
       });
+
+      mensaje.appendChild(DivGrafico);
+      mensaje.scrollIntoView({ behaviour: "smooth" });
     }
 
     // Crear el elemento Radar y agregarlo al nuevo div
 
     // Agregar el nuevo div al elemento existente en el DOM
-    mensaje.appendChild(DivGrafico);
-    mensaje.scrollIntoView({ behaviour: "smooth" });
+
     let class_name = ".grafico-" + tematica;
     /*let graficos = document.querySelectorAll(class_name);
     console.log("graficos", class_name, graficos);
@@ -281,10 +318,10 @@
       let button_container = document.getElementById("botones-juntos");
       if (!buttons_are_active) {
         button_container.style.display = "flex";
-        image_buttons = "../src/assets/Arrow_close.svg";
+        image_buttons = "../src/assets/menu.svg"; //close
       } else {
         button_container.style.display = "none";
-        image_buttons = "../src/assets/Arrow_open.svg";
+        image_buttons = "../src/assets/menu.svg"; //open
       }
       buttons_are_active = !buttons_are_active;
     });
@@ -338,6 +375,7 @@
         {/if}
       {/each}
 
+      <!-- BOTONES  -->
       <div class="botones" id="list-buttons">
         <img id="image-buttons" src={image_buttons} alt="Arrow" />
         <div id="botones-juntos" style="display: none;">
@@ -349,26 +387,98 @@
                 id="botones-preguntas-{index}"
               >
                 {#each preguntas as [pregunta, texto1, texto2], index_pregunta}
+                  {#if pregunta == "Trabajo y edad" || pregunta == "Trabajo y nivel de ingreso"}
+                    <input
+                      class="botones-opciones btn-preguntas"
+                      type="button"
+                      value={pregunta}
+                      on:click={() => {
+                        let button_touched_div =
+                          document.querySelectorAll(".botones-preguntas");
+                        button_touched_div.forEach(function (button) {
+                          button.style.display = "none";
+                        });
+                        delayed_action(
+                          (speed + 2) * pregunta.length,
+                          reinicio_preguntas
+                        );
+                        mostrar_texto(texto1, index_actual);
+                        delayed_action(
+                          (speed + 2) * texto1.length + delay_global2,
+                          mostrar_texto,
+                          texto2,
+                          index_actual
+                        );
+                        delayed_action(
+                          (speed + 2) * texto1.length + delay_global2,
+                          mostrar_graficos,
+                          tematica,
+                          index_actual,
+                          "Caso"
+                        );
+                      }}
+                      disabled
+                    />
+                  {:else}
+                    <input
+                      class="botones-opciones btn-preguntas"
+                      type="button"
+                      value={pregunta}
+                      on:click={() => {
+                        mostrar_botones(
+                          "Preguntas",
+                          tematica,
+                          index_pregunta,
+                          "botones-preguntas"
+                        );
+                        mostrar_texto(texto1, index_actual);
+                        delayed_action(
+                          (speed + 2) * texto1.length + delay_global2,
+                          mostrar_texto,
+                          texto2,
+                          index_actual
+                        );
+                        delayed_action(
+                          (speed + 2) * (texto1.length + texto2.length) +
+                            delay_global2 +
+                            5000,
+                          enable_buttons,
+                          "btn-opciones"
+                        );
+                      }}
+                      disabled
+                    />
+                  {/if}
+                {/each}
+              </div>
+              <div style="display: flex;" class="botones-tematicas">
+                {#if preguntas.length == 1}
                   <input
-                    class="botones-opciones btn-preguntas"
+                    class="botones-opciones btn-tematica"
                     type="button"
-                    value={pregunta}
+                    value={tematica}
                     on:click={() => {
                       mostrar_botones(
                         "Preguntas",
                         tematica,
-                        index_pregunta,
-                        "botones-preguntas"
+                        0,
+                        "botones-tematicas"
                       );
-                      mostrar_texto(texto1, index_actual);
-                      delayed_action(
-                        (speed + 2) * texto1.length + delay_global2,
-                        mostrar_texto,
-                        texto2,
+                      mostrar_texto(
+                        tematicas_mensajes[tematica][0],
                         index_actual
                       );
                       delayed_action(
-                        (speed + 2) * (texto1.length + texto2.length) +
+                        (speed + 2) * tematicas_mensajes[tematica][0].length +
+                          delay_global2,
+                        mostrar_texto,
+                        tematicas_mensajes[tematica][1],
+                        index_actual
+                      );
+                      delayed_action(
+                        (speed + 2) *
+                          (tematicas_mensajes[tematica][0].length +
+                            tematicas_mensajes[tematica][1].length) +
                           delay_global2 +
                           5000,
                         enable_buttons,
@@ -377,42 +487,41 @@
                     }}
                     disabled
                   />
-                {/each}
-              </div>
-              <div style="display: flex;" class="botones-tematicas">
-                <input
-                  class="botones-opciones btn-tematica"
-                  type="button"
-                  value={tematica}
-                  on:click={() => {
-                    mostrar_botones(
-                      "Tematica",
-                      tematica,
-                      index,
-                      "botones-tematicas"
-                    );
-                    mostrar_texto(
-                      tematicas_mensajes[tematica][0],
-                      index_actual
-                    );
-                    delayed_action(
-                      (speed + 2) * tematicas_mensajes[tematica][0].length +
-                        delay_global2,
-                      mostrar_texto,
-                      tematicas_mensajes[tematica][1],
-                      index_actual
-                    );
-                    delayed_action(
-                      (speed + 2) *
-                        (tematicas_mensajes[tematica][0].length +
-                          tematicas_mensajes[tematica][1].length) +
-                        delay_global2,
-                      enable_buttons,
-                      "btn-preguntas"
-                    );
-                  }}
-                  disabled
-                />
+                {:else}
+                  <input
+                    class="botones-opciones btn-tematica"
+                    type="button"
+                    value={tematica}
+                    on:click={() => {
+                      mostrar_botones(
+                        "Tematica",
+                        tematica,
+                        index,
+                        "botones-tematicas"
+                      );
+                      mostrar_texto(
+                        tematicas_mensajes[tematica][0],
+                        index_actual
+                      );
+                      delayed_action(
+                        (speed + 2) * tematicas_mensajes[tematica][0].length +
+                          delay_global2,
+                        mostrar_texto,
+                        tematicas_mensajes[tematica][1],
+                        index_actual
+                      );
+                      delayed_action(
+                        (speed + 2) *
+                          (tematicas_mensajes[tematica][0].length +
+                            tematicas_mensajes[tematica][1].length) +
+                          delay_global2,
+                        enable_buttons,
+                        "btn-preguntas"
+                      );
+                    }}
+                    disabled
+                  />
+                {/if}
               </div>
             {/each}
           </div>
@@ -439,19 +548,13 @@
                           );
                           delayed_action(
                             (speed + 2) * opcion.length + delay_global2,
-                            mostrar_texto,
-                            respuesta,
-                            index_actual
-                          );
-                          delayed_action(
-                            (speed + 2) * opcion.length + delay_global2,
                             mostrar_graficos,
                             tematica,
                             index_actual,
-                            respuesta
+                            opcion
                           );
                           delayed_action(
-                            (speed + 2) * opcion.length + delay_global2 * 2,
+                            (speed + 2) * opcion.length + delay_global2,
                             mostrar_texto,
                             respuesta,
                             index_actual
@@ -481,6 +584,7 @@
                 );
                 document.getElementById("reinicio-preguntas").style.display =
                   "none";
+                delayed_action(0, enable_buttons, "btn-tematicas");
               }}
             />
             <input
@@ -498,6 +602,7 @@
                 );
                 document.getElementById("reinicio-preguntas").style.display =
                   "none";
+                delayed_action(0, enable_buttons, "btn-preguntas");
               }}
             />
             <input
@@ -515,6 +620,7 @@
                 );
                 document.getElementById("reinicio-preguntas").style.display =
                   "none";
+                delayed_action(0, enable_buttons, "btn-preguntas");
               }}
             />
             <input
@@ -532,6 +638,7 @@
                 );
                 document.getElementById("reinicio-preguntas").style.display =
                   "none";
+                delayed_action(0, enable_buttons, "btn-preguntas");
               }}
             />
           </div>
@@ -625,10 +732,11 @@
   }
 
   .botones {
-    display: flex;
+    display: inline-block; /*MODIFICADO*/
     position: fixed;
     right: 20px;
     bottom: 20px;
+    right: 310px; /*MODIFICADO*/
   }
 
   .boton-inicio {
@@ -666,12 +774,13 @@
 
   .mensaje-usuario {
     border-radius: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 1.5%;
+    padding-right: 1.5%;
     margin-bottom: 1px;
     margin-right: 50px;
     background-color: #2e2f2e;
-    width: 500px;
+    width: fit-content;
+    max-width: 80%;
     align-self: flex-end;
     height: fit-content;
     font-size: 20px;
@@ -681,7 +790,8 @@
     border-radius: 20px;
     padding-right: 10px;
     background-color: #202021;
-    width: 900px;
+    width: 1000px;
+    max-width: 95%;
     align-self: flex-start;
     display: flex;
     flex-direction: column;

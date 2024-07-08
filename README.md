@@ -6,8 +6,7 @@
 
 ### Referencias:
 
--[Stanford AI Index Report, la fuente de inspiración](https://aiindex.stanford.edu/report/)
-
+- [Stanford AI Index Report, la fuente de inspiración](https://aiindex.stanford.edu/report/)
 - [Flourish: armado de gráficos de barras y mapas](https://flourish.studio/)
 - [Radar animado: para los gráficos de torta](https://codepen.io/vii120/pen/yLGYqJq)
 - Funciones y animaciones del flujo, como la escritura y la interactividad de elaboración propia con JavaScript
@@ -19,7 +18,7 @@
 
 ## Motivación
 
-Detrás del desarrollo de este trabajo, se buscaba comunicar los resultados de un estudio masivo realizado por la universidad de Stanford (Starford AI Index Report 2023), el cual incluye métricas de todo tipo relacionadas con inteligencia artificial. En particular, se decidió trabajar con el capítulo 9 de dicho reporte, basado en opinión pública para comunicar un mensaje claro, acotado y conciso.
+Detrás del desarrollo de este trabajo, se buscaba comunicar los resultados de un estudio masivo realizado por la universidad de Stanford ([Starford AI Index Report 2023](https://aiindex.stanford.edu/report/)), el cual incluye métricas de todo tipo relacionadas con inteligencia artificial. En particular, se decidió trabajar con el capítulo 9 de dicho reporte, basado en opinión pública para comunicar un mensaje claro, acotado y conciso.
 
 ## Desarrollo y consideraciones generales
 

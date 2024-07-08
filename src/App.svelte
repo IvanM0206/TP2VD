@@ -3,117 +3,55 @@
   import * as d3 from "d3";
 
   import Radar from "./components/Radar.svelte";
-  import MapaDaily from "./components/MapaDaily.svelte";
+  import Mapa from "./components/MapaDaily.svelte";
   import Circuit from "./components/Circuit.svelte";
   import NetSentimentBars from "./components/NetSentimentBars.svelte";
+  import * as TM from "./textos.svelte";
+  import Graf9110 from "./components/graf9110.svelte";
+  import ShareAiSocialMediaBars from "./components/ShareAISocialMediaBars.svelte";
 
-  let texto_Trabajo =
-    "Por el momento, se tiene a la IA como una herramienta más que como un reemplazo. Si bien es cierto que algunas tareas básicas las puede realizar en su totalidad un modelo automatizado por su cuenta, existen actividades que requieren cierta capacidad de análisis, pensamiento y empatía que estos modelos todavía no tienen, y no se sabe con exactitud si llegarán a tenerlos. Los humanos siguen siendo piezas esenciales y recursos indiscutibles para llevar a cabo muchos trabajos, pero es verdad, por otro lado, que actividades menos complejas podrían ser automatizadas y eso dejaría vulnerable a un sector de la población. ¿Vos qué pensás? ¿La inteligencia artificial va a reemplazar tu trabajo actual?";
+  let globalIndex = 0;
 
-  let texto_Trabajo2 = "En particular, se notó que existe una importante brecha generacional, en donde las personas encuestadas más jóvenes tendían a tener más presente que hay un peligro asociado a su trabajo actual (en un P%) frente a personas mayores de las cuales solamente el P% consideraban que la IA podía quitarles su empleo."
+  let welcomeText =
+    "¡Hola! Este chat va a ser tu guía en el sitio web. Los pasos a seguir son simples: elegí una temática y seleccioná una pregunta para conocer más sobre diversos temas relacionados con inteligencia artificial, la perspectiva de la gente y comparar con tus opiniones.";
 
-  let texto_Trabajo3 = "Además, otro factor determinante resultó ser el nivel de ingresos de la persona encuestada. A mayores ingresos se temía más por el posible reemplazo en el trabajo actual dentro de 5 años en comparación con gente de ingresos medios o bajos. Si bien la diferencia parece sutil, es significativa en la dimensión de la encuesta y revela nuevamente otra faceta esencial  del boom de la inteligencia artificial: el nivel de concientización sobre su impacto."
+  let text1Trabajo =
+    "En esta sección podrás descubrir y reflexionar acerca de si la inteligencia artificial y sus avances más recientes son positivos o negativos para el empleo a nivel global. Por el momento, se tiene a la IA como una herramienta más que como un reemplazo. Si bien es cierto que algunas tareas básicas las puede realizar en su totalidad un modelo automatizado por su cuenta, existen actividades que requieren cierta capacidad de análisis, pensamiento y empatía que estos modelos todavía no tienen, y no se sabe con exactitud si llegarán a tenerlos. Los humanos siguen siendo piezas esenciales y recursos indiscutibles para llevar a cabo muchos trabajos, pero es verdad, por otro lado, que actividades menos complejas podrían ser automatizadas y eso dejaría vulnerable a un sector de la población. ¿Vos qué pensás? ¿La inteligencia artificial va a reemplazar tu trabajo actual?";
 
-  let texto_UsoCotidiano =
+  let text1Habitualidad =
     "¿Se usa en exceso la IA? ¿Se explotan sus beneficios en pos de la productividad? ¿Se utilizan en exceso  los modelos como Chat-GPT para todo tipo de tareas? La realidad es que la introducción y distribución de modelos abiertos y libres para su uso cambió el paradigma de la inteligencia artificial, antes utilizada especialmente para actividades de investigación, desarrollo o procesos esenciales en ciertas industrias (en el caso de los modelos más avanzados). En la actualidad se le dan cada vez más uso, y nació una concepción que asocia estos modelos como asistentes personales. Y vos, ¿conocías a Chat-GPT? ¿Lo usás seguido?";
 
-  let texto_Lenguaje2 =
-    "Frente a la popularidad de estos modelos de inteligencia artificial, se ha armado un gran debate sobre si la influencia de estos es positiva o negativa, es decir, cómo son percibidos por los usuarios. En base a publicaciones en redes sociales sobre estos, se armó un índice de opinión para determinar, para varios modelos, si se tenía una opinión positiva o negativa de cada uno. ¿Para vos estos modelos tienen impacto negativo o positivo en general?";
+  let textListAnswerHabitualidad = [
+    "Sí, lo uso cada día.",
+    "Los servicios ofrecidos por Chat GPT no solamente mostraron ser útiles, sino que también consistente, ya que dentro de sus usuarios un P% lo usa al menos una vez a la semana.",
+    "graf-bar",
+    "También su expansión por el mundo permite descubrir dónde impactó más. Debajo podés ver por país el porcentaje de usuarios que usan Chat GPT diariamente. Entre los países que más frecuentemente utilizan el chat están, por ejemplo, India y Kenia.",
+    "graf-map",
+  ];
 
-  let texto_Lenguaje =
+  let text1Lenguaje =
     "Chat-GPT es un modelo de inteligencia artificial creado por la empresa OpenIA, y está abierta al público desde el año 2021. Es una de las primeras herramientas de inteligencia artificial avanzadas en ser libre de uso para todo público. Se la utiliza para diversas aplicaciones, desde escribir ensayos simples hasta desarrollar programas complejos o crear imágenes a partir de indicaciones en formato de texto. Su impacto a nivel mundial ha ido y sigue agigantándose cada vez más, mientras que salen versiones de la herramienta con más funcionalidades, más conocimiento y respuestas cada vez más precisas. Realmente se ha convertido en un hito de estos últimos años. ¿Lo conocías?";
 
-  let texto_Lenguaje3 =
+  let text2Lenguaje =
+    "Frente a la popularidad de estos modelos de inteligencia artificial, se ha armado un gran debate sobre si la influencia de estos es positiva o negativa, es decir, cómo son percibidos por los usuarios. En base a publicaciones en redes sociales sobre estos, se armó un índice de opinión para determinar, para varios modelos, si se tenía una opinión positiva o negativa de cada uno. ¿Para vos estos modelos tienen impacto negativo o positivo en general?";
+
+  let text3Lenguaje =
+    "En el siguiente gráfico podés comparar la opinión que se tiene sobre diferentes modelos en diferentes trimestres de 2023. Un índice positivo se considera una mejor opinión que uno negativo (el índice toma valores entre -100 y 100). En particular, puede verse que los modelos con menor índice coinciden en gran parte con los más populares, debido a que son los más usados y por eso generan más debate al involucrar a una mayor cantidad de usuarios.";
+
+  let text4Lenguaje =
     "En esta era de la inteligencia artificial, diversos lenguajes y modelos de IA han experimentado un crecimiento exponencial en cuanto a popularidad y uso, reflejando la adopción de la tecnología en distintos campos. A continuación, se presenta un gráfico que ilustra los lenguajes de IA más populares en el cuarto trimestre de 2023, basándonos en el índice de atención de las redes sociales.";
 
-  let respuestas_por_pregunta = [
-    ["Sí", "No"],
-    ["Mucho", "No se"],
-    ["si3", "no3"],
+  let textListAnswerLenguaje = [
+    "Positivo",
+    "En el siguiente gráfico podés comparar la opinión que se tiene sobre diferentes modelos en diferentes trimestres de 2023. Un índice positivo se considera una mejor opinión que uno negativo (el índice toma valores entre -100 y 100). En particular, puede verse que los modelos con menor índice coinciden en gran parte con los más populares, debido a que son los más usados y por eso generan más debate al involucrar a una mayor cantidad de usuarios.",
+    "graf-bar-sentiment",
   ];
-  let tematicas = {
-    Trabajo: [
-      [
-        "Riesgo de empleo",
-        "¿Cómo afecta el avance de la IA y los modelos de aprendizaje automáticos al mercado laboral?",
-        texto_Trabajo,
-      ],
-      ["Trabajo y edad", "¿Hay posibilidad de que nos quedemos sin trabajo a causa de la inteligencia artificial?", texto_Trabajo2],
-      ["Trabajo y nivel de ingreso", "¿Hay relación entre el temor de reemplazo y la clase economica?", texto_Lenguaje3]
-    ],
-    "Uso cotidiano": [
-      [
-        "¿Que tanto se usa Chat-GPT?",
-        "¿Que tanto se usa Chat-GPT?",
-        texto_UsoCotidiano,
-      ],
-    ],
-    Lenguajes: [
-      [
-        "Chat-GPT",
-        "¿Qué es Chat-GPT? ¿Por qué todos hablan de él?",
-        texto_Lenguaje,
-      ],
-      [
-        "Impacto positivo/negativo",
-        "¿Estos modelos son buenos o malos?",
-        texto_Lenguaje2,
-      ],
-      [
-        "Modelos más populares",
-        "¿Cuáles son los modelos más populares?",
-        texto_Lenguaje3,
-      ],
-    ],
-  };
 
-  let respuestas_por_pregunta2 = {
-    Trabajo: {
-      "Riesgo de empleo": {
-        "Si, definitivamente": "todos concuerdan con vos",
-        "No, para nada": "nadie concuerda con vos",
-      },
-      "Trabajo y edad": {
-        "NULL": "asas"
-      },
-      "Trabajo y nivel de ingreso":{
-        "NULL": "rrer"
-      }
-    },
-    "Uso cotidiano": {
-      "¿Que tanto se usa Chat-GPT?": {
-        "Sí, lo uso cada día.": "muchos piensan como vos",
-        "Sí, lo uso cada semana": "pocos concuerdan",
-        "Sí, lo uso raramente": "mira vos",
-        "No, no tenía idea": "vos y alguien más coinciden",
-      },
-    },
-    Lenguajes: {
-      "Chat-GPT": {
-        "Lo conozco y lo uso a menudo":
-          "No sos el único, desde que salió su popularidad fue en ascenso sin descanso.",
-        "Lo conozco pero no lo uso":
-          "Hay bastante gente como vos, que todavía no incorporó la herramienta pese a conocer de su existencia. Sin embargo, muchos otros ya están inmersos en el uso de la IA en su vida diaria.",
-        "No lo conocía": "Raro, te lo presento: https://chatgpt.com/",
-      },
-      "Impacto positivo/negativo": {
-        Positivo: "Y",
-        Negativo: "N",
-      },
-      "Modelos más populares": {
-        A: "ad",
-      },
-    },
-  };
-
-  let tematicas_mensajes = {
-    Trabajo: [
-      "¿Cómo afecta el avance de la IA y los modelos de aprendizaje automáticos al mercado laboral?",
-      "En esta sección podrás descubrir y reflexionar acerca de si la inteligencia artificial y sus avances más recientes son positivos o negativos para el empleo a nivel global.",
-    ],
-    "Uso cotidiano": [
+  let topicsTexts = {
+    Trabajo: ["¿Me voy a quedar sin trabajo a causa de la IA?", text1Trabajo],
+    Habitualidad: [
       "¿Qué nivel de acceso se tiene a herramientas de inteligencia artificial sofisticadas hoy en día? ¿Es algo más bien exclusivo?",
-      "¿Se usa en exceso la IA? ¿Se explotan sus beneficios en pos de la productividad? ¿Se utilizan en exceso los modelos como Chat-GPT para todo tipo de tareas? En esta sección abarcaremos estas preguntas y más.",
+      text1Habitualidad,
     ],
     Lenguajes: [
       "¿Qué  tipos de modelos de  IA existen? ¿Cualés son los más usados?",
@@ -121,9 +59,88 @@
     ],
   };
 
-  let textoBienvenida =
-    "¡Hola! Este chat va a ser tu guía en el sitio web. Los pasos a seguir son simples: elegí una temática y seleccioná una pregunta para conocer más sobre diversos temas relacionados con inteligencia artificial, la perspectiva de la gente y comparar con tus opiniones.";
-  let index_actual = 0;
+  let messageTexts = {
+    Trabajo: {
+      "Riesgo de empleo": [
+        "¿Me voy a quedar sin trabajo a causa de la IA?",
+        text1Trabajo,
+        "graf-radar",
+        {
+          "Si, definitivamente": [
+            "Si, definitivamente",
+            "Muchas personas opinan como vos. La realidad es que la IA esta avanzando a pasos agigantados pero no necesariamente va a pasar lo peor. Trabajar con esta nueva herramienta es una opción viable.",
+            "graf-radar",
+            "graf-bar-sentiment",
+          ],
+          "No, para nada": [
+            "No, para nada",
+            "Hay que ser optimistas! Sorpresivamente muchas no concuerdan con vos",
+            "graf-radar",
+          ],
+        },
+      ],
+    },
+    Habitualidad: {
+      "¿Que tanto se usa Chat-GPT?": [
+        "¿Que tanto se usa Chat-GPT?",
+        text1Habitualidad,
+        {
+          "Sí, lo uso cada día.": textListAnswerHabitualidad,
+          "Sí, lo uso cada semana": textListAnswerHabitualidad,
+          "Sí, lo uso raramente": textListAnswerHabitualidad,
+          "No, no tenía idea": textListAnswerHabitualidad,
+        },
+      ],
+    },
+    Lenguajes: {
+      "Chat-GPT": [
+        "¿Qué es Chat-GPT? ¿Por qué todos hablan de él?",
+        text1Lenguaje,
+        {
+          "Lo conozco y lo uso a menudo": [
+            "Lo conozco y lo uso a menudo",
+            "No sos el único, desde que salió su popularidad fue en ascenso sin descanso.",
+          ],
+          "Lo conozco pero no lo uso": [
+            "Lo conozco pero no lo uso",
+            "Hay bastante gente como vos, que todavía no incorporó la herramienta pese a conocer de su existencia. Sin embargo, muchos otros ya están inmersos en el uso de la IA en su vida diaria.",
+          ],
+          "No lo conocía": [
+            "No lo conocía",
+            "Raro, te lo presento: https://chatgpt.com/",
+          ],
+        },
+      ],
+      "Impacto positivo/negativo": [
+        "¿Estos modelos son buenos o malos?",
+        text2Lenguaje,
+        {
+          Positivo: textListAnswerLenguaje,
+          Negativo: textListAnswerLenguaje,
+        },
+      ],
+      "Modelos más populares": [
+        "¿Cuáles son los modelos más populares?",
+        text4Lenguaje,
+        "graf-bar-share",
+        {
+          "Unica opción": ["", ""],
+        },
+      ],
+    },
+  };
+
+  let messagesAvailables = {
+    Trabajo: ["Riesgo de empleo"],
+    Habitualidad: ["¿Que tanto se usa Chat-GPT?"],
+    Lenguajes: [
+      "Chat-GPT",
+      "Impacto positivo/negativo",
+      "Modelos más populares",
+    ],
+  };
+
+  console.log(messagesAvailables);
 
   let chat = [
     { mensaje: "", tipo: 1 },
@@ -152,95 +169,10 @@
     { mensaje: "", tipo: 0 },
   ];
 
-  var speed = 10;
-  let delay_global = (speed + 5) * 100;
-  let delay_global2 = 1000;
-  let buttons_are_active = false;
-  let image_buttons = "../src/assets/menu.svg"; //open //CAMBIO
-
-  onMount(() => {
-    mostrar_texto(textoBienvenida, 0);
-    delayed_action(
-      (speed + 2) * textoBienvenida.length + delay_global2,
-      enable_buttons,
-      "btn-tematica"
-    );
-  });
-
-  function enable_buttons(name) {
-    let class_name = "." + name;
-    let botones = document.querySelectorAll(class_name);
-    botones.forEach(function (boton) {
-      boton.disabled = false;
-    });
-  }
-
-  function delayed_action(delay, funcion_a_ejecutar, ...args) {
-    setTimeout(function () {
-      funcion_a_ejecutar(...args);
-    }, delay);
-  }
-
-  function mostrar_graficos(tematica, index, respuesta) {
-    let mensaje_id = "mensaje-" + index;
-    let mensaje = document.getElementById(mensaje_id);
-
-    var DivGrafico = document.createElement("div");
-    DivGrafico.className = "grafico";
-    DivGrafico.style.justifyContent = "start";
-
-    if (tematica == "Trabajo") {
-      if(respuesta == "Caso"){
-        new NetSentimentBars({
-        target: DivGrafico
-      });
-      mensaje.insertBefore(DivGrafico, mensaje.firstChild);
-      mensaje.scrollIntoView({ behaviour: "smooth" });
-      }
-      else{
-        new Radar({
-        target: DivGrafico,
-        props: { p: 36, yes: respuesta === "Sí, definitivamente." },
-      });
-      
-      mensaje.appendChild(DivGrafico);
-      mensaje.scrollIntoView({ behaviour: "smooth" });      
-      }
-
-    } else if (tematica == "Uso cotidiano") {
-      DivGrafico.style.height = "100%";
-      DivGrafico.style.width = "100%";
-      new MapaDaily({
-        target: DivGrafico,
-      });
-      
-      mensaje.appendChild(DivGrafico);
-      mensaje.scrollIntoView({ behaviour: "smooth" });
-    }
-    else if(tematica == "Lenguajes"){
-      new NetSentimentBars({
-        target: DivGrafico
-      });
-
-      mensaje.appendChild(DivGrafico);
-      mensaje.scrollIntoView({ behaviour: "smooth" });
-    }
-
-    // Crear el elemento Radar y agregarlo al nuevo div
-
-    // Agregar el nuevo div al elemento existente en el DOM
-    
-    let class_name = ".grafico-" + tematica;
-    /*let graficos = document.querySelectorAll(class_name);
-    console.log("graficos", class_name, graficos);
-    graficos.forEach(function(grafico){
-      grafico.style.display = "flex";
-    })*/
-  }
-
   var i = 0;
+  var speed = 5;
 
-  function typeWrite(texto_respuesta, index) {
+  function typeWrite(texto_respuesta, index, resolve) {
     let typing_id = "typing-indicator-" + index;
 
     if (i < texto_respuesta.length) {
@@ -252,84 +184,137 @@
       textoRespuesta.appendChild(typingIndicator);
 
       setTimeout(function () {
-        typeWrite(texto_respuesta, index);
+        typeWrite(texto_respuesta, index, resolve);
       }, speed);
     } else {
       document.getElementById(typing_id).style.display = "none";
+      if (resolve) {
+        resolve();
+      }
     }
   }
 
-  function mostrar_texto(mensaje, index) {
-    //chat = [...chat, {mensaje, tipo}];
-    let mensaje_id = "mensaje-" + index;
-    i = 0;
-    document.getElementById(mensaje_id).style.display = "flex";
-    document.getElementById(mensaje_id).scrollIntoView({ behaviour: "smooth" });
-    typeWrite(mensaje, index);
-    index_actual = index_actual + 1;
+  function mostrarTexto(mensaje, index) {
+    return new Promise((resolve) => {
+      let mensaje_id = "mensaje-" + index;
+      i = 0;
+      document.getElementById(mensaje_id).style.display = "flex";
+      document
+        .getElementById(mensaje_id)
+        .scrollIntoView({ behaviour: "smooth" });
+      typeWrite(mensaje, index, resolve);
+    });
   }
 
-  function mostrar_botones(
-    type_button_touched,
-    tematica,
-    index,
-    id_button_touched
-  ) {
-    
-    if (type_button_touched == "reinicio-tematicas") {
-      let botones_tematica = document.querySelectorAll(".botones-tematicas");
-      botones_tematica.forEach(function (button) {
-        button.style.display = "flex";
+  function mostrarBotones(sectionName, topic, nro_pregunta) {
+    console.log(sectionName);
+
+    let classNameOfButtonTouched;
+
+    if (sectionName == "tematicas") {
+      classNameOfButtonTouched = ".btn-" + sectionName;
+    } else if (sectionName == "btn-opciones") {
+      classNameOfButtonTouched =
+        "." + sectionName + "-" + nro_pregunta + "-" + topic;
+    } else {
+      classNameOfButtonTouched = "." + sectionName + "-" + topic;
+    }
+
+    let buttonTouchedDiv = document.querySelectorAll(classNameOfButtonTouched);
+    buttonTouchedDiv.forEach(function (button) {
+      button.style.display = "flex";
+    });
+  }
+
+  function ocultarBotones(sectionName, topic, nro_pregunta) {
+    let classNameOfButtonTouched;
+
+    if (sectionName == "btn-tematicas") {
+      classNameOfButtonTouched = "." + sectionName;
+    } else if (sectionName == "btn-opciones") {
+      classNameOfButtonTouched =
+        "." + sectionName + "-" + nro_pregunta + "-" + topic;
+    } else {
+      classNameOfButtonTouched = "." + sectionName + "-" + topic;
+    }
+
+    let buttonTouchedDiv = document.querySelectorAll(classNameOfButtonTouched);
+    buttonTouchedDiv.forEach(function (button) {
+      button.style.display = "none";
+    });
+  }
+
+  function mostrarGrafico(graphicName) {
+    let messageId = "mensaje-" + globalIndex;
+    let message = document.getElementById(messageId);
+    var DivGrafico = document.createElement("div");
+    DivGrafico.className = "grafico";
+    DivGrafico.style.justifyContent = "start";
+
+    if (graphicName == "radar") {
+      new Radar({
+        target: DivGrafico,
+        props: { p: 60 },
+      });
+    } else if (graphicName == "bar-sentiment") {
+      new NetSentimentBars({
+        target: DivGrafico,
+      });
+    } else if (graphicName == "map") {
+      new Mapa({
+        target: DivGrafico,
+      });
+    } else if (graphicName == "bar") {
+      new Graf9110({
+        target: DivGrafico,
+      });
+    } else if (graphicName == "bar-share") {
+      new ShareAiSocialMediaBars({
+        target: DivGrafico,
       });
     }
-    
-    else if (type_button_touched == "Tematica") {
-      let id_botones = "botones-preguntas-" + index;
-      let botones_preguntas_tematica = document.getElementById(id_botones);
-      botones_preguntas_tematica.style.display = "flex";
-    } 
-    
-    
-    else if (type_button_touched == "Preguntas") {
-      console.log(index, tematica, "botones preguntas");
-      let id_botones = "respuestas-" + index + "-" + tematica;
-      let botones_preguntas_tematica = document.getElementById(id_botones);
-      botones_preguntas_tematica.style.display = "flex";
-    }
-    let class_boton_touched = "." + id_button_touched;
-    let button_touched_div = document.querySelectorAll(class_boton_touched);
-    button_touched_div.forEach(function (button) {
-      button.style.display = "none";
-    });
+    message.appendChild(DivGrafico);
   }
 
-  function reinicio_preguntas() {
-    let reinicio_div = document.getElementById("reinicio-preguntas");
-    reinicio_div.style.display = "flex";
-
-    let botones_respuesta = document.querySelectorAll(".opciones-respuestas");
-    botones_respuesta.forEach(function (button) {
-      button.style.display = "none";
-    });
-  }
-  document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("image-buttons").addEventListener("click", () => {
-      let button_container = document.getElementById("botones-juntos");
-      if (!buttons_are_active) {
-        button_container.style.display = "flex";
-        image_buttons = "../src/assets/menu.svg"; //close
+  async function nextSection(
+    actualSectionName,
+    nextSectionName,
+    topic,
+    nro_pregunta,
+    textToShowList
+  ) {
+    let i = 0;
+    for (let message of textToShowList) {
+      if (message.slice(0, 4) == "graf") {
+        await mostrarGrafico(message.slice(5, message.length));
       } else {
-        button_container.style.display = "none";
-        image_buttons = "../src/assets/menu.svg"; //open
+        await mostrarTexto(message, globalIndex);
       }
-      buttons_are_active = !buttons_are_active;
-    });
+      if (i == 0) {
+        globalIndex = globalIndex + 1;
+      }
+      i = i + 1;
+    }
+    globalIndex = globalIndex + 1;
+
+    if (nextSectionName == "btn-reinicio") {
+      mostrarBotones(nextSectionName, "all", nro_pregunta);
+    } else {
+      mostrarBotones(nextSectionName, topic, nro_pregunta);
+    }
+    ocultarBotones(actualSectionName, topic, nro_pregunta);
+  }
+
+  onMount(() => {
+    mostrarTexto(welcomeText, 0);
+    mostrarBotones("tematicas", "", 0);
+    globalIndex = globalIndex + 1;
   });
 </script>
 
 <main>
+  <div class="border-image"></div>
   <div class="container">
-    <Circuit></Circuit>
     <h3 class="headline">
       <b>IA y Opinión Pública</b>
     </h3>
@@ -374,281 +359,146 @@
         {/if}
       {/each}
 
-      <!-- BOTONES  -->
-      <div class="botones" id="list-buttons">
-        <img id="image-buttons" src="{image_buttons}" alt="Arrow">
-        <div id="botones-juntos" style="display: none;">
-          <div style="display: flex;">
-            {#each Object.entries(tematicas) as [tematica, preguntas], index}
+      <div style="display: flex;">
+        <!--<div>
+          <input class="button-bar" type="button" value="Botones"/>
+        </div>-->
+        {#each Object.entries(messageTexts) as [tematica, preguntas]}
+          <div>
+            {#each Object.entries(preguntas) as [pregunta, opciones], nro_pregunta}
               <div
-                style="display: none;"
-                class="botones-preguntas"
-                id="botones-preguntas-{index}"
+                id="respuestas-{nro_pregunta}-{tematica}"
+                class="opciones-respuestas"
+                style="display: flex;"
               >
-                {#each preguntas as [pregunta, texto1, texto2], index_pregunta}
-                  {#if (pregunta == "Trabajo y edad" || pregunta == "Trabajo y nivel de ingreso")}
+                {#each Object.entries(opciones[opciones.length - 1]) as [opcion, respuesta]}
                   <input
-                  class="botones-opciones btn-preguntas"
-                  type="button"
-                  value={pregunta}
-                  on:click={() => {
-                      let button_touched_div = document.querySelectorAll(".botones-preguntas");
-                      button_touched_div.forEach(function (button) {
-                      button.style.display = "none";
-                    });
-                    delayed_action(
-                        (speed + 2) * pregunta.length,
-                        reinicio_preguntas
-                    );
-                    mostrar_texto(texto1, index_actual);
-                    delayed_action(
-                      (speed + 2) * texto1.length + delay_global2,
-                      mostrar_texto,
-                      texto2,
-                      index_actual
-                    );
-                    delayed_action(
-                            (speed + 2) * texto1.length + delay_global2,
-                            mostrar_graficos,
-                            tematica,
-                            index_actual,
-                            "Caso"
-                    );
-                  }}
-                  disabled
-                />
-                {:else}
-                  <input
-                  class="botones-opciones btn-preguntas"
-                  type="button"
-                  value={pregunta}
-                  on:click={() => {
-                    mostrar_botones(
-                      "Preguntas",
-                      tematica,
-                      index_pregunta,
-                      "botones-preguntas"
-                    );
-                    mostrar_texto(texto1, index_actual);
-                    delayed_action(
-                      (speed + 2) * texto1.length + delay_global2,
-                      mostrar_texto,
-                      texto2,
-                      index_actual
-                    );
-                    delayed_action(
-                      (speed + 2) * (texto1.length + texto2.length) + delay_global2 + 5000,
-                      enable_buttons,
-                      "btn-opciones"
-                    );
-                  }}
-                  disabled
-                />
-                {/if}
-                {/each}
-              </div>
-              <div style="display: flex;" class="botones-tematicas">
-                {#if preguntas.length == 1}
-                  <input
-                  class="botones-opciones btn-tematica"
-                  type="button"
-                  value={tematica}
-                  on:click={() => {
-                    mostrar_botones(
-                      "Preguntas",
-                      tematica,
-                      0,
-                      "botones-tematicas"
-                    );
-                    mostrar_texto(tematicas_mensajes[tematica][0], index_actual);
-                    delayed_action(
-                      (speed + 2) * tematicas_mensajes[tematica][0].length + delay_global2,
-                      mostrar_texto,
-                      tematicas_mensajes[tematica][1],
-                      index_actual
-                    );
-                    delayed_action(
-                      (speed + 2) * (tematicas_mensajes[tematica][0].length + tematicas_mensajes[tematica][1].length) + delay_global2 + 5000,
-                      enable_buttons,
-                      "btn-opciones"
-                    );
-                  }}
-                  disabled
-                />
-                {:else}
-                  <input
-                  class="botones-opciones btn-tematica"
-                  type="button"
-                  value={tematica}
-                  on:click={() => {
-                    mostrar_botones(
-                      "Tematica",
-                      tematica,
-                      index,
-                      "botones-tematicas"
-                    );
-                    mostrar_texto(
-                      tematicas_mensajes[tematica][0],
-                      index_actual
-                    );
-                    delayed_action(
-                      (speed + 2) * tematicas_mensajes[tematica][0].length +
-                        delay_global2,
-                      mostrar_texto,
-                      tematicas_mensajes[tematica][1],
-                      index_actual
-                    );
-                    delayed_action(
-                      (speed + 2) *
-                        (tematicas_mensajes[tematica][0].length +
-                          tematicas_mensajes[tematica][1].length) +
-                        delay_global2,
-                      enable_buttons,
-                      "btn-preguntas"
-                    );
-                  }}
-                  disabled
-                  />
-                {/if}
-              </div>
-            {/each}
-          </div>
-
-          
-          <div style="display: flex;">
-            {#each Object.entries(respuestas_por_pregunta2) as [tematica, preguntas]}
-              <div>
-                {#each Object.entries(preguntas) as [pregunta, opciones], nro_pregunta}
-                  <div
+                    class="botones-opciones btn-opciones-{nro_pregunta}-{tematica}"
+                    type="button"
                     style="display: none;"
-                    id="respuestas-{nro_pregunta}-{tematica}"
-                    class="opciones-respuestas"
-                  >
-                    {#each Object.entries(opciones) as [opcion, respuesta]}
-                      <input
-                        class="botones-opciones btn-opciones"
-                        type="button"
-                        value={opcion}
-                        on:click={() => {
-                          mostrar_texto(opcion, index_actual);
-                          delayed_action(
-                            (speed + 2) * opcion.length,
-                            reinicio_preguntas
-                          );
-                          delayed_action(
-                            (speed + 2) * opcion.length + delay_global2,
-                            mostrar_graficos,
-                            tematica,
-                            index_actual,
-                            opcion
-                          );
-                          delayed_action(
-                            (speed + 2) * opcion.length + delay_global2,
-                            mostrar_texto,
-                            respuesta,
-                            index_actual
-                          );
-                        }}
-                        disabled
-                      />
-                    {/each}
-                  </div>
+                    value={opcion}
+                    on:click={() => {
+                      nextSection(
+                        "btn-opciones",
+                        "btn-reinicio",
+                        tematica,
+                        nro_pregunta,
+                        respuesta
+                      );
+                    }}
+                  />
                 {/each}
+              </div>
+              <div>
+                <input
+                  class="botones-opciones btn-preguntas-{tematica}"
+                  type="button"
+                  style="display: none;"
+                  value={pregunta}
+                  on:click={() => {
+                    if (Object.keys(opciones[opciones.length - 1]).length > 1) {
+                      nextSection(
+                        "btn-preguntas",
+                        "btn-opciones",
+                        tematica,
+                        nro_pregunta,
+                        opciones.slice(0, opciones.length - 1)
+                      );
+                    } else {
+                      nextSection(
+                        "btn-preguntas",
+                        "btn-reinicio",
+                        tematica,
+                        nro_pregunta,
+                        opciones.slice(0, opciones.length - 1)
+                      );
+                    }
+                  }}
+                />
               </div>
             {/each}
           </div>
-
-          <div style="display: none;" id="reinicio-preguntas">
+          <div>
             <input
+              class="botones-opciones btn-tematicas"
               type="button"
-              class="botones-opciones"
-              value="Otra categoria"
+              style="display: none;"
+              value={tematica}
               on:click={() => {
-                delayed_action(
-                  0,
-                  mostrar_botones,
-                  "reinicio-tematicas",
-                  0,
-                  "botones-respuestas"
-                );
-                document.getElementById("reinicio-preguntas").style.display =
-                  "none";
-                delayed_action(
-                  0,
-                  enable_buttons,
-                  "btn-tematicas"
-                );
-              }}
-            />
-            <input
-              type="button"
-              class="botones-opciones"
-              value="Más preguntas trabajo"
-              on:click={() => {
-                delayed_action(
-                  delay_global,
-                  mostrar_botones,
-                  "Tematica",
-                  "Trabajo",
-                  0,
-                  "botones-respuestas"
-                );
-                document.getElementById("reinicio-preguntas").style.display =
-                  "none";
-                delayed_action(
-                  0,
-                  enable_buttons,
-                  "btn-preguntas"
-                );
-              }}
-            />
-            <input
-              type="button"
-              class="botones-opciones"
-              value="Más preguntas uso cotidiano"
-              on:click={() => {
-                delayed_action(
-                  delay_global,
-                  mostrar_botones,
-                  "Tematica",
-                  "Uso cotidiano",
-                  1,
-                  "botones-respuestas"
-                );
-                document.getElementById("reinicio-preguntas").style.display =
-                  "none";
-                delayed_action(
-                  0,
-                  enable_buttons,
-                  "btn-preguntas"
-                );
-              }}
-            />
-            <input
-              type="button"
-              class="botones-opciones"
-              value="Más preguntas lenguaje"
-              on:click={() => {
-                delayed_action(
-                  delay_global,
-                  mostrar_botones,
-                  "Tematica",
-                  "Lenguaje",
-                  2,
-                  "botones-respuestas"
-                );
-                document.getElementById("reinicio-preguntas").style.display =
-                  "none";
-                delayed_action(
-                  0,
-                  enable_buttons,
-                  "btn-preguntas"
-                );
+                if (Object.keys(preguntas).length > 1) {
+                  nextSection(
+                    "btn-tematicas",
+                    "btn-preguntas",
+                    tematica,
+                    0,
+                    topicsTexts[tematica]
+                  );
+                } else {
+                  nextSection(
+                    "btn-tematicas",
+                    "btn-opciones",
+                    tematica,
+                    0,
+                    topicsTexts[tematica]
+                  );
+                }
               }}
             />
           </div>
-        </div>
+        {/each}
       </div>
+
+      <div>
+        <input
+          class="botones-opciones btn-reinicio-all"
+          type="button"
+          style="display: none;"
+          value="Otro tema"
+          on:click={() => {
+            mostrarBotones("tematicas", "", 0);
+            ocultarBotones("btn-reinicio", "all", 0);
+          }}
+        />
+        <input
+          class="btn-reinicio-trabajo"
+          type="button"
+          style="display: none;"
+          value="Más preguntas de Trabajo"
+          on:click={() => {
+            mostrarBotones("tematicas", "", 0);
+            ocultarBotones("btn-reinicio", "trabajo", 0);
+          }}
+        />
+        <input
+          class="btn-reinicio-habitualidad"
+          type="button"
+          style="display: none;"
+          value="Más preguntas de Habitualidad"
+          on:click={() => {
+            mostrarBotones("tematicas", "", 0);
+            ocultarBotones("btn-reinicio", "habitualidad", 0);
+          }}
+        />
+        <input
+          class="btn-reinicio-lenguaje"
+          type="button"
+          style="display: none;"
+          value="Más preguntas de Lenguaje"
+          on:click={() => {
+            mostrarBotones("tematicas", "", 0);
+            ocultarBotones("btn-reinicio", "lenguaje", 0);
+          }}
+        />
+      </div>
+
+      <!--<div>
+          {#each Object.entries(messagesAvailables) as [topic, choiceAvailable]}
+            <input class="btn-reinicio" type="button" style="display: none;" value={topic}/>
+            {#each choiceAvailable as messageChoice}
+              <input class="btn-reinicio-{topic}" type="button" style="display: none;" value={messageChoice}/>
+            {/each}
+          {/each}
+        </div>-->
     </div>
   </div>
 </main>
@@ -665,6 +515,35 @@
       "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
       "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
       "Noto Color Emoji";
+  }
+
+  .border-image {
+    overflow: hidden;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .border-image::before,
+  .border-image::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 15%;
+    background-size: cover;
+    background-repeat: repeat;
+    z-index: 1;
+  }
+
+  .border-image::before {
+    left: 0;
+    background-image: url("../src/assets/border_left.png");
+  }
+
+  .border-image::after {
+    right: 0;
+    background-image: url("../src/assets/border_right.png");
   }
 
   input {
@@ -737,11 +616,22 @@
   }
 
   .botones {
-    display: inline-block; /*MODIFICADO*/
+    display: flex;
     position: fixed;
     right: 20px;
     bottom: 20px;
-    right: 310px; /*MODIFICADO*/
+  }
+
+  .button-bar {
+    position: fixed;
+    bottom: 20px;
+    width: 500px;
+    height: 50px;
+    left: 380px;
+    border-radius: 20px;
+    background-color: #202021;
+    color: white;
+    border-color: black;
   }
 
   .boton-inicio {
@@ -779,13 +669,12 @@
 
   .mensaje-usuario {
     border-radius: 20px;
-    padding-left: 1.5%;
-    padding-right: 1.5%;
+    padding-left: 10px;
+    padding-right: 10px;
     margin-bottom: 1px;
     margin-right: 50px;
     background-color: #2e2f2e;
-    width: fit-content;
-    max-width: 80%;
+    width: 500px;
     align-self: flex-end;
     height: fit-content;
     font-size: 20px;
@@ -795,8 +684,7 @@
     border-radius: 20px;
     padding-right: 10px;
     background-color: #202021;
-    width: 1000px;
-    max-width: 95%;
+    width: 900px;
     align-self: flex-start;
     display: flex;
     flex-direction: column;
@@ -835,6 +723,4 @@
     align-items: center;
     height: 100vh;
   }
-
- 
 </style>
