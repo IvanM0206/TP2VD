@@ -1,28 +1,27 @@
-# VD | Svelte Scroller Template 
+# VD | IA y Opinión Pública
 
-### Maqueta de proyecto que implementa svelte-scroller para filtrar datos y mostrar visualizaciones de datos en una página web con efecto de scrollytelling.
+### Narrativa visual de datos en formato de test o paseo interactivo basada en encuestas sobre diversos temas de inteligencia artificial y la opinión sobre ellos del público. Realizada para la materia Visualización de Datos por los alumnos Iván Mondrzak, Federico Peitti y Franco Setti.
+
 ---
 
-### Referencias: 
-- [https://github.com/sveltejs/svelte-scroller](https://github.com/sveltejs/svelte-scroller)
-- [Escalas de d3.js](https://d3js.org/d3-scale)
-[API de Intersection Observer](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)
+### Referencias:
 
+-[Stanford AI Index Report, la fuente de inspiración](https://aiindex.stanford.edu/report/)
+
+- [Flourish: armado de gráficos de barras y mapas](https://flourish.studio/)
+- [Radar animado: para los gráficos de torta](https://codepen.io/vii120/pen/yLGYqJq)
+- Funciones y animaciones del flujo, como la escritura y la interactividad de elaboración propia con JavaScript
+
+#TODO
 ![thumbnail](thumbnail.png)
 
 ---
 
-This template should help get you started developing with Svelte in Vite.
+## Motivación
 
-## Recommended IDE Setup
+Detrás del desarrollo de este trabajo, se buscaba comunicar los resultados de un estudio masivo realizado por la universidad de Stanford (Starford AI Index Report 2023), el cual incluye métricas de todo tipo relacionadas con inteligencia artificial. En particular, se decidió trabajar con el capítulo 9 de dicho reporte, basado en opinión pública para comunicar un mensaje claro, acotado y conciso.
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
-
-## Need an official Svelte framework?
-
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
-
-## Technical considerations
+## Desarrollo y consideraciones generales
 
 **Why use this over SvelteKit?**
 
@@ -54,6 +53,6 @@ If you have state that's important to retain within a component, consider creati
 ```js
 // store.js
 // An extremely simple external store
-import { writable } from "svelte/store"
-export default writable(0)
+import { writable } from "svelte/store";
+export default writable(0);
 ```
