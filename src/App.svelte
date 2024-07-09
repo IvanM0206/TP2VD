@@ -16,7 +16,8 @@
   let welcomeText =
     "¡Hola! Este chat va a ser tu guía en el sitio web. Los pasos a seguir son simples: elegí una temática y seleccioná una pregunta para conocer más sobre diversos temas relacionados con inteligencia artificial, la perspectiva de la gente y comparar con tus opiniones.";
 
-  let conclusionText = "La inteligencia artificial se ha convertido en una herramienta poderosa y omnipresente en nuestra sociedad actual. Desde su impacto en el mercado laboral, donde se debate entre ser una ayuda o una amenaza, hasta su uso cotidiano que muestra una creciente adopción y dependencia, la IA está remodelando el panorama global. Modelos como GPT-4 dominan la atención pública, destacando la rapidez con la que estas tecnologías se integran en diversas áreas. Las percepciones varían según la generación y el nivel de ingresos, lo que refleja la complejidad y diversidad de opiniones sobre el futuro de la IA. A medida que continuamos explorando y utilizando estas herramientas, es crucial fomentar un uso consciente y ético que maximice sus beneficios y minimice sus riesgos. La inteligencia artificial promete no sólo desafíos, sino también oportunidades únicas para el progreso humano.";
+  let conclusionText =
+    "La inteligencia artificial se ha convertido en una herramienta poderosa y omnipresente en nuestra sociedad actual. Desde su impacto en el mercado laboral, donde se debate entre ser una ayuda o una amenaza, hasta su uso cotidiano que muestra una creciente adopción y dependencia, la IA está remodelando el panorama global. Modelos como GPT-4 dominan la atención pública, destacando la rapidez con la que estas tecnologías se integran en diversas áreas. Las percepciones varían según la generación y el nivel de ingresos, lo que refleja la complejidad y diversidad de opiniones sobre el futuro de la IA. A medida que continuamos explorando y utilizando estas herramientas, es crucial fomentar un uso consciente y ético que maximice sus beneficios y minimice sus riesgos. La inteligencia artificial promete no sólo desafíos, sino también oportunidades únicas para el progreso humano.";
 
   let text1Trabajo =
     "En esta sección podrás descubrir y reflexionar acerca de si la inteligencia artificial y sus avances más recientes son positivos o negativos para el empleo a nivel global. Por el momento, se tiene a la IA como una herramienta más que como un reemplazo. Si bien es cierto que algunas tareas básicas las puede realizar en su totalidad un modelo automatizado por su cuenta, existen actividades que requieren cierta capacidad de análisis, pensamiento y empatía que estos modelos todavía no tienen, y no se sabe con exactitud si llegarán a tenerlos. Los humanos siguen siendo piezas esenciales y recursos indiscutibles para llevar a cabo muchos trabajos, pero es verdad, por otro lado, que actividades menos complejas podrían ser automatizadas y eso dejaría vulnerable a un sector de la población. ¿Vos qué pensás? ¿La inteligencia artificial va a reemplazar tu trabajo actual?";
@@ -162,9 +163,8 @@
   let countersBySection = {
     Trabajo: 1,
     Habitualidad: 1,
-    Lenguajes: 3
+    Lenguajes: 3,
   };
-
 
   let chat = [
     { mensaje: "", tipo: 1 },
@@ -241,7 +241,6 @@
   }
 
   function mostrarBotones(sectionName, topic, nro_pregunta) {
-
     let classNameOfButtonTouched;
 
     if (sectionName == "tematicas") {
@@ -257,63 +256,60 @@
     buttonTouchedDiv.forEach(function (button) {
       button.style.display = "flex";
     });
-
   }
 
-  function displayConclusion(){
+  function displayConclusion() {
     console.log("conclusion");
-    mostrarTexto(conclusionText, globalIndex);
+    setTimeout(function () {
+      mostrarTexto(conclusionText, globalIndex + 1);
+    }, 2000);
   }
 
-  function checkButtonsVisited(sectionName, topic, nro_pregunta){
-    
+  function checkButtonsVisited(sectionName, topic, nro_pregunta) {
     let nameButtonTouched;
     let ButtonTouched;
 
-    if(sectionName == "btn-tematicas"){
-      
+    if (sectionName == "btn-tematicas") {
       countersBySection[topic] -= 1 * (topic != "Lenguajes");
-    }
-
-    else if(sectionName == "btn-preguntas"){
-
+    } else if (sectionName == "btn-preguntas") {
       countersBySection[topic] -= 1;
       nameButtonTouched = sectionName + "-" + topic + "-" + nro_pregunta;
       ButtonTouched = document.getElementById(nameButtonTouched);
       ButtonTouched.classList.add("eliminated");
     }
 
-    if(countersBySection[topic] == 0){
+    if (countersBySection[topic] == 0) {
       nameButtonTouched = "btn-tematicas-" + topic;
       ButtonTouched = document.getElementById(nameButtonTouched);
       ButtonTouched.classList.add("eliminated");
 
-      if(topic == "Lenguajes"){
+      if (topic == "Lenguajes") {
         let idElementMore = ".btn-reinicio-" + topic;
         let elementMore = document.querySelectorAll(topic);
-        elementMore.forEach(function(button){
+        elementMore.forEach(function (button) {
           button.classList.add("eliminated");
-        })
+        });
       }
-    }
-    else if(topic == "Lenguajes" && countersBySection[topic] < 3){
+    } else if (topic == "Lenguajes" && countersBySection[topic] < 3) {
       nameButtonTouched = "btn-tematicas-" + topic;
       ButtonTouched = document.getElementById(nameButtonTouched);
       ButtonTouched.classList.add("eliminated");
     }
 
-    if(countersBySection["Trabajo"] == 0 && countersBySection["Habitualidad"] == 0){
-      if(countersBySection["Lenguajes"] < 3){
+    if (
+      countersBySection["Trabajo"] == 0 &&
+      countersBySection["Habitualidad"] == 0
+    ) {
+      if (countersBySection["Lenguajes"] < 3) {
         let elementReinicio = document.querySelectorAll(".btn-reinicio-all");
-        elementReinicio.forEach(function(button){
+        elementReinicio.forEach(function (button) {
           button.classList.add("eliminated");
-        })
-      }
-      else if(countersBySection["Lenguajes"] == 0){
+        });
+      } else if (countersBySection["Lenguajes"] == 0) {
         let elementReinicio = document.querySelectorAll(".btn-reinicio-all");
-        elementReinicio.forEach(function(button){
+        elementReinicio.forEach(function (button) {
           button.classList.add("eliminated");
-        })
+        });
       }
     }
   }
@@ -322,7 +318,7 @@
     let classNameOfButtonTouched;
 
     if (sectionName == "btn-tematicas") {
-      classNameOfButtonTouched = "." + sectionName;     
+      classNameOfButtonTouched = "." + sectionName;
     } else if (sectionName == "btn-opciones") {
       classNameOfButtonTouched =
         "." + sectionName + "-" + nro_pregunta + "-" + topic;
@@ -336,7 +332,6 @@
     });
 
     checkButtonsVisited(sectionName, topic, nro_pregunta);
-
   }
 
   function mostrarGrafico(graphicName, answeredText) {
@@ -398,20 +393,21 @@
     }
     globalIndex = globalIndex + 1;
 
-    if(nextSectionName == "btn-reinicio"){
+    if (nextSectionName == "btn-reinicio") {
       mostrarBotones(nextSectionName, "all", nro_pregunta);
-      if(0 < countersBySection["Lenguajes"]  && countersBySection["Lenguajes"] < 3){
+      if (
+        0 < countersBySection["Lenguajes"] &&
+        countersBySection["Lenguajes"] < 3
+      ) {
         mostrarBotones(nextSectionName, "Lenguajes", nro_pregunta);
       }
-    }
-    else{
+    } else {
       mostrarBotones(nextSectionName, topic, nro_pregunta);
     }
     let end = 0;
-    for(value in Object.values(countersBySection)){
-      end += value;
-    }
-    if(end == 0){
+    end = Object.values(countersBySection).reduce((a, b) => a + b, 0);
+    console.log(end, "FINAL", globalIndex);
+    if (end == 0 && globalIndex == 21) {
       displayConclusion();
     }
   }
@@ -503,7 +499,7 @@
               <div>
                 <input
                   class="botones-opciones btn-preguntas-{tematica}"
-                  id = "btn-preguntas-{tematica}-{nro_pregunta}"
+                  id="btn-preguntas-{tematica}-{nro_pregunta}"
                   type="button"
                   style="display: none;"
                   value={pregunta}
@@ -632,11 +628,11 @@
     background-image: url("../src/assets/border_right.png");
   }
 
-  .eliminated{
+  .eliminated {
     display: none !important;
   }
 
-  #btn-more-Lenguajes{
+  #btn-more-Lenguajes {
     display: none;
   }
 
