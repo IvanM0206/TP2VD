@@ -1,42 +1,4 @@
 <script>
-  /*document.addEventListener("DOMContentLoaded", function () {
-    const radar = document.getElementById("radar");
-
-    const data = [
-      { label: "Likely", value: 57 },
-      { label: "Don't know", value: 35 },
-      { label: "Not likely", value: 8 },
-    ];
-
-    // Convertir los valores a ángulos
-    const total = data.reduce((acc, item) => acc + item.value, 0);
-    const angles = data.map((item) => (item.value / total) * 360);
-
-    // Crear las secciones del radar
-    let currentAngle = 0;
-    angles.forEach((angle, index) => {
-      const section = document.createElement("div");
-      section.className = "radar-section";
-      section.style.transform = `rotate(${currentAngle}deg) skewY(-90deg)`;
-      section.style.background = `conic-gradient(${getColor(index)} ${angle}deg, transparent 0)`;
-      radar.appendChild(section);
-      currentAngle += angle;
-    });
-
-    function getColor(index) {
-      switch (index) {
-        case 0:
-          return "#0af";
-        case 1:
-          return "#05a";
-        case 2:
-          return "#005";
-        default:
-          return "#000";
-      }
-    }
-  });*/
-
   export let p = 0;
   export let yes = false;
   function reglaDeTresSimple(p) {
@@ -83,7 +45,7 @@
     --size: 400px;
     --color: #15fcd8;
     --color-inside: rgb(21, 252, 216, 0.05);
-    --color-axis: rgb(21, 252, 216, 0.2);
+    --color-axis: rgb(21, 252, 216, 0.1);
     --p: 180;
 
     width: var(--size);
@@ -196,7 +158,6 @@
   .highlight {
     color: #15fcd8;
     font-weight: bold;
-    font-size: xx-large;
   }
 
   .container {
