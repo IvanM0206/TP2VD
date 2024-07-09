@@ -466,12 +466,12 @@
         {/if}
       {/each}
 
-      <div style="display: flex;">
+      <div style="display: flex;" class="botones">
         <!--<div>
           <input class="button-bar" type="button" value="Botones"/>
         </div>-->
         {#each Object.entries(messageTexts) as [tematica, preguntas]}
-          <div>
+          <div style="display: flex;">
             {#each Object.entries(preguntas) as [pregunta, opciones], nro_pregunta}
               <div
                 id="respuestas-{nro_pregunta}-{tematica}"
@@ -556,7 +556,7 @@
         {/each}
       </div>
 
-      <div>
+      <div style="display: flex;">
         <a
           class="botones-opciones btn-reinicio-all"
           type="button"
@@ -584,6 +584,7 @@
 
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,700;1,700&display=swap");
+  
   :global(body) {
     background-color: #202021;
     /*font-family: "Roboto Mono", monospace;*/
@@ -627,10 +628,6 @@
 
   .eliminated {
     display: none !important;
-  }
-
-  #btn-more-Lenguajes {
-    display: none;
   }
 
   a {
@@ -705,7 +702,6 @@
   .botones {
     display: flex;
     position: fixed;
-    right: 20px;
     bottom: 20px;
   }
 
@@ -858,7 +854,7 @@
     padding-right: 10px;
     margin-bottom: 1px;
     margin-right: 50px;
-    background-color: #2e2f2e;
+    background: linear-gradient(-30deg, #0b3d34 50%, #082b27 50%);
     width: 500px;
     align-self: flex-end;
     height: fit-content;
@@ -868,44 +864,11 @@
   .chat {
     border-radius: 20px;
     padding-right: 10px;
-    background-color: #202021;
+    background: #202021;
     width: 900px;
     align-self: flex-start;
     display: flex;
     flex-direction: column;
     height: fit-content;
-  }
-
-  /* Estilos para el scroller */
-  .foreground_container {
-    pointer-events: none;
-    padding-left: 50%;
-  }
-
-  .step_foreground {
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    height: 100vh;
-    border: 1px solid rgba(0, 0, 0, 0.4);
-    color: white;
-    padding: 1em;
-    margin: 0 0 2em 0;
-  }
-  .epi_foreground {
-    padding: 20px;
-    max-width: 150px;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  .lorem_ipsum {
-    font-family: "Gentium Plus", serif;
-    margin: 100px auto;
-    max-width: 740px;
-  }
-  .image_container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
   }
 </style>
