@@ -16,6 +16,8 @@
   let welcomeText =
     "¡Hola! Este chat va a ser tu guía en el sitio web. Los pasos a seguir son simples: elegí una temática y seleccioná una pregunta para conocer más sobre diversos temas relacionados con inteligencia artificial, la perspectiva de la gente y comparar con tus opiniones.";
 
+  let conclusionText = "La inteligencia artificial se ha convertido en una herramienta poderosa y omnipresente en nuestra sociedad actual. Desde su impacto en el mercado laboral, donde se debate entre ser una ayuda o una amenaza, hasta su uso cotidiano que muestra una creciente adopción y dependencia, la IA está remodelando el panorama global. Modelos como GPT-4 dominan la atención pública, destacando la rapidez con la que estas tecnologías se integran en diversas áreas. Las percepciones varían según la generación y el nivel de ingresos, lo que refleja la complejidad y diversidad de opiniones sobre el futuro de la IA. A medida que continuamos explorando y utilizando estas herramientas, es crucial fomentar un uso consciente y ético que maximice sus beneficios y minimice sus riesgos. La inteligencia artificial promete no sólo desafíos, sino también oportunidades únicas para el progreso humano.";
+
   let text1Trabajo =
     "En esta sección podrás descubrir y reflexionar acerca de si la inteligencia artificial y sus avances más recientes son positivos o negativos para el empleo a nivel global. Por el momento, se tiene a la IA como una herramienta más que como un reemplazo. Si bien es cierto que algunas tareas básicas las puede realizar en su totalidad un modelo automatizado por su cuenta, existen actividades que requieren cierta capacidad de análisis, pensamiento y empatía que estos modelos todavía no tienen, y no se sabe con exactitud si llegarán a tenerlos. Los humanos siguen siendo piezas esenciales y recursos indiscutibles para llevar a cabo muchos trabajos, pero es verdad, por otro lado, que actividades menos complejas podrían ser automatizadas y eso dejaría vulnerable a un sector de la población. ¿Vos qué pensás? ¿La inteligencia artificial va a reemplazar tu trabajo actual?";
 
@@ -157,17 +159,12 @@
     },
   };
 
-  let messagesAvailables = {
-    Trabajo: ["Riesgo de empleo"],
-    Habitualidad: ["¿Qué tanto se usa Chat-GPT?"],
-    Lenguajes: [
-      "Chat-GPT",
-      "Impacto positivo/negativo",
-      "Modelos más populares",
-    ],
+  let countersBySection = {
+    Trabajo: 1,
+    Habitualidad: 1,
+    Lenguajes: 3
   };
 
-  console.log(messagesAvailables);
 
   let chat = [
     { mensaje: "", tipo: 1 },
@@ -206,8 +203,8 @@
     { mensaje: "", tipo: 0 },
   ];
 
-  var i = 0;
-  var speed = 1;
+  let i = 0;
+  let speed = 0.5;
 
   function typeWrite(texto_respuesta, index, resolve) {
     let typing_id = "typing-indicator-" + index;
@@ -244,7 +241,6 @@
   }
 
   function mostrarBotones(sectionName, topic, nro_pregunta) {
-    console.log(sectionName);
 
     let classNameOfButtonTouched;
 
@@ -261,13 +257,72 @@
     buttonTouchedDiv.forEach(function (button) {
       button.style.display = "flex";
     });
+
+  }
+
+  function displayConclusion(){
+    console.log("conclusion");
+    mostrarTexto(conclusionText, globalIndex);
+  }
+
+  function checkButtonsVisited(sectionName, topic, nro_pregunta){
+    
+    let nameButtonTouched;
+    let ButtonTouched;
+
+    if(sectionName == "btn-tematicas"){
+      
+      countersBySection[topic] -= 1 * (topic != "Lenguajes");
+    }
+
+    else if(sectionName == "btn-preguntas"){
+
+      countersBySection[topic] -= 1;
+      nameButtonTouched = sectionName + "-" + topic + "-" + nro_pregunta;
+      ButtonTouched = document.getElementById(nameButtonTouched);
+      ButtonTouched.classList.add("eliminated");
+    }
+
+    if(countersBySection[topic] == 0){
+      nameButtonTouched = "btn-tematicas-" + topic;
+      ButtonTouched = document.getElementById(nameButtonTouched);
+      ButtonTouched.classList.add("eliminated");
+
+      if(topic == "Lenguajes"){
+        let idElementMore = ".btn-reinicio-" + topic;
+        let elementMore = document.querySelectorAll(topic);
+        elementMore.forEach(function(button){
+          button.classList.add("eliminated");
+        })
+      }
+    }
+    else if(topic == "Lenguajes" && countersBySection[topic] < 3){
+      nameButtonTouched = "btn-tematicas-" + topic;
+      ButtonTouched = document.getElementById(nameButtonTouched);
+      ButtonTouched.classList.add("eliminated");
+    }
+
+    if(countersBySection["Trabajo"] == 0 && countersBySection["Habitualidad"] == 0){
+      if(countersBySection["Lenguajes"] < 3){
+        let elementReinicio = document.querySelectorAll(".btn-reinicio-all");
+        elementReinicio.forEach(function(button){
+          button.classList.add("eliminated");
+        })
+      }
+      else if(countersBySection["Lenguajes"] == 0){
+        let elementReinicio = document.querySelectorAll(".btn-reinicio-all");
+        elementReinicio.forEach(function(button){
+          button.classList.add("eliminated");
+        })
+      }
+    }
   }
 
   function ocultarBotones(sectionName, topic, nro_pregunta) {
     let classNameOfButtonTouched;
 
     if (sectionName == "btn-tematicas") {
-      classNameOfButtonTouched = "." + sectionName;
+      classNameOfButtonTouched = "." + sectionName;     
     } else if (sectionName == "btn-opciones") {
       classNameOfButtonTouched =
         "." + sectionName + "-" + nro_pregunta + "-" + topic;
@@ -279,11 +334,13 @@
     buttonTouchedDiv.forEach(function (button) {
       button.style.display = "none";
     });
+
+    checkButtonsVisited(sectionName, topic, nro_pregunta);
+
   }
 
   function mostrarGrafico(graphicName, answeredText) {
     let messageId = "mensaje-" + globalIndex;
-    console.log("MENSAJE", messageId);
     let message = document.getElementById(messageId);
     var DivGrafico = document.createElement("div");
     DivGrafico.className = "grafico";
@@ -316,6 +373,7 @@
       });
     }
     message.appendChild(DivGrafico);
+    message.scrollIntoView({ behaviour: "smooth" });
   }
 
   async function nextSection(
@@ -326,6 +384,7 @@
     textToShowList
   ) {
     let i = 0;
+    ocultarBotones(actualSectionName, topic, nro_pregunta);
     for (let message of textToShowList) {
       if (message.slice(0, 4) == "graf") {
         await mostrarGrafico(message.slice(5, message.length), textToShowList);
@@ -339,12 +398,22 @@
     }
     globalIndex = globalIndex + 1;
 
-    if (nextSectionName == "btn-reinicio") {
+    if(nextSectionName == "btn-reinicio"){
       mostrarBotones(nextSectionName, "all", nro_pregunta);
-    } else {
+      if(0 < countersBySection["Lenguajes"]  && countersBySection["Lenguajes"] < 3){
+        mostrarBotones(nextSectionName, "Lenguajes", nro_pregunta);
+      }
+    }
+    else{
       mostrarBotones(nextSectionName, topic, nro_pregunta);
     }
-    ocultarBotones(actualSectionName, topic, nro_pregunta);
+    let end = 0;
+    for(value in Object.values(countersBySection)){
+      end += value;
+    }
+    if(end == 0){
+      displayConclusion();
+    }
   }
 
   onMount(() => {
@@ -434,6 +503,7 @@
               <div>
                 <input
                   class="botones-opciones btn-preguntas-{tematica}"
+                  id = "btn-preguntas-{tematica}-{nro_pregunta}"
                   type="button"
                   style="display: none;"
                   value={pregunta}
@@ -464,6 +534,7 @@
             <input
               class="botones-opciones btn-tematicas"
               type="button"
+              id="btn-tematicas-{tematica}"
               style="display: none;"
               value={tematica}
               on:click={() => {
@@ -499,48 +570,21 @@
           on:click={() => {
             mostrarBotones("tematicas", "", 0);
             ocultarBotones("btn-reinicio", "all", 0);
+            ocultarBotones("btn-reinicio", "Lenguajes", 0);
           }}
         />
         <input
-          class="btn-reinicio-trabajo"
+          class="botones-opciones btn-reinicio-Lenguajes"
           type="button"
           style="display: none;"
-          value="Más preguntas de Trabajo"
+          value="Más preguntas de lenguaje"
           on:click={() => {
-            mostrarBotones("tematicas", "", 0);
-            ocultarBotones("btn-reinicio", "trabajo", 0);
-          }}
-        />
-        <input
-          class="btn-reinicio-habitualidad"
-          type="button"
-          style="display: none;"
-          value="Más preguntas de Habitualidad"
-          on:click={() => {
-            mostrarBotones("tematicas", "", 0);
-            ocultarBotones("btn-reinicio", "habitualidad", 0);
-          }}
-        />
-        <input
-          class="btn-reinicio-lenguaje"
-          type="button"
-          style="display: none;"
-          value="Más preguntas de Lenguaje"
-          on:click={() => {
-            mostrarBotones("tematicas", "", 0);
-            ocultarBotones("btn-reinicio", "lenguaje", 0);
+            mostrarBotones("btn-preguntas", "Lenguajes", 0);
+            ocultarBotones("btn-reinicio", "Lenguajes", 0);
+            ocultarBotones("btn-reinicio", "all", 0);
           }}
         />
       </div>
-
-      <!--<div>
-          {#each Object.entries(messagesAvailables) as [topic, choiceAvailable]}
-            <input class="btn-reinicio" type="button" style="display: none;" value={topic}/>
-            {#each choiceAvailable as messageChoice}
-              <input class="btn-reinicio-{topic}" type="button" style="display: none;" value={messageChoice}/>
-            {/each}
-          {/each}
-        </div>-->
     </div>
   </div>
 </main>
@@ -586,6 +630,14 @@
   .border-image::after {
     right: 0;
     background-image: url("../src/assets/border_right.png");
+  }
+
+  .eliminated{
+    display: none !important;
+  }
+
+  #btn-more-Lenguajes{
+    display: none;
   }
 
   input {
