@@ -194,6 +194,10 @@
     { mensaje: "", tipo: 0 },
     { mensaje: "", tipo: 1 },
     { mensaje: "", tipo: 0 },
+    { mensaje: "", tipo: 1 },
+    { mensaje: "", tipo: 0 },
+    { mensaje: "", tipo: 1 },
+    { mensaje: "", tipo: 0 },
   ];
 
   var i = 0;
