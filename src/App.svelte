@@ -479,11 +479,11 @@
                 style="display: flex;"
               >
                 {#each Object.entries(opciones[opciones.length - 1]) as [opcion, respuesta]}
-                  <input
+                  <a
                     class="botones-opciones btn-opciones-{nro_pregunta}-{tematica}"
                     type="button"
                     style="display: none;"
-                    value={opcion}
+                    
                     on:click={() => {
                       nextSection(
                         "btn-opciones",
@@ -493,16 +493,16 @@
                         respuesta
                       );
                     }}
-                  />
+                  ><span/><span/><span/><span/> {opcion} </a>
                 {/each}
               </div>
               <div>
-                <input
+                <a
                   class="botones-opciones btn-preguntas-{tematica}"
                   id="btn-preguntas-{tematica}-{nro_pregunta}"
                   type="button"
                   style="display: none;"
-                  value={pregunta}
+                  
                   on:click={() => {
                     if (Object.keys(opciones[opciones.length - 1]).length > 1) {
                       nextSection(
@@ -522,17 +522,16 @@
                       );
                     }
                   }}
-                />
+                ><span/><span/><span/><span/> {pregunta} </a>
               </div>
             {/each}
           </div>
           <div>
-            <input
+            <a
               class="botones-opciones btn-tematicas"
               type="button"
               id="btn-tematicas-{tematica}"
               style="display: none;"
-              value={tematica}
               on:click={() => {
                 if (Object.keys(preguntas).length > 1) {
                   nextSection(
@@ -552,34 +551,32 @@
                   );
                 }
               }}
-            />
+            ><span/><span/><span/><span/> {tematica} </a>
           </div>
         {/each}
       </div>
 
       <div>
-        <input
+        <a
           class="botones-opciones btn-reinicio-all"
           type="button"
           style="display: none;"
-          value="Otro tema"
           on:click={() => {
             mostrarBotones("tematicas", "", 0);
             ocultarBotones("btn-reinicio", "all", 0);
             ocultarBotones("btn-reinicio", "Lenguajes", 0);
           }}
-        />
-        <input
+        ><span/><span/><span/><span/> Otro tema </a>
+        <a
           class="botones-opciones btn-reinicio-Lenguajes"
           type="button"
           style="display: none;"
-          value="Más preguntas de lenguaje"
           on:click={() => {
             mostrarBotones("btn-preguntas", "Lenguajes", 0);
             ocultarBotones("btn-reinicio", "Lenguajes", 0);
             ocultarBotones("btn-reinicio", "all", 0);
           }}
-        />
+        ><span/><span/><span/><span/> Más preguntas de lenguaje </a>
       </div>
     </div>
   </div>
@@ -636,12 +633,12 @@
     display: none;
   }
 
-  input {
+  a {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
   }
 
-  input:enabled {
+  a:enabled {
     cursor: pointer;
   }
 
@@ -733,14 +730,112 @@
   }
 
   .botones-opciones {
-    width: fit-content;
-    min-width: 100px;
-    height: 50px;
-    color: #202021;
-    border-radius: 5px;
-    font-size: large;
-  }
+  background: linear-gradient(-30deg, #0b3d34 50%, #082b27 50%);
+  padding: 20px 40px;
+  margin: 12px;
+  display: inline-block;
+  border-radius: 25px; 
+  -webkit-transform: translate(0%, 0%);
+          transform: translate(0%, 0%);
+  overflow: hidden;
+  color: #ffffff;
+  font-size: 20px;
+  letter-spacing: 2.5px;
+  text-align: center;
+  text-decoration: none;
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
 
+.botones-opciones::before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: #15fcd8;
+  opacity: 0;
+  transition: .2s opacity ease-in-out;
+}
+
+.botones-opciones:hover::before {
+  opacity: 0.2;
+}
+
+.botones-opciones span {
+  position: absolute;
+}
+
+.botones-opciones span:nth-child(1) {
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to left, rgba(8, 20, 43, 0), #00ffe1);
+          animation: 2s animateTop linear infinite;
+}
+
+@keyframes animateTop {
+  0% {
+            transform: translateX(100%);
+  }
+  100% {
+            transform: translateX(-100%);
+  }
+}
+
+.botones-opciones span:nth-child(2) {
+  top: 0px;
+  right: 0px;
+  height: 100%;
+  width: 2px;
+  background: linear-gradient(to top, rgba(8, 20, 43, 0), #00ffe1);
+          animation: 2s animateRight linear -1s infinite;
+}
+
+@keyframes animateRight {
+  0% {
+            transform: translateY(100%);
+  }
+  100% {
+            transform: translateY(-100%);
+  }
+}
+.botones-opciones span:nth-child(3) {
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, rgba(8, 20, 43, 0), #00ffe1);
+          animation: 2s animateBottom linear infinite;
+}
+
+@keyframes animateBottom {
+  0% {
+            transform: translateX(-100%);
+  }
+  100% {
+            transform: translateX(100%);
+  }
+}
+
+.botones-opciones span:nth-child(4) {
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 2px;
+  background: linear-gradient(to bottom, rgba(8, 20, 43, 0), #00ffe1);
+          animation: 2s animateLeft linear -1s infinite;
+}
+
+@keyframes animateLeft {
+  0% {
+            transform: translateY(-100%);
+  }
+  100% {
+            transform: translateY(100%);
+  }
+}
   .botones-respuesta {
     width: 100px;
     height: 50px;
