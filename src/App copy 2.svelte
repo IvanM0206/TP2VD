@@ -3,7 +3,7 @@
   import * as d3 from "d3";
 
   import Radar from "./components/Radar.svelte";
-  import MapaDaily from "./components/MapaDaily.svelte";
+  import MapaDaily from "./components/Daily.svelte";
   import Circuit from "./components/Circuit.svelte";
   import NetSentimentBars from "./components/NetSentimentBars.svelte";
 

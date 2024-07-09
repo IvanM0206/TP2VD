@@ -7,13 +7,15 @@
     <span>66%</span>) frente a personas mayores de las cuales solamente el
     <span>46%</span> consideraban que la IA podía afectar en alguna forma su empleo.
   </p>
-  <div
-    style="padding-left: 35px;"
-    class="flourish-embed flourish-chart"
-    data-src="visualisation/18665973"
-  >
-    <script src="https://public.flourish.studio/resources/embed.js"></script>
-  </div>
+  <iframe
+    src="https://flo.uri.sh/visualisation/18665973/embed"
+    title="Interactive or visual content"
+    class="flourish-embed-iframe"
+    frameborder="0"
+    scrolling="no"
+    style="width:100%;height:300px;padding-left: 35px;"
+    sandbox="allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"
+  ></iframe>
 
   <p style="padding-left: 35px;">
     Además, otro factor determinante resultó ser el <span
