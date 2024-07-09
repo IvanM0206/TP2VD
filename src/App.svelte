@@ -23,9 +23,26 @@
     "¿Se usa en exceso la IA? ¿Se explotan sus beneficios en pos de la productividad? ¿Se utilizan en exceso  los modelos como Chat-GPT para todo tipo de tareas? La realidad es que la introducción y distribución de modelos abiertos y libres para su uso cambió el paradigma de la inteligencia artificial, antes utilizada especialmente para actividades de investigación, desarrollo o procesos esenciales en ciertas industrias (en el caso de los modelos más avanzados). En la actualidad se le dan cada vez más uso, y nació una concepción que asocia estos modelos como asistentes personales. Y vos, ¿conocías a Chat-GPT? ¿Lo usás seguido?";
 
   let textListAnswerHabitualidad = [
-    "Sí, lo uso cada día.",
-    "Los servicios ofrecidos por Chat GPT no solamente mostraron ser útiles, sino que también consistente, ya que dentro de sus usuarios un P% lo usa al menos una vez a la semana.",
-    "graf-daily",
+    [
+      "Sí, lo uso cada día",
+      "Entonces te debe resultar muy útil y práctica la herramienta. ¡Bien por vos!",
+      "graf-daily",
+    ],
+    [
+      "Sí, lo uso cada semana",
+      "Hay mucha gente como vos que cada vez utiliza más frecuentemente la herramienta durante su semana, de forma más bien casual.",
+      "graf-daily",
+    ],
+    [
+      "Sí, lo uso raramente",
+      "Hay bastantes casos en donde poco a poco la gente se va familiarizando con la herramienta. Pero no te preocupes, estamos para ayudarte.",
+      "graf-daily",
+    ],
+    [
+      "No, no lo utilizo",
+      "¿Que esperás para adentrarte en este nuevo mundo? Te invito a conocer a ChatGPT, simpático y disponible 24/7.",
+      "graf-daily",
+    ],
   ];
 
   let text1Lenguaje =
@@ -81,14 +98,14 @@
       ],
     },
     Habitualidad: {
-      "¿Que tanto se usa Chat-GPT?": [
-        "¿Que tanto se usa Chat-GPT?",
+      "¿Qué tanto se usa Chat-GPT?": [
+        "¿Qué tanto se usa Chat-GPT?",
         text1Habitualidad,
         {
-          "Sí, lo uso cada día.": textListAnswerHabitualidad,
-          "Sí, lo uso cada semana": textListAnswerHabitualidad,
-          "Sí, lo uso raramente": textListAnswerHabitualidad,
-          "No, no tenía idea": textListAnswerHabitualidad,
+          "Sí, lo uso cada día": textListAnswerHabitualidad[0],
+          "Sí, lo uso cada semana": textListAnswerHabitualidad[1],
+          "Sí, lo uso raramente": textListAnswerHabitualidad[2],
+          "No, no lo utilizo": textListAnswerHabitualidad[3],
         },
       ],
     },
@@ -132,7 +149,7 @@
 
   let messagesAvailables = {
     Trabajo: ["Riesgo de empleo"],
-    Habitualidad: ["¿Que tanto se usa Chat-GPT?"],
+    Habitualidad: ["¿Qué tanto se usa Chat-GPT?"],
     Lenguajes: [
       "Chat-GPT",
       "Impacto positivo/negativo",

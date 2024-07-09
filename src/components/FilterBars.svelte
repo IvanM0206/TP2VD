@@ -20,19 +20,21 @@
   <p style="padding-left: 35px;">
     Además, otro factor determinante resultó ser el <span
       >nivel de ingresos</span
-    > de la persona encuestada. A mayores ingresos se temía más por el posible reemplazo
+    > de la persona encuestada. A mayores ingresos se temía más por el posible impacto
     en el trabajo actual dentro de 5 años en comparación con gente de ingresos medios
     o bajos. Si bien la diferencia parece sutil, es significativa en la dimensión
     de la encuesta y revela nuevamente otra faceta esencial del boom de la inteligencia
     artificial: el nivel de concientización sobre su impacto.
   </p>
-  <div
-    style="padding-left: 35px;"
-    class="flourish-embed flourish-chart"
-    data-src="visualisation/18666016"
-  >
-    <script src="https://public.flourish.studio/resources/embed.js"></script>
-  </div>
+  <iframe
+    src="https://flo.uri.sh/visualisation/18666016/embed"
+    title="Interactive or visual content"
+    class="flourish-embed-iframe"
+    frameborder="0"
+    scrolling="no"
+    style="width:100%;height:300px;padding-left: 35px;"
+    sandbox="allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"
+  ></iframe>
 
   <p style="padding-left: 35px;">
     Como podrás ver, las opiniones difieren según la realidad de cada persona,

@@ -1,11 +1,19 @@
 <main>
-  <div
-    style="padding-left: 35px;"
-    class="flourish-embed flourish-chart"
-    data-src="visualisation/18481701"
-  >
-    <script src="https://public.flourish.studio/resources/embed.js"></script>
-  </div>
+  <p style="padding-left: 35px;">
+    Los servicios ofrecidos por Chat GPT no solamente mostraron ser útiles, sino
+    que también consistente, ya que dentro de sus usuarios <span
+      >un 53% lo usa al menos una vez a la semana</span
+    >.
+  </p>
+  <iframe
+    src="https://flo.uri.sh/visualisation/18481701/embed"
+    title="Interactive or visual content"
+    class="flourish-embed-iframe"
+    frameborder="0"
+    scrolling="no"
+    style="width:100%;height:300px;padding-left: 35px;"
+    sandbox="allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"
+  ></iframe>
 
   <p style="padding-left: 35px;">
     También su expansión por el mundo permite descubrir dónde impactó más.
