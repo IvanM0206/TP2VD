@@ -1,7 +1,7 @@
 <main>
   <p style="padding-left: 35px;">
     Los servicios ofrecidos por Chat GPT no solamente mostraron ser útiles, sino
-    que también consistente, ya que dentro de sus usuarios <span
+    que también consistentes, ya que dentro de sus usuarios <span
       >un 53% lo usa al menos una vez a la semana</span
     >.
   </p>

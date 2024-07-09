@@ -4,11 +4,11 @@
 
   import Radar from "./components/Radar.svelte";
   import Daily from "./components/Daily.svelte";
+  import Awareness from "./components/Awareness.svelte";
   import Circuit from "./components/Circuit.svelte";
   import NetSentimentBars from "./components/NetSentimentBars.svelte";
   import FilterBars from "./components/FilterBars.svelte";
   import * as TM from "./textos.svelte";
-  import Graf9110 from "./components/graf9110.svelte";
   import ShareAiSocialMediaBars from "./components/ShareAISocialMediaBars.svelte";
 
   let globalIndex = 0;
@@ -58,9 +58,16 @@
     "En esta era de la inteligencia artificial, diversos lenguajes y modelos de IA han experimentado un crecimiento exponencial en cuanto a popularidad y uso, reflejando la adopción de la tecnología en distintos campos. A continuación, se presenta un gráfico que ilustra los lenguajes de IA más populares en el cuarto trimestre de 2023, basándonos en el índice de atención de las redes sociales.";
 
   let textListAnswerLenguaje = [
-    "Positivo",
-    "En el siguiente gráfico podés comparar la opinión que se tiene sobre diferentes modelos en diferentes trimestres de 2023. Un índice positivo se considera una mejor opinión que uno negativo (el índice toma valores entre -100 y 100). En particular, puede verse que los modelos con menor índice coinciden en gran parte con los más populares, debido a que son los más usados y por eso generan más debate al involucrar a una mayor cantidad de usuarios.",
-    "graf-bar-sentiment",
+    [
+      "Positivo",
+      "¡Eso! Hay que mantenerse optimistas y buscarle la ventaja o los beneficios de estas tecnologías.",
+      "graf-bar-sentiment",
+    ],
+    [
+      "Negativo",
+      "Se nota que sos una persona precavida, y que ningún modelo te tomará por sorpresa cuando adquiera consciencia. Es un enfoque verdaderamente interesante, serás de mucha ayuda en una eventual crisis de IAs rebeldes.",
+      "graf-bar-sentiment",
+    ],
   ];
 
   let topicsTexts = {
@@ -117,14 +124,17 @@
           "Lo conozco y lo uso a menudo": [
             "Lo conozco y lo uso a menudo",
             "No sos el único, desde que salió su popularidad fue en ascenso sin descanso.",
+            "graf-awareness",
           ],
           "Lo conozco pero no lo uso": [
             "Lo conozco pero no lo uso",
-            "Hay bastante gente como vos, que todavía no incorporó la herramienta pese a conocer de su existencia. Sin embargo, muchos otros ya están inmersos en el uso de la IA en su vida diaria.",
+            "Aunque no lo creas, hat bastante gente en la misma situación, que todavía no incorporó la herramienta pese a conocer de su existencia. Sin embargo, aún más gente ya está inmersa en el uso de la IA en su vida diaria.",
+            "graf-awareness",
           ],
           "No lo conocía": [
             "No lo conocía",
-            "Raro, te lo presento: https://chatgpt.com/.",
+            "En ese caso, te lo presento: https://chatgpt.com/.",
+            "graf-awareness",
           ],
         },
       ],
@@ -132,8 +142,8 @@
         "¿Estos modelos son buenos o malos?",
         text2Lenguaje,
         {
-          Positivo: textListAnswerLenguaje,
-          Negativo: textListAnswerLenguaje,
+          Positivo: textListAnswerLenguaje[0],
+          Negativo: textListAnswerLenguaje[1],
         },
       ],
       "Modelos más populares": [
@@ -286,8 +296,8 @@
       new Daily({
         target: DivGrafico,
       });
-    } else if (graphicName == "bar") {
-      new Graf9110({
+    } else if (graphicName == "awareness") {
+      new Awareness({
         target: DivGrafico,
       });
     } else if (graphicName == "bar-share") {
