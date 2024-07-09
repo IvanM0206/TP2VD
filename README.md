@@ -1,6 +1,6 @@
 # VD | IA y Opinión Pública
 
-### Narrativa visual de datos en formato de test o paseo interactivo basada en encuestas sobre diversos temas de inteligencia artificial y la opinión sobre ellos del público. Realizada para la materia Visualización de Datos por los alumnos Iván Mondrzak, Federico Peitti y Franco Setti.
+Narrativa visual de datos en formato de test o paseo interactivo basada en encuestas sobre diversos temas de inteligencia artificial y la opinión sobre ellos del público. Realizada para la materia Visualización de Datos por los alumnos Iván Mondrzak, Federico Peitti y Franco Setti.
 
 ---
 
@@ -20,38 +20,12 @@
 
 Detrás del desarrollo de este trabajo, se buscaba comunicar los resultados de un estudio masivo realizado por la universidad de Stanford ([Starford AI Index Report 2023](https://aiindex.stanford.edu/report/)), el cual incluye métricas de todo tipo relacionadas con inteligencia artificial. En particular, se decidió trabajar con el capítulo 9 de dicho reporte, basado en opinión pública para comunicar un mensaje claro, acotado y conciso.
 
-## Desarrollo y consideraciones generales
+## Consideraciones generales
 
-**Why use this over SvelteKit?**
+**Desarrollo**
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+En esencia, la idea del proyecto consiste en tener un conjunto de preguntas que puede hacer el usuario subdividido por algunas categorías de interés. Toda la interacción se resuelve en un flujo de idas y vueltas en las que (1) se introduce el tema, (2) en caso de haber una pregunta asociada se busca la interacción con el usuario y (3) se presentan los datos, con algún formato de respuesta que puede o no estar personalizada. A medida que se navega por las preguntas, estas van desapareciendo para el usuario, de forma que se repita la menor información posible.
 
-This template contains as little as possible to get started with Vite + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+**Expansión**
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
-
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
-
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `checkJs` in the JS template?**
-
-It is likely that most cases of changing variable types in runtime are likely to be accidental, rather than deliberate. This provides advanced typechecking out of the box. Should you like to take advantage of the dynamically-typed nature of JavaScript, it is trivial to change the configuration.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/sveltejs/svelte-hmr/tree/master/packages/svelte-hmr#preservation-of-local-state).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```js
-// store.js
-// An extremely simple external store
-import { writable } from "svelte/store";
-export default writable(0);
-```
+Eventualmente podría pensarse en implementar una API que vincule el listado de preguntas/categorías con componentes de Flourish o personalizados tal que se permita contener una cantidad variable de temáticas, incluso teniendo múltiples "rutas" que se disparan tras otras preguntas, personalizando aún más la experiencia.
