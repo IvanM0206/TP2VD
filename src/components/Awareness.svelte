@@ -1,9 +1,9 @@
+<script>
+  import AwarenessRadar from "./AwarenessRadar.svelte";
+</script>
+
 <main>
-  <p style="padding-left: 35px;">
-    A nivel global, se estima que en 2023 un <span>63%</span> de la población global
-    tenía idea de qué era ChatGPT.
-  </p>
-  #BARRAS
+  <AwarenessRadar />
 
   <p style="padding-left: 35px;">
     Su difusión rápida y sus variedad de funcionalidades hizo que se expandiera
