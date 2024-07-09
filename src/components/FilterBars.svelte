@@ -7,16 +7,7 @@
     <span>66%</span>) frente a personas mayores de las cuales solamente el
     <span>46%</span> consideraban que la IA podía afectar en alguna forma su empleo.
   </p>
-  <iframe
-    src="https://flo.uri.sh/visualisation/18665973/embed"
-    title="Interactive or visual content"
-    class="flourish-embed-iframe"
-    frameborder="0"
-    scrolling="no"
-    style="width:100%;height:300px;padding-left: 35px;"
-    sandbox="allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"
-  ></iframe>
-
+  <iframe src='https://flo.uri.sh/visualisation/18665973/embed' title='Interactive or visual content' class='flourish-embed-iframe' frameborder='0' scrolling='no' style='width:100%;height:600px;' sandbox='allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation'></iframe><div style='width:100%!;margin-top:4px!important;text-align:right!important;'><a class='flourish-credit' href='https://public.flourish.studio/visualisation/18665973/?utm_source=embed&utm_campaign=visualisation/18665973' target='_top' style='text-decoration:none!important'><img alt='Made with Flourish' src='https://public.flourish.studio/resources/made_with_flourish.svg' style='width:105px!important;height:16px!important;border:none!important;margin:0!important;'> </a></div>
   <p style="padding-left: 35px;">
     Además, otro factor determinante resultó ser el <span
       >nivel de ingresos</span
