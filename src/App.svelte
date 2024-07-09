@@ -3,9 +3,10 @@
   import * as d3 from "d3";
 
   import Radar from "./components/Radar.svelte";
-  import Mapa from "./components/MapaDaily.svelte";
+  import Daily from "./components/Daily.svelte";
   import Circuit from "./components/Circuit.svelte";
   import NetSentimentBars from "./components/NetSentimentBars.svelte";
+  import FilterBars from "./components/FilterBars.svelte";
   import * as TM from "./textos.svelte";
   import Graf9110 from "./components/graf9110.svelte";
   import ShareAiSocialMediaBars from "./components/ShareAISocialMediaBars.svelte";
@@ -24,9 +25,7 @@
   let textListAnswerHabitualidad = [
     "Sí, lo uso cada día.",
     "Los servicios ofrecidos por Chat GPT no solamente mostraron ser útiles, sino que también consistente, ya que dentro de sus usuarios un P% lo usa al menos una vez a la semana.",
-    "graf-bar",
-    "También su expansión por el mundo permite descubrir dónde impactó más. Debajo podés ver por país el porcentaje de usuarios que usan Chat GPT diariamente. Entre los países que más frecuentemente utilizan el chat están, por ejemplo, India y Kenia.",
-    "graf-map",
+    "graf-daily",
   ];
 
   let text1Lenguaje =
@@ -66,16 +65,17 @@
         text1Trabajo,
         "graf-radar",
         {
-          "Si, definitivamente": [
-            "Si, definitivamente",
-            "Muchas personas opinan como vos. La realidad es que la IA esta avanzando a pasos agigantados pero no necesariamente va a pasar lo peor. Trabajar con esta nueva herramienta es una opción viable.",
+          "Sí, definitivamente.": [
+            "Sí, definitivamente.",
+            "Sorprendentemente, no muchas personas opinan como vos. La realidad es que los modelos de inteligencia artifical están avanzando a pasos agigantados pero no necesariamente va a pasar lo peor. Trabajar con esta nueva herramienta como potenciador es una opción viable.",
             "graf-radar",
-            "graf-bar-sentiment",
+            "graf-bar-filters",
           ],
-          "No, para nada": [
-            "No, para nada",
-            "Hay que ser optimistas! Sorpresivamente muchas no concuerdan con vos",
+          "No, para nada.": [
+            "No, para nada.",
+            "Eso! Hay que ser optimistas! Sorpresivamente muchas personas concuerdan con vos.",
             "graf-radar",
+            "graf-bar-filters",
           ],
         },
       ],
@@ -107,7 +107,7 @@
           ],
           "No lo conocía": [
             "No lo conocía",
-            "Raro, te lo presento: https://chatgpt.com/",
+            "Raro, te lo presento: https://chatgpt.com/.",
           ],
         },
       ],
@@ -170,7 +170,7 @@
   ];
 
   var i = 0;
-  var speed = 5;
+  var speed = 1;
 
   function typeWrite(texto_respuesta, index, resolve) {
     let typing_id = "typing-indicator-" + index;
@@ -244,8 +244,9 @@
     });
   }
 
-  function mostrarGrafico(graphicName) {
+  function mostrarGrafico(graphicName, answeredText) {
     let messageId = "mensaje-" + globalIndex;
+    console.log("MENSAJE", messageId);
     let message = document.getElementById(messageId);
     var DivGrafico = document.createElement("div");
     DivGrafico.className = "grafico";
@@ -254,14 +255,18 @@
     if (graphicName == "radar") {
       new Radar({
         target: DivGrafico,
-        props: { p: 60 },
+        props: { p: 36, yes: answeredText[0].includes("Sí") },
+      });
+    } else if (graphicName == "bar-filters") {
+      new FilterBars({
+        target: DivGrafico,
       });
     } else if (graphicName == "bar-sentiment") {
       new NetSentimentBars({
         target: DivGrafico,
       });
-    } else if (graphicName == "map") {
-      new Mapa({
+    } else if (graphicName == "daily") {
+      new Daily({
         target: DivGrafico,
       });
     } else if (graphicName == "bar") {
@@ -286,7 +291,7 @@
     let i = 0;
     for (let message of textToShowList) {
       if (message.slice(0, 4) == "graf") {
-        await mostrarGrafico(message.slice(5, message.length));
+        await mostrarGrafico(message.slice(5, message.length), textToShowList);
       } else {
         await mostrarTexto(message, globalIndex);
       }
