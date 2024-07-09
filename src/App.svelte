@@ -17,7 +17,7 @@
     "¡Hola! Este chat va a ser tu guía en el sitio web. Los pasos a seguir son simples: elegí una temática y seleccioná una pregunta para conocer más sobre diversos temas relacionados con inteligencia artificial, la perspectiva de la gente y comparar con tus opiniones.";
 
   let conclusionText =
-    "La inteligencia artificial se ha convertido en una herramienta poderosa y omnipresente en nuestra sociedad actual. Desde su impacto en el mercado laboral hasta su uso cotidiano, las IAs están remodelando el panorama global. Modelos como GPT-4 dominan la atención pública, destacando la rapidez con la que estas tecnologías se integran en diversas áreas. Las percepciones varían según la realidad de cada cual. A medida que continuamos explorando y utilizando estas herramientas, es crucial fomentar un uso consciente y ético de estas herramientas. La inteligencia artificial promete no sólo desafíos, sino también oportunidades únicas para el progreso humano. Muchas gracias por acompañarme y por tu curiosidad por aprender!";
+    "La inteligencia artificial se ha convertido en una herramienta poderosa y omnipresente en nuestra sociedad actual. Desde su impacto en el mercado laboral, donde se debate entre ser una ayuda o una amenaza, hasta su uso cotidiano que muestra una creciente adopción y dependencia, la IA está remodelando el panorama global. Modelos como GPT-4 dominan la atención pública, destacando la rapidez con la que estas tecnologías se integran en diversas áreas. Las percepciones varían según la generación y el nivel de ingresos, lo que refleja la complejidad y diversidad de opiniones sobre el futuro de la IA. A medida que continuamos explorando y utilizando estas herramientas, es crucial fomentar un uso consciente y ético que maximice sus beneficios y minimice sus riesgos. La inteligencia artificial promete no sólo desafíos, sino también oportunidades únicas para el progreso humano.";
 
   let text1Trabajo =
     "En esta sección podrás descubrir y reflexionar acerca de si la inteligencia artificial y sus avances más recientes son positivos o negativos para el empleo a nivel global. Por el momento, se tiene a la IA como una herramienta más que como un reemplazo. Si bien es cierto que algunas tareas básicas las puede realizar en su totalidad un modelo automatizado por su cuenta, existen actividades que requieren cierta capacidad de análisis, pensamiento y empatía que estos modelos todavía no tienen, y no se sabe con exactitud si llegarán a tenerlos. Los humanos siguen siendo piezas esenciales y recursos indiscutibles para llevar a cabo muchos trabajos, pero es verdad, por otro lado, que actividades menos complejas podrían ser automatizadas y eso dejaría vulnerable a un sector de la población. ¿Vos qué pensás? ¿La inteligencia artificial va a reemplazar tu trabajo actual?";
@@ -49,7 +49,7 @@
   ];
 
   let text1Lenguaje =
-    "Chat-GPT es un modelo de inteligencia artificial creado por la empresa Open AI, y está abierta al público desde el año 2021. Es una de las primeras herramientas de inteligencia artificial avanzadas en ser libre de uso para todo público. Se la utiliza para diversas aplicaciones, desde escribir ensayos simples hasta desarrollar programas complejos o crear imágenes a partir de indicaciones en formato de texto. Su impacto a nivel mundial ha ido y sigue agigantándose cada vez más, mientras que salen versiones de la herramienta con más funcionalidades, más conocimiento y respuestas cada vez más precisas. Realmente se ha convertido en un hito de estos últimos años. ¿Lo conocías?";
+    "Chat-GPT es un modelo de inteligencia artificial creado por la empresa OpenIA, y está abierta al público desde el año 2021. Es una de las primeras herramientas de inteligencia artificial avanzadas en ser libre de uso para todo público. Se la utiliza para diversas aplicaciones, desde escribir ensayos simples hasta desarrollar programas complejos o crear imágenes a partir de indicaciones en formato de texto. Su impacto a nivel mundial ha ido y sigue agigantándose cada vez más, mientras que salen versiones de la herramienta con más funcionalidades, más conocimiento y respuestas cada vez más precisas. Realmente se ha convertido en un hito de estos últimos años. ¿Lo conocías?";
 
   let text2Lenguaje =
     "Frente a la popularidad de estos modelos de inteligencia artificial, se ha armado un gran debate sobre si la influencia de estos es positiva o negativa, es decir, cómo son percibidos por los usuarios. En base a publicaciones en redes sociales sobre estos, se armó un índice de opinión para determinar, para varios modelos, si se tenía una opinión positiva o negativa de cada uno. ¿Para vos estos modelos tienen impacto negativo o positivo en general?";
@@ -259,6 +259,7 @@
   }
 
   function displayConclusion() {
+    console.log("conclusion");
     setTimeout(function () {
       mostrarTexto(conclusionText, globalIndex + 1);
     }, 2000);
@@ -405,6 +406,7 @@
     }
     let end = 0;
     end = Object.values(countersBySection).reduce((a, b) => a + b, 0);
+    console.log(end, "FINAL", globalIndex);
     if (end == 0 && globalIndex == 21) {
       displayConclusion();
     }
@@ -421,8 +423,11 @@
   <div class="border-image"></div>
   <div class="container">
     <h3 class="headline">
-      <b>IA y Opinión Pública</b>
+      <b>The IA Explorer</b>
     </h3>
+    <h2 class = "sub">
+      <b> Descubre como la Inteligencia Artificial está transformando nuestro día a día</b>
+    </h2>
 
     <div class="container">
       {#each chat as { mensaje, tipo }, index}
@@ -481,6 +486,7 @@
                     class="botones-opciones btn-opciones-{nro_pregunta}-{tematica}"
                     type="button"
                     style="display: none;"
+                    
                     on:click={() => {
                       nextSection(
                         "btn-opciones",
@@ -490,8 +496,7 @@
                         respuesta
                       );
                     }}
-                    ><span /><span /><span /><span /> {opcion}
-                  </a>
+                  ><span/><span/><span/><span/> {opcion} </a>
                 {/each}
               </div>
               <div>
@@ -500,6 +505,7 @@
                   id="btn-preguntas-{tematica}-{nro_pregunta}"
                   type="button"
                   style="display: none;"
+                  
                   on:click={() => {
                     if (Object.keys(opciones[opciones.length - 1]).length > 1) {
                       nextSection(
@@ -519,8 +525,7 @@
                       );
                     }
                   }}
-                  ><span /><span /><span /><span /> {pregunta}
-                </a>
+                ><span/><span/><span/><span/> {pregunta} </a>
               </div>
             {/each}
           </div>
@@ -549,8 +554,7 @@
                   );
                 }
               }}
-              ><span /><span /><span /><span /> {tematica}
-            </a>
+            ><span/><span/><span/><span/> {tematica} </a>
           </div>
         {/each}
       </div>
@@ -565,8 +569,7 @@
             ocultarBotones("btn-reinicio", "all", 0);
             ocultarBotones("btn-reinicio", "Lenguajes", 0);
           }}
-          ><span /><span /><span /><span /> Otro tema
-        </a>
+        ><span/><span/><span/><span/> Otro tema </a>
         <a
           class="botones-opciones btn-reinicio-Lenguajes"
           type="button"
@@ -576,8 +579,7 @@
             ocultarBotones("btn-reinicio", "Lenguajes", 0);
             ocultarBotones("btn-reinicio", "all", 0);
           }}
-          ><span /><span /><span /><span /> Más preguntas de lenguaje
-        </a>
+        ><span/><span/><span/><span/> Más preguntas de lenguaje </a>
       </div>
     </div>
   </div>
@@ -585,7 +587,7 @@
 
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,700;1,700&display=swap");
-
+  
   :global(body) {
     background-color: #202021;
     /*font-family: "Roboto Mono", monospace;*/
@@ -598,43 +600,58 @@
       "Noto Color Emoji";
   }
 
-  .border-image {
-    overflow: hidden;
-    margin: 0 auto;
-    position: relative;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-
-  .border-image::before,
-  .border-image::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    width: 15%;
-    background-size: cover;
-    background-repeat: repeat;
-    z-index: 1;
-  }
-
-  .border-image::before {
-    left: 0;
-    background-image: url("../src/assets/border_left.png");
-  }
-
-  .border-image::after {
-    right: 0;
-    background-image: url("../src/assets/border_right.png");
-  }
 
   .eliminated {
     display: none !important;
   }
 
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Raleway:wght@700&display=swap');
+
+/* Estilos para el título h3 */
+h3.headline {
+  font-size: 60px; /* Tamaño de fuente */
+  color: rgb(255, 255, 255); /* Color del texto - verde azulado */
+  margin-bottom: 15px; /* Margen inferior */
+  margin-top: -50px; /* Margen superior */
+  font-family: 'Orbitron', sans-serif; /* Fuente futurista */
+  text-align: center; /* Alineación centrada */
+  position: relative; /* Necesario para el pseudoelemento */
+  text-shadow: 0 0 20px rgba(7, 255, 214, 0.3), 0 0 30px rgba(0, 255, 208, 0.2), 0 0 40px rgba(0, 255, 213, 0.1), 0 0 50px rgba(0, 255, 187, 0.05);
+}
+
+h3.headline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(0, 255, 221, 0) 0%, rgba(0, 255, 217, 0.15) 50%, rgba(0, 255, 200, 0) 100%);
+  transform: translateX(-50%);
+  filter: blur(10px);
+  z-index: -1;
+}
+
+/* Estilos para el título h2 */
+h2.sub {
+  font-size: 34px; /* Tamaño de fuente */
+  color: rgb(255, 255, 255); /* Color del texto - verde azulado */
+  margin-bottom: 30px; /* Margen inferior */
+  font-family: 'Raleway', sans-serif; /* Fuente futurista */
+  text-align: center; /* Alineación centrada */
+  position: relative; /* Necesario para el pseudoelemento */
+}
+
+
+
+
+
+
   a {
     font-family: Arial, Helvetica, sans-serif;
-    cursor: pointer;
+    font-weight: bold;
   }
+
   a:enabled {
     cursor: pointer;
   }
@@ -702,7 +719,7 @@
   .botones {
     display: flex;
     position: fixed;
-    bottom: 100px;
+    bottom: 20px;
   }
 
   .button-bar {
@@ -726,110 +743,112 @@
   }
 
   .botones-opciones {
-    background: linear-gradient(-30deg, #0b3d34 50%, #082b27 50%);
-    padding: 15px 25px;
-    margin: 5px;
-    display: inline-block;
-    border-radius: 20px;
-    transform: translate(0%, 0%);
-    overflow: hidden;
-    color: #ffffff;
-    font-size: 20px;
-    letter-spacing: 1px;
-    text-align: center;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-  }
+  background: linear-gradient(-30deg, #0b3d34 50%, #082b27 50%);
+  padding: 20px 40px;
+  margin: 12px;
+  display: inline-block;
+  border-radius: 25px; 
+  -webkit-transform: translate(0%, 0%);
+          transform: translate(0%, 0%);
+  overflow: hidden;
+  color: #ffffff;
+  font-size: 20px;
+  letter-spacing: 2.5px;
+  text-align: center;
+  text-decoration: none;
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
 
-  .botones-opciones::before {
-    content: "";
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    background-color: #15fcd8;
-    opacity: 0;
-    transition: 0.2s opacity ease-in-out;
-  }
+.botones-opciones::before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: #15fcd8;
+  opacity: 0;
+  transition: .2s opacity ease-in-out;
+}
 
-  .botones-opciones:hover::before {
-    opacity: 0.2;
-  }
+.botones-opciones:hover::before {
+  opacity: 0.2;
+}
 
-  .botones-opciones span {
-    position: absolute;
-  }
+.botones-opciones span {
+  position: absolute;
+}
 
-  .botones-opciones:hover span:nth-child(1) {
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(to left, rgba(8, 20, 43, 0), #00ffe1);
-    animation: 2s animateTop linear infinite;
-  }
+.botones-opciones span:nth-child(1) {
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to left, rgba(8, 20, 43, 0), #00ffe1);
+          animation: 2s animateTop linear infinite;
+}
 
-  @keyframes animateTop {
-    0% {
-      transform: translateX(100%);
-    }
-    100% {
-      transform: translateX(-100%);
-    }
+@keyframes animateTop {
+  0% {
+            transform: translateX(100%);
   }
+  100% {
+            transform: translateX(-100%);
+  }
+}
 
-  .botones-opciones:hover span:nth-child(2) {
-    top: 0px;
-    right: 0px;
-    height: 100%;
-    width: 2px;
-    background: linear-gradient(to top, rgba(8, 20, 43, 0), #00ffe1);
-    animation: 2s animateRight linear -1s infinite;
-  }
+.botones-opciones span:nth-child(2) {
+  top: 0px;
+  right: 0px;
+  height: 100%;
+  width: 2px;
+  background: linear-gradient(to top, rgba(8, 20, 43, 0), #00ffe1);
+          animation: 2s animateRight linear -1s infinite;
+}
 
-  @keyframes animateRight {
-    0% {
-      transform: translateY(100%);
-    }
-    100% {
-      transform: translateY(-100%);
-    }
+@keyframes animateRight {
+  0% {
+            transform: translateY(100%);
   }
-  .botones-opciones:hover span:nth-child(3) {
-    bottom: 0px;
-    left: 0px;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(to right, rgba(8, 20, 43, 0), #00ffe1);
-    animation: 2s animateBottom linear infinite;
+  100% {
+            transform: translateY(-100%);
   }
+}
+.botones-opciones span:nth-child(3) {
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, rgba(8, 20, 43, 0), #00ffe1);
+          animation: 2s animateBottom linear infinite;
+}
 
-  @keyframes animateBottom {
-    0% {
-      transform: translateX(-100%);
-    }
-    100% {
-      transform: translateX(100%);
-    }
+@keyframes animateBottom {
+  0% {
+            transform: translateX(-100%);
   }
+  100% {
+            transform: translateX(100%);
+  }
+}
 
-  .botones-opciones:hover span:nth-child(4) {
-    top: 0px;
-    left: 0px;
-    height: 100%;
-    width: 2px;
-    background: linear-gradient(to bottom, rgba(8, 20, 43, 0), #00ffe1);
-    animation: 2s animateLeft linear -1s infinite;
-  }
+.botones-opciones span:nth-child(4) {
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 2px;
+  background: linear-gradient(to bottom, rgba(8, 20, 43, 0), #00ffe1);
+          animation: 2s animateLeft linear -1s infinite;
+}
 
-  @keyframes animateLeft {
-    0% {
-      transform: translateY(-100%);
-    }
-    100% {
-      transform: translateY(100%);
-    }
+@keyframes animateLeft {
+  0% {
+            transform: translateY(-100%);
   }
+  100% {
+            transform: translateY(100%);
+  }
+}
   .botones-respuesta {
     width: 100px;
     height: 50px;
@@ -848,13 +867,12 @@
 
   .mensaje-usuario {
     border-radius: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
     margin-bottom: 1px;
     margin-right: 50px;
-    background: linear-gradient(-60deg, #0b3d34 15%, #082b27 10%);
-    width: fit-content;
-    max-width: 600px;
+    background: linear-gradient(-30deg, #0b3d34 50%, #082b27 50%);
+    width: 500px;
     align-self: flex-end;
     height: fit-content;
     font-size: 20px;
@@ -862,9 +880,8 @@
 
   .chat {
     border-radius: 20px;
-    padding-right: 100px;
+    padding-right: 10px;
     background: #202021;
-    max-width: 900px;
     width: 900px;
     align-self: flex-start;
     display: flex;
