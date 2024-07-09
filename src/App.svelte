@@ -17,7 +17,7 @@
     "¡Hola! Este chat va a ser tu guía en el sitio web. Los pasos a seguir son simples: elegí una temática y seleccioná una pregunta para conocer más sobre diversos temas relacionados con inteligencia artificial, la perspectiva de la gente y comparar con tus opiniones.";
 
   let conclusionText =
-    "La inteligencia artificial se ha convertido en una herramienta poderosa y omnipresente en nuestra sociedad actual. Desde su impacto en el mercado laboral, donde se debate entre ser una ayuda o una amenaza, hasta su uso cotidiano que muestra una creciente adopción y dependencia, la IA está remodelando el panorama global. Modelos como GPT-4 dominan la atención pública, destacando la rapidez con la que estas tecnologías se integran en diversas áreas. Las percepciones varían según la generación y el nivel de ingresos, lo que refleja la complejidad y diversidad de opiniones sobre el futuro de la IA. A medida que continuamos explorando y utilizando estas herramientas, es crucial fomentar un uso consciente y ético que maximice sus beneficios y minimice sus riesgos. La inteligencia artificial promete no sólo desafíos, sino también oportunidades únicas para el progreso humano.";
+    "La inteligencia artificial se ha convertido en una herramienta poderosa y omnipresente en nuestra sociedad actual. Desde su impacto en el mercado laboral hasta su uso cotidiano, las IAs están remodelando el panorama global. Modelos como GPT-4 dominan la atención pública, destacando la rapidez con la que estas tecnologías se integran en diversas áreas. Las percepciones varían según la realidad de cada cual. A medida que continuamos explorando y utilizando estas herramientas, es crucial fomentar un uso consciente y ético de estas herramientas. La inteligencia artificial promete no sólo desafíos, sino también oportunidades únicas para el progreso humano. Muchas gracias por acompañarme y por tu curiosidad por aprender!";
 
   let text1Trabajo =
     "En esta sección podrás descubrir y reflexionar acerca de si la inteligencia artificial y sus avances más recientes son positivos o negativos para el empleo a nivel global. Por el momento, se tiene a la IA como una herramienta más que como un reemplazo. Si bien es cierto que algunas tareas básicas las puede realizar en su totalidad un modelo automatizado por su cuenta, existen actividades que requieren cierta capacidad de análisis, pensamiento y empatía que estos modelos todavía no tienen, y no se sabe con exactitud si llegarán a tenerlos. Los humanos siguen siendo piezas esenciales y recursos indiscutibles para llevar a cabo muchos trabajos, pero es verdad, por otro lado, que actividades menos complejas podrían ser automatizadas y eso dejaría vulnerable a un sector de la población. ¿Vos qué pensás? ¿La inteligencia artificial va a reemplazar tu trabajo actual?";
@@ -848,12 +848,13 @@
 
   .mensaje-usuario {
     border-radius: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
     margin-bottom: 1px;
     margin-right: 50px;
     background: linear-gradient(-60deg, #0b3d34 15%, #082b27 10%);
-    width: 500px;
+    width: fit-content;
+    max-width: 600px;
     align-self: flex-end;
     height: fit-content;
     font-size: 20px;
@@ -861,8 +862,9 @@
 
   .chat {
     border-radius: 20px;
-    padding-right: 10px;
+    padding-right: 100px;
     background: #202021;
+    max-width: 900px;
     width: 900px;
     align-self: flex-start;
     display: flex;
