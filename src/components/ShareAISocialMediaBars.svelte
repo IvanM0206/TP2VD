@@ -1,13 +1,5 @@
 <main>
-  <iframe
-    src="https://flo.uri.sh/visualisation/18663993/embed"
-    title="Interactive or visual content"
-    class="flourish-embed-iframe"
-    frameborder="0"
-    scrolling="no"
-    style="width:100%;height:600px;padding-left:35px;"
-    sandbox="allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"
-  ></iframe>
+  <div class="flourish-embed flourish-chart" data-src="visualisation/18663993"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
   <p style="padding-left:35px;">
     El gráfico muestra que <span>GPT-4</span> lidera con un impresionante
     <span>45% de índice de popularidad</span>, seguido por

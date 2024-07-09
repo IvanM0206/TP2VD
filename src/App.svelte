@@ -128,7 +128,7 @@
           ],
           "Lo conozco pero no lo uso": [
             "Lo conozco pero no lo uso",
-            "Aunque no lo creas, hat bastante gente en la misma situación, que todavía no incorporó la herramienta pese a conocer de su existencia. Sin embargo, aún más gente ya está inmersa en el uso de la IA en su vida diaria.",
+            "Aunque no lo creas, hay bastante gente en la misma situación, que todavía no incorporó la herramienta pese a conocer de su existencia. Sin embargo, aún más gente ya está inmersa en el uso de la IA en su vida diaria.",
             "graf-awareness",
           ],
           "No lo conocía": [
