@@ -21,10 +21,10 @@
   let text1Trabajo =
     "En esta sección podrás descubrir y reflexionar acerca de si la inteligencia artificial y sus avances más recientes son positivos o negativos para el empleo a nivel global. Por el momento, se tiene a la IA como una herramienta más que como un reemplazo. Si bien es cierto que algunas tareas básicas las puede realizar en su totalidad un modelo automatizado por su cuenta, existen actividades que requieren cierta capacidad de análisis, pensamiento y empatía que estos modelos todavía no tienen, y no se sabe con exactitud si llegarán a tenerlos. Los humanos siguen siendo piezas esenciales y recursos indiscutibles para llevar a cabo muchos trabajos, pero es verdad, por otro lado, que actividades menos complejas podrían ser automatizadas y eso dejaría vulnerable a un sector de la población. ¿Vos qué pensás? ¿La inteligencia artificial va a reemplazar tu trabajo actual?";
 
-  let text1Habitualidad =
+  let text1Cotidianeidad =
     "¿Se usa en exceso la IA? ¿Se explotan sus beneficios en pos de la productividad? ¿Se utilizan en exceso  los modelos como Chat-GPT para todo tipo de tareas? La realidad es que la introducción y distribución de modelos abiertos y libres para su uso cambió el paradigma de la inteligencia artificial, antes utilizada especialmente para actividades de investigación, desarrollo o procesos esenciales en ciertas industrias (en el caso de los modelos más avanzados). En la actualidad se le dan cada vez más uso, y nació una concepción que asocia estos modelos como asistentes personales. Y vos, ¿conocías a Chat-GPT? ¿Lo usás seguido?";
 
-  let textListAnswerHabitualidad = [
+  let textListAnswerCotidianeidad = [
     [
       "Sí, lo uso cada día",
       "Entonces te debe resultar muy útil y práctica la herramienta. ¡Bien por vos!",
@@ -74,9 +74,9 @@
 
   let topicsTexts = {
     Trabajo: ["¿Me voy a quedar sin trabajo a causa de la IA?", text1Trabajo],
-    Habitualidad: [
+    Cotidianeidad: [
       "¿Qué nivel de acceso se tiene a herramientas de inteligencia artificial sofisticadas hoy en día? ¿Es algo más bien exclusivo?",
-      text1Habitualidad,
+      text1Cotidianeidad,
     ],
     Lenguajes: [
       "¿Qué  tipos de modelos de  IA existen? ¿Cualés son los más usados?",
@@ -106,15 +106,15 @@
         },
       ],
     },
-    Habitualidad: {
+    Cotidianeidad: {
       "¿Qué tanto se usa Chat-GPT?": [
         "¿Qué tanto se usa Chat-GPT?",
-        text1Habitualidad,
+        text1Cotidianeidad,
         {
-          "Sí, lo uso cada día": textListAnswerHabitualidad[0],
-          "Sí, lo uso cada semana": textListAnswerHabitualidad[1],
-          "Sí, lo uso raramente": textListAnswerHabitualidad[2],
-          "No, no lo utilizo": textListAnswerHabitualidad[3],
+          "Sí, lo uso cada día": textListAnswerCotidianeidad[0],
+          "Sí, lo uso cada semana": textListAnswerCotidianeidad[1],
+          "Sí, lo uso raramente": textListAnswerCotidianeidad[2],
+          "No, no lo utilizo": textListAnswerCotidianeidad[3],
         },
       ],
     },
@@ -161,7 +161,7 @@
 
   let countersBySection = {
     Trabajo: 1,
-    Habitualidad: 1,
+    Cotidianeidad: 1,
     Lenguajes: 3,
   };
 
@@ -297,7 +297,7 @@
 
     if (
       countersBySection["Trabajo"] == 0 &&
-      countersBySection["Habitualidad"] == 0
+      countersBySection["Cotidianeidad"] == 0
     ) {
       if (countersBySection["Lenguajes"] < 3) {
         let elementReinicio = document.querySelectorAll(".btn-reinicio-all");
@@ -720,7 +720,7 @@
   .botones {
     display: flex;
     position: fixed;
-    bottom: 20px;
+    bottom: 100px;
   }
 
   .button-bar {
@@ -890,6 +890,7 @@
     height: fit-content;
   }
 
+  /*
   .border-image {
     overflow: hidden;
     margin: 0 auto;
@@ -917,5 +918,5 @@
   .border-image::after {
     right: 0;
     background-image: url("../src/assets/border_right.png");
-  }
+  }*/
 </style>
