@@ -11,7 +11,7 @@ Narrativa visual de datos en formato de test o paseo interactivo basada en encue
 - [Radar animado: para los gráficos de torta](https://codepen.io/vii120/pen/yLGYqJq)
 - Funciones y animaciones del flujo, como la escritura y la interactividad de elaboración propia con JavaScript
 
-![thumbnail](thumbnail.png)
+![thumbnail](screenshot.png)
 
 ---
 
