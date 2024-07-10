@@ -51,7 +51,7 @@
 	}
 
   #button{
-    border-radius: 8px 8px 0px 0px;
+    border-radius: 8px;
     background-color: rgb(12, 87, 78);
   }
 	
