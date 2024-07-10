@@ -455,7 +455,7 @@
                 style="flex-direction: row; align-items: flex-start; "
               >
                 <img
-                  src="../src/public/images/compass.svg"
+                  src="../public/images/compass.svg"
                   alt="Logo"
                   width="20px"
                   style="margin-top: 25px"
@@ -569,10 +569,10 @@
           </p>
           <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
             <a href="https://github.com/IvanM0206/TP2VD.git">
-              <img src="./src/public/images/git_logo.svg" alt="git" style="height: 50px;">
+              <img src="./public/images/git_logo.svg" alt="git" style="height: 50px;">
             </a>
             <a href="https://www.utdt.edu/" style="display: flex; align-items: center">
-              <img src="./src/public/images/ditella_logo.svg" alt="ditella" style="height: 50px;">
+              <img src="./public/images/ditella_logo.svg" alt="ditella" style="height: 50px;">
               <p style="font-size: 20px; color: #fff; font-weight: bold;">UTDT</p>
             </a>
           </div>

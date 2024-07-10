@@ -21,7 +21,7 @@
 	<div class="header">
 		
 		<button on:click={handleClick} id="button">
-      <img src="./src/assets/Arrow_{arrowString}.svg" alt="arrow" id="arrow-icon">
+      <img src="./public/images/Arrow_{arrowString}.svg" alt="arrow" id="arrow-icon">
 		</button>
     <div class="text">
 			<slot name="head"></slot>	
