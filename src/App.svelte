@@ -745,18 +745,16 @@
 
   .botones-opciones {
     background: linear-gradient(-30deg, #0b3d34 50%, #082b27 50%);
-    padding: 20px 40px;
-    margin: 12px;
+    padding: 20px 20px;
+    margin: 5px;
     display: inline-block;
-    border-radius: 25px;
-    -webkit-transform: translate(0%, 0%);
+    border-radius: 20px;
     transform: translate(0%, 0%);
     overflow: hidden;
     color: #ffffff;
     font-size: 20px;
-    letter-spacing: 2.5px;
+    letter-spacing: 1px;
     text-align: center;
-    text-decoration: none;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
   }
 
@@ -872,7 +870,7 @@
     padding-right: 20px;
     margin-bottom: 1px;
     margin-right: 50px;
-    background: linear-gradient(-30deg, #0b3d34 50%, #082b27 50%);
+    background: linear-gradient(-60deg, #0b3d34 15%, #082b27 10%);
     width: fit-content;
     max-width: 600px;
     align-self: flex-end;

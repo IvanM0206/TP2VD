@@ -26,6 +26,9 @@ Detrás del desarrollo de este trabajo, se buscaba comunicar los resultados de u
 
 En esencia, la idea del proyecto consiste en tener un conjunto de preguntas que puede hacer el usuario subdividido por algunas categorías de interés. Toda la interacción se resuelve en un flujo de idas y vueltas en las que (1) se introduce el tema, (2) en caso de haber una pregunta asociada se busca la interacción con el usuario y (3) se presentan los datos, con algún formato de respuesta que puede o no estar personalizada. A medida que se navega por las preguntas, estas van desapareciendo para el usuario, de forma que se repita la menor información posible.
 
+**Desarrollo**
+Entre las funciones clave detrás del proyecto se encuentran: `typeWrite`, la encargada de animar la escritura de los textos; y por otro lado muchas funciones de orden que administran la visibilidad de los componentes y las rutas visitadas.
+
 **Expansión**
 
 Eventualmente podría pensarse en implementar una API que vincule el listado de preguntas/categorías con componentes de Flourish o personalizados tal que se permita contener una cantidad variable de temáticas, incluso teniendo múltiples "rutas" que se disparan tras otras preguntas, personalizando aún más la experiencia.
