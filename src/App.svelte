@@ -231,10 +231,10 @@
       let mensaje_id = "mensaje-" + index;
       i = 0;
       document.getElementById(mensaje_id).style.display = "flex";
-      if(index < 22){
+      if (index < 22) {
         document
-        .getElementById(mensaje_id)
-        .scrollIntoView({ behaviour: "smooth" });
+          .getElementById(mensaje_id)
+          .scrollIntoView({ behaviour: "smooth" });
       }
       typeWrite(mensaje, index, resolve);
     });
@@ -455,7 +455,7 @@
                 style="flex-direction: row; align-items: flex-start; "
               >
                 <img
-                  src="/compass.svg"
+                  src="/images/compass.svg"
                   alt="Logo"
                   width="20px"
                   style="margin-top: 25px"
@@ -562,21 +562,35 @@
         <span slot="head"></span>
         <div slot="details">
           <p style="text-align: start;">
-            Fuente: <a href="https://aiindex.stanford.edu/report/" style="color: #15fcd8;">AI Index Report 2024, Stanford University</a><br/>
-            Iván Mondrzak, Federico Peitti y Franco Setti<br/>
-            Visualización de Datos, LTD, UTDT<br/>
+            Fuente: <a
+              href="https://aiindex.stanford.edu/report/"
+              style="color: #15fcd8;"
+              >AI Index Report 2024, Stanford University</a
+            ><br />
+            Iván Mondrzak, Federico Peitti y Franco Setti<br />
+            Visualización de Datos, LTD, UTDT<br />
             Julio 2024
           </p>
-          <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+          <div
+            style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;"
+          >
             <a href="https://github.com/IvanM0206/TP2VD.git">
-              <img src="/git_logo.svg" alt="git" style="height: 50px;">
+              <img src="/images/git_logo.svg" alt="git" style="height: 50px;" />
             </a>
-            <a href="https://www.utdt.edu/" style="display: flex; align-items: center">
-              <img src="/ditella_logo.svg" alt="ditella" style="height: 50px;">
-              <p style="font-size: 20px; color: #fff; font-weight: bold;">UTDT</p>
+            <a
+              href="https://www.utdt.edu/"
+              style="display: flex; align-items: center"
+            >
+              <img
+                src="/images/ditella_logo.svg"
+                alt="ditella"
+                style="height: 50px;"
+              />
+              <p style="font-size: 20px; color: #fff; font-weight: bold;">
+                UTDT
+              </p>
             </a>
           </div>
-          
         </div>
       </Accordion>
 
@@ -737,14 +751,14 @@
     }
   }
 
-  .footer{
+  .footer {
     height: 70px;
     width: 70px;
     border-radius: 10%;
     background-color: rgb(113, 113, 113);
   }
 
-  .footer-text{
+  .footer-text {
     padding: 20px 20px 20px 20px;
     width: 1000px;
     border-radius: 20px 20px 0px 0px;
