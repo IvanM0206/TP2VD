@@ -574,12 +574,13 @@
           <div
             style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;"
           >
-            <a href="https://github.com/IvanM0206/TP2VD.git">
+            <a href="https://github.com/IvanM0206/TP2VD.git" class="git">
               <img src="/images/git_logo.svg" alt="git" style="height: 50px;" />
             </a>
             <a
               href="https://www.utdt.edu/"
               style="display: flex; align-items: center"
+              class="ditella"
             >
               <img
                 src="/images/ditella_logo.svg"
@@ -639,6 +640,24 @@
 
   .eliminated {
     display: none !important;
+  }
+
+  .git{
+    transition: transform 0.3s ease;
+
+  }
+
+  .git:hover{
+    transform: translateY(-10px);
+  }
+
+  .ditella{
+    transition: transform 0.3s ease;
+
+  }
+
+  .ditella:hover{
+    transform: translateY(-10px);
   }
 
   h3.headline {
