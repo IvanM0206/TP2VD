@@ -455,7 +455,7 @@
                 style="flex-direction: row; align-items: flex-start; "
               >
                 <img
-                  src="../src/assets/compass.svg"
+                  src="../src/public/images/compass.svg"
                   alt="Logo"
                   width="20px"
                   style="margin-top: 25px"
@@ -569,10 +569,10 @@
           </p>
           <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
             <a href="https://github.com/IvanM0206/TP2VD.git">
-              <img src="./src/assets/git_logo.svg" alt="git" style="height: 50px;">
+              <img src="./src/public/images/git_logo.svg" alt="git" style="height: 50px;">
             </a>
             <a href="https://www.utdt.edu/" style="display: flex; align-items: center">
-              <img src="./src/assets/ditella_logo.svg" alt="ditella" style="height: 50px;">
+              <img src="./src/public/images/ditella_logo.svg" alt="ditella" style="height: 50px;">
               <p style="font-size: 20px; color: #fff; font-weight: bold;">UTDT</p>
             </a>
           </div>
@@ -912,34 +912,4 @@
     flex-direction: column;
     height: fit-content;
   }
-
-  /*
-  .border-image {
-    overflow: hidden;
-    margin: 0 auto;
-    position: relative;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-
-  .border-image::before,
-  .border-image::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    width: 15%;
-    background-size: cover;
-    background-repeat: repeat;
-    z-index: 1;
-  }
-
-  .border-image::before {
-    left: 0;
-    background-image: url("../src/assets/border_left.png");
-  }
-
-  .border-image::after {
-    right: 0;
-    background-image: url("../src/assets/border_right.png");
-  }*/
 </style>
