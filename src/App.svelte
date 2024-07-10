@@ -9,6 +9,7 @@
   import NetSentimentBars from "./components/NetSentimentBars.svelte";
   import FilterBars from "./components/FilterBars.svelte";
   import * as TM from "./textos.svelte";
+  import Accordion from "./components/Accordion.svelte";
   import ShareAiSocialMediaBars from "./components/ShareAISocialMediaBars.svelte";
 
   let globalIndex = 0;
@@ -470,9 +471,6 @@
       {/each}
 
       <div style="display: flex;" class="botones">
-        <!--<div>
-          <input class="button-bar" type="button" value="Botones"/>
-        </div>-->
         {#each Object.entries(messageTexts) as [tematica, preguntas]}
           <div style="display: flex;">
             {#each Object.entries(preguntas) as [pregunta, opciones], nro_pregunta}
@@ -559,6 +557,28 @@
           </div>
         {/each}
       </div>
+
+      <Accordion>
+        <span slot="head"></span>
+        <div slot="details">
+          <p style="text-align: start;">
+            Fuente: <a href="https://aiindex.stanford.edu/report/" style="color: #15fcd8;">AI Index Report 2024, Stanford University</a><br/>
+            Iván Mondrzak, Federico Peitti y Franco Setti<br/>
+            Visualización de Datos, LTD, UTDT<br/>
+            Julio 2024
+          </p>
+          <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+            <a href="https://github.com/IvanM0206/TP2VD.git">
+              <img src="./src/assets/git_logo.svg" alt="git" style="height: 50px;">
+            </a>
+            <a href="https://www.utdt.edu/" style="display: flex; align-items: center">
+              <img src="./src/assets/ditella_logo.svg" alt="ditella" style="height: 50px;">
+              <p style="font-size: 20px; color: #fff; font-weight: bold;">UTDT</p>
+            </a>
+          </div>
+          
+        </div>
+      </Accordion>
 
       <div style="display: flex;">
         <a
@@ -717,22 +737,25 @@
     }
   }
 
+  .footer{
+    height: 70px;
+    width: 70px;
+    border-radius: 10%;
+    background-color: rgb(113, 113, 113);
+  }
+
+  .footer-text{
+    padding: 20px 20px 20px 20px;
+    width: 1000px;
+    border-radius: 20px 20px 0px 0px;
+    color: white;
+    background-color: black;
+  }
+
   .botones {
     display: flex;
     position: fixed;
     bottom: 100px;
-  }
-
-  .button-bar {
-    position: fixed;
-    bottom: 20px;
-    width: 500px;
-    height: 50px;
-    left: 380px;
-    border-radius: 20px;
-    background-color: #202021;
-    color: white;
-    border-color: black;
   }
 
   .boton-inicio {
