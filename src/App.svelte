@@ -5,10 +5,8 @@
   import Radar from "./components/Radar.svelte";
   import Daily from "./components/Daily.svelte";
   import Awareness from "./components/Awareness.svelte";
-  import Circuit from "./components/Circuit.svelte";
   import NetSentimentBars from "./components/NetSentimentBars.svelte";
   import FilterBars from "./components/FilterBars.svelte";
-  import * as TM from "./textos.svelte";
   import Accordion from "./components/Accordion.svelte";
   import ShareAiSocialMediaBars from "./components/ShareAISocialMediaBars.svelte";
 

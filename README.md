@@ -11,14 +11,13 @@ Narrativa visual de datos en formato de test o paseo interactivo basada en encue
 - [Radar animado: para los gráficos de torta](https://codepen.io/vii120/pen/yLGYqJq)
 - Funciones y animaciones del flujo, como la escritura y la interactividad de elaboración propia con JavaScript
 
-#TODO
 ![thumbnail](thumbnail.png)
 
 ---
 
 ## Motivación
 
-Detrás del desarrollo de este trabajo, se buscaba comunicar los resultados de un estudio masivo realizado por la universidad de Stanford ([Starford AI Index Report 2023](https://aiindex.stanford.edu/report/)), el cual incluye métricas de todo tipo relacionadas con inteligencia artificial. En particular, se decidió trabajar con el capítulo 9 de dicho reporte, basado en opinión pública para comunicar un mensaje claro, acotado y conciso.
+Detrás del desarrollo de este trabajo, se buscaba comunicar los resultados de un estudio masivo realizado por la universidad de Stanford ([Starford AI Index Report 2024](https://aiindex.stanford.edu/report/)), el cual incluye métricas de todo tipo relacionadas con inteligencia artificial. En particular, se decidió trabajar con el capítulo 9 de dicho reporte, basado en opinión pública para comunicar un mensaje claro, acotado y conciso.
 
 ## Consideraciones generales
 
