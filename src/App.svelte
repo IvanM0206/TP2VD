@@ -204,7 +204,7 @@
   ];
 
   let i = 0;
-  let speed = 0.5;
+  let speed = 10;
 
   function typeWrite(texto_respuesta, index, resolve) {
     let typing_id = "typing-indicator-" + index;
@@ -233,9 +233,11 @@
       let mensaje_id = "mensaje-" + index;
       i = 0;
       document.getElementById(mensaje_id).style.display = "flex";
-      document
+      if(index < 22){
+        document
         .getElementById(mensaje_id)
         .scrollIntoView({ behaviour: "smooth" });
+      }
       typeWrite(mensaje, index, resolve);
     });
   }
@@ -580,7 +582,7 @@
         </div>
       </Accordion>
 
-      <div style="display: flex;">
+      <div style="display: flex;" class="botones">
         <a
           class="botones-opciones btn-reinicio-all"
           type="button"
@@ -895,7 +897,7 @@
     margin-right: 50px;
     background: linear-gradient(-60deg, #0b3d34 15%, #082b27 10%);
     width: fit-content;
-    max-width: 600px;
+    max-width: 540px;
     align-self: flex-end;
     height: fit-content;
     font-size: 20px;
