@@ -13,7 +13,7 @@
   let globalIndex = 0;
 
   let welcomeText =
-    "¡Hola! Este chat va a ser tu guía en el sitio web. Los pasos a seguir son simples: elegí una temática y seleccioná una pregunta para conocer más sobre diversos temas relacionados con inteligencia artificial, la perspectiva de la gente y comparar con tus opiniones.";
+    "¡Hola! Este chat va a ser tu guía en el sitio web. Los pasos a seguir son simples: elegí una temática para conocer más sobre los modelos de inteligencia artificial, la perspectiva de la gente sobre estos tópicos y comparar con tus opiniones.";
 
   let conclusionText =
     "La inteligencia artificial se ha convertido en una herramienta poderosa y omnipresente en nuestra sociedad actual. Desde su impacto en el mercado laboral hasta su uso cotidiano, las IAs están remodelando el panorama global. Modelos como GPT-4 dominan la atención pública, destacando la rapidez con la que estas tecnologías se integran en diversas áreas. Las percepciones varían según la realidad de cada cual. A medida que continuamos explorando y utilizando estas herramientas, es crucial fomentar un uso consciente y ético de estas herramientas. La inteligencia artificial promete no sólo desafíos, sino también oportunidades únicas para el progreso humano. Muchas gracias por acompañarme y por tu curiosidad por aprender!";
